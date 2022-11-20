@@ -79,7 +79,7 @@ export class HomePage extends LitElement {
           outbox-url=${this.groupActor.outbox}
           upload-media-url=${this.groupActor.endpoints.uploadMedia}
           group-actor-id=${this.groupActor.id}
-          image=${JSON.stringify(this.groupActor.image)}
+          icon=${JSON.stringify(this.groupActor.icon)}
           name=${this.groupActor.name}
           summary=${this.groupActor.summary}>
         </group-details>

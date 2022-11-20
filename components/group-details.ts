@@ -39,7 +39,7 @@ export class GroupDetails extends LitElement {
   private summary?: string;
 
   @property({type: Object})
-  private image?: AP.Image;
+  private icon?: AP.Image;
 
   private handleSubmit(event: SubmitEvent) {
     event.preventDefault();
@@ -105,7 +105,7 @@ export class GroupDetails extends LitElement {
             actor: this.groupActorId,
             object: {
               id: this.groupActorId,
-              image: activity.object,
+              icon: activity.object,
             },
           }),
         })
@@ -126,7 +126,7 @@ export class GroupDetails extends LitElement {
 
   render() {
     return html`
-      ${this.image ? html`<img src=${this.image.url} />` : html`<p>No avatar set.</p>`}
+      ${this.icon ? html`<img src=${this.icon.url} />` : html`<p>No avatar set.</p>`}
 
       <form name="upload" @submit=${this.handleAvatarUpload}>
         <input type="file" name="file" />
