@@ -63,7 +63,7 @@ export class HomePage extends LitElement {
       }));
 
       this.requests = await Promise.all(followersCollection.items.filter((item: string) => {
-        return !followingCollection.includes(item);
+        return !followingCollection.items.includes(item);
       }).map(async (item: string) => {
         return await fetch(item, {
           headers: {
