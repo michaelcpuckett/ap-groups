@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "noLib": false,
+    "esModuleInterop": true,
+    "target": "ESNext",
+    "jsx": "react",
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "lib": [
+      "ESNext"
+    ],
+    "outDir": "./lib"
+  },
+  "exclude": [
+    "./node_modules",
+  ],
+  "include": [
+    "index.ts"
+  ]
+}
