@@ -19,8 +19,11 @@ export class GroupDetails extends LitElement {
   @query('textarea[name="summary"]')
   summaryTextareaElement: HTMLTextAreaElement|null;
 
-  @property({type: String, attribute: 'group-id'})
-  private groupId?: string;
+  @property({type: String, attribute: 'outbox-url'})
+  private outboxUrl?: string;
+
+  @property({type: String, attribute: 'group-actor-id'})
+  private groupActorId?: string;
 
   @property({type: String})
   private name?: string;
@@ -38,7 +41,7 @@ export class GroupDetails extends LitElement {
     const name = this.nameInputElement.value;
     const summary = this.summaryTextareaElement.value;
 
-    fetch(`${this.groupId}/outbox`, {
+    fetch(this.outboxUrl, {
       method: 'POST',
       headers: {
         'Accept': 'application/activity+json',
@@ -46,9 +49,9 @@ export class GroupDetails extends LitElement {
       body: JSON.stringify({
         '@context': 'https://www.w3.org/ns/activitystreams',
         type: 'Update',
-        actor: this.groupId,
+        actor: this.groupActorId,
         object: {
-          id: this.groupId,
+          id: this.groupActorId,
           name,
           summary,
         },

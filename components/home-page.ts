@@ -1,5 +1,6 @@
 import './group-details';
 import './members-list';
+import './member-requests';
 
 import {LitElement, html, css, nothing} from 'lit';
 import {customElement, property, query} from 'lit/decorators';
@@ -22,10 +23,10 @@ export class HomePage extends LitElement {
   private groupActor?: AP.Actor;
 
   @property({type: Object})
-  private followingCollection?: AP.Collection;
+  private members?: AP.Actor[];
 
   @property({type: Object})
-  private members?: AP.Actor[];
+  private requests?: AP.Actor[];
 
   firstUpdated() {
     if (!this.groupId) {
@@ -41,13 +42,29 @@ export class HomePage extends LitElement {
     .then(async (actor: AP.Actor) => {
       this.groupActor = actor;
 
-      this.followingCollection = await fetch(this.groupActor.following, {
+      const followingCollection: AP.Collection = await fetch(this.groupActor.following, {
         headers: {
           'Accept': 'application/activity+json',
         },
       }).then(res => res.json());
 
-      this.members = await Promise.all(this.followingCollection.items.map(async (item: string) => {
+      const followersCollection: AP.Collection = await fetch(this.groupActor.followers, {
+        headers: {
+          'Accept': 'application/activity+json',
+        },
+      }).then(res => res.json());
+
+      this.members = await Promise.all(followingCollection.items.map(async (item: string) => {
+        return await fetch(item, {
+          headers: {
+            'Accept': 'application/activity+json',
+          },
+        }).then(res => res.json());
+      }));
+
+      this.requests = await Promise.all(followersCollection.items.filter((item: string) => {
+        return !followingCollection.includes(item);
+      }).map(async (item: string) => {
         return await fetch(item, {
           headers: {
             'Accept': 'application/activity+json',
@@ -79,7 +96,8 @@ export class HomePage extends LitElement {
           Edit Group Details
         </h2>
         <group-details
-          group-id=${this.groupId}
+          outbox-url=${this.groupActor.outbox}
+          group-actor-id=${this.groupActor.id}
           name=${this.groupActor.name}
           summary=${this.groupActor.summary}>
         </group-details>
@@ -91,6 +109,18 @@ export class HomePage extends LitElement {
           Manage Members
         </h2>
         <members-list members=${JSON.stringify(this.members)}></members-list>
+      </section>
+      <section
+        role="region"
+        aria-labelledby="manage-members-heading">
+        <h2 id="manage-members-heading">
+          Requests
+        </h2>
+        <member-requests
+          outbox-url=${this.groupActor.outbox}
+          group-actor-id=${this.groupActor.id}
+          requests=${JSON.stringify(this.requests)}>
+        </member-requests>
       </section>
     `;
   }

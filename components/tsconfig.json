@@ -20,6 +20,8 @@
       "signup-form.ts",
       "login-form.ts",
       "members-list.ts",
+      "login-page.ts",
+      "member-requests.ts",
       "group-details.ts"
     ]
   }
