@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "ts-node ./src/index.ts",
     "format": "prettier --config .prettierrc \"**/*.ts\" --write",
-    "serve": "ts-node ./src/index.ts",
+    "build": "tsc",
+    "serve": "node ./lib/index.js",
     "watch": "parcel --dist-dir=static"
   },
   "targets": {

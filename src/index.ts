@@ -1,6 +1,6 @@
 import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 dotenv.config()
-import express from 'express';
+import * as express from 'express';
 import { activityPub } from 'activitypub-core-server-express';
 import { MongoClient } from 'mongodb';
 import { MongoDbAdapter } from 'activitypub-core-db-mongo';
@@ -14,7 +14,7 @@ import { LOCAL_DOMAIN } from 'activitypub-core-utilities';
 import * as nunjucks from 'nunjucks';
 import { AP } from 'activitypub-core-types';
 
-const app = express();
+const app = express.default();
 app.use(express.static('static/'));
 
 nunjucks.configure('views', {
