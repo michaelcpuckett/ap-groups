@@ -1,6 +1,7 @@
 import {LitElement, html, css, nothing} from 'lit';
 import {customElement, property, query} from 'lit/decorators';
 import { baseCss } from './base-css';
+import { AP } from 'activitypub-core-types';
 
 @customElement('group-details')
 export class GroupDetails extends LitElement {
@@ -37,8 +38,8 @@ export class GroupDetails extends LitElement {
   @property({type: String})
   private summary?: string;
 
-  @property({type: String})
-  private image?: string;
+  @property({type: Object})
+  private image?: AP.Image;
 
   private handleSubmit(event: SubmitEvent) {
     event.preventDefault();
@@ -85,8 +86,14 @@ export class GroupDetails extends LitElement {
       },
       body: new FormData(this.uploadFormElement),
     })
-    .then((res) => {
+    .then(async (res) => {
       if (res.headers.has('Location')) {
+        const activity = await fetch(res.headers.get('Location'), {
+          headers: {
+            'Accept': 'application/activity+json',
+          },
+        }).then(res => res.json());
+
         fetch(this.outboxUrl, {
           method: 'POST',
           headers: {
@@ -98,7 +105,7 @@ export class GroupDetails extends LitElement {
             actor: this.groupActorId,
             object: {
               id: this.groupActorId,
-              image: res.headers.get('Location'),
+              image: activity.object,
             },
           }),
         })
@@ -119,7 +126,7 @@ export class GroupDetails extends LitElement {
 
   render() {
     return html`
-      ${this.image ? html`<img src=${this.image} />` : html`<p>No avatar set.</p>`}
+      ${this.image ? html`<img src=${this.image.url} />` : html`<p>No avatar set.</p>`}
 
       <form name="upload" @submit=${this.handleAvatarUpload}>
         <input type="file" name="file" />
