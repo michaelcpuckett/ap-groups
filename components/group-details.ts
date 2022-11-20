@@ -19,8 +19,14 @@ export class GroupDetails extends LitElement {
   @query('textarea[name="summary"]')
   summaryTextareaElement: HTMLTextAreaElement|null;
 
+  @query('form[name="upload"]')
+  uploadFormElement: HTMLFormElement|null;
+
   @property({type: String, attribute: 'outbox-url'})
   private outboxUrl?: string;
+
+  @property({type: String, attribute: 'upload-media-url'})
+  private uploadMediaUrl?: string;
 
   @property({type: String, attribute: 'group-actor-id'})
   private groupActorId?: string;
@@ -31,10 +37,13 @@ export class GroupDetails extends LitElement {
   @property({type: String})
   private summary?: string;
 
+  @property({type: String})
+  private image?: string;
+
   private handleSubmit(event: SubmitEvent) {
     event.preventDefault();
     
-    if (!this.nameInputElement || !this.summaryTextareaElement) {
+    if (!this.nameInputElement || !this.summaryTextareaElement || !this.uploadFormElement) {
       return;
     }
 
@@ -66,8 +75,62 @@ export class GroupDetails extends LitElement {
     });
   }
 
+  private handleAvatarUpload(event: SubmitEvent) {
+    event.preventDefault();
+
+    fetch(this.uploadMediaUrl, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/activity+json',
+      },
+      body: new FormData(this.uploadFormElement),
+    })
+    .then((res) => {
+      if (res.headers.has('Location')) {
+        fetch(this.outboxUrl, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/activity+json',
+          },
+          body: JSON.stringify({
+            '@context': 'https://www.w3.org/ns/activitystreams',
+            type: 'Update',
+            actor: this.groupActorId,
+            object: {
+              id: this.groupActorId,
+              image: res.headers.get('Location'),
+            },
+          }),
+        })
+        .then((res) => {
+          if (res.headers.has('Location')) {
+            window.location.reload();
+          }
+        }).catch((error: unknown) => {
+          console.log('error', error);
+        });
+      } else {
+        throw new Error('Bad response.');
+      }
+    }).catch((error: unknown) => {
+      console.log('error', error);
+    });    
+  }
+
   render() {
     return html`
+      ${this.image ? html`<img src=${this.image} />` : html`<p>No avatar set.</p>`}
+
+      <form name="upload" @submit=${this.handleAvatarUpload}>
+        <input type="file" name="file" />
+        <input type="hidden" name="object" value=${JSON.stringify({
+          "type": "Image",
+        })} />
+        <button class="button" type="submit">
+          Upload
+        </button>
+      </form>
+
       <form
         @submit=${this.handleSubmit}
         novalidate>
