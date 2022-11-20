@@ -36,7 +36,7 @@ export const baseCss = css`
   }
 
   .button {
-    background-color: purple;
+    background-color: LinkText;
     color: white;
     border: 1px solid;
     border-radius: 8px;

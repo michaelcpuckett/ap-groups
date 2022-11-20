@@ -19,6 +19,11 @@ body {
   margin: 0;
   display: grid;
   gap: 24px;
+  background-color: #010145;
+}
+
+a {
+  color: lightpink;
 }
 
 h1,
