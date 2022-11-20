@@ -20,6 +20,7 @@ body {
   display: grid;
   gap: 24px;
   background-color: #010145;
+  color: white;
 }
 
 a {

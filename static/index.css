@@ -21,7 +21,7 @@
     padding: .5em 1em;
     border: 1px solid black;
     display: inline-block;
-    background: LinkText;
-    color: CanvasText;
+    background: white;
+    color: #010145;
     border-radius: .25em;
   }
