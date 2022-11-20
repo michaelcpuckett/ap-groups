@@ -2,3 +2,4 @@ node_modules
 .parcel-cache
 lib
 static/*.js
+static/*.map

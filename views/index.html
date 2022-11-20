@@ -1,6 +1,67 @@
 <!doctype html>
 <html>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="base.css" />
+  <link rel="stylesheet" href="index.css" />
   <body>
-    <h1>Welcome</h1>
+    <div>
+    <header role="banner">
+      <h1>
+        ActivityPub Groups
+      </h1>
+    </header>
+    <nav role="navigation">
+      <p>
+        <a href="/home" class="cta">
+          Create a Group
+        </a>
+      </p>
+    </nav>
+    <section role="section" aria-labelledby="about-heading">
+      <h2 id="about-heading">How does this work?</h2>
+      <p>
+        This is an <a target="_blank" href="https://activitypub.rocks">ActivityPub</a> server that can interact with <a target="_blank" href="https://joinmastodon.org">Mastodon</a>.
+      </p>
+      <p>
+        All accounts created here are Group accounts.
+      </p>
+      <p>
+        Anyone that follows the account will be a group member.
+      </p>
+      <p>
+        Any post addressed to the group by a group member will be boosted
+        automatically by the group account, for all group members to see.
+      </p>
+      <p>
+        Everything is public and shows up in the timeline.
+      </p>
+      <p>
+        Group accounts cannot post anything from here currently.
+      </p>
+      <p>
+        This server is where you login and manage your group.
+      </p>
+      <p>
+        This is a bare-bones work-in-progress solution. Currently there is no way to change
+        ownership, or even directly post to the group.
+      </p>
+    </section>
+    <footer role="contentinfo">
+      <ul>
+        <li>
+          v0.0.1 &copy; <a target="_blank" href="https://michaelpuckett.engineer">Michael Puckett</a>
+        </li>
+        <li>
+          Fork this project on
+          <a target="_blank" href="https://github.com/michaelcpuckett/ap-groups">
+            Github
+          </a>
+        </li>
+        <li>
+          (This is not a fork of Mastodon and is not affiliated with Mastodon.)
+        </li>
+      </ul>
+    </footer>
+  </div>
   </body>
 </html>

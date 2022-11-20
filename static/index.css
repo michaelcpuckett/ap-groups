@@ -1,0 +1,23 @@
+  body {
+    padding: 24px;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .cta {
+    font-size: 1.75em;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 24px 48px;
+    border: 1px solid black;
+    display: inline-block;
+    background: LinkText;
+    color: CanvasText;
+    border-radius: .25em;
+  }
