@@ -32,19 +32,17 @@ export class MembersList extends LitElement {
     }
 
     return html`
-      <div role="table">
-        ${repeat(this.members, (member: AP.Actor) => {
+      <ul>
+        ${repeat(this.members, (memberer: AP.Actor) => {
           return html`
-            <div role="row">
-              <div role="cell">
-                <a href=${member.id}>
-                  ${member.preferredUsername}
-                </a>
-              </div>
-            </div>
+            <li>
+              <a href=${memberer.id}>
+                ${memberer.preferredUsername}
+              </a>
+            </li>
           `;
         })}
-      </div>
+      </ul>
     `;
   }
 }
