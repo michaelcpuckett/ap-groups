@@ -61,6 +61,10 @@ const renderEntityPage = async ({ entity, actor }: { entity: AP.Entity, actor?: 
   return nunjucks.render('entity.html', { entity, actor });
 };
 
+const renderDirectoryPage = async ({ groups }: { groups: AP.Group[] }): Promise<string> => {
+  return nunjucks.render('directory.html', { groups });
+};
+
 (async () => {
   const mongoClient = new MongoClient(process.env.AP_MONGO_CLIENT_URL ?? 'mongodb://localhost:27017');
   await mongoClient.connect();
@@ -82,6 +86,7 @@ const renderEntityPage = async ({ entity, actor }: { entity: AP.Entity, actor?: 
         login: renderLoginPage,
         home: renderHomePage,
         entity: renderEntityPage,
+        directory: renderDirectoryPage,
       },
 
       adapters: {
