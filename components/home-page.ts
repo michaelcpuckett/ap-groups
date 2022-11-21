@@ -54,6 +54,11 @@ export class HomePage extends LitElement {
     });
   }
 
+  private logOut() {
+    window.document.cookie = '';
+    window.location.reload();
+  }
+
   render() {
     if (!this.groupId) {
       return html`
@@ -68,6 +73,9 @@ export class HomePage extends LitElement {
     }
 
     return html`
+      <button type="button" class="button" @click=${this.logOut}>
+        Log Out
+      </button>
       <h1>Manage Group</h1>
       <section
         role="region"
