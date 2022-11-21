@@ -68,7 +68,7 @@ export class SignupForm extends LitElement {
         'Accept': 'application/activity+json',
       },
       body: JSON.stringify({
-        type: AP.ActorTypes.PERSON, // GROUP, but Mastodon won't recognize it?
+        type: AP.ActorTypes.GROUP,
         email,
         password,
         preferredUsername: username,
