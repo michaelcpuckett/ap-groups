@@ -15,8 +15,33 @@ export class MembersList extends LitElement {
     }
   `];
 
+  @property({type: String, attribute: 'outbox-url'})
+  private outboxUrl?: string;
+
+  @property({type: String, attribute: 'group-actor-id'})
+  private groupActorId?: string;
+
   @property({type: Object})
   private members?: AP.Actor[];
+
+  private block(memberId: string) {
+    fetch(this.outboxUrl, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/activity+json',
+      },
+      body: JSON.stringify({
+        '@context': 'https://www.w3.org/ns/activitystreams',
+        type: 'Block',
+        actor: this.groupActorId,
+        object: memberId,
+      }),
+    }).then(res => {
+      if (res.headers.has('Location')) {
+        window.location.reload();
+      }
+    });
+  }
 
   render() {
     if (!this.members) {
@@ -33,12 +58,18 @@ export class MembersList extends LitElement {
 
     return html`
       <ul>
-        ${repeat(this.members, (memberer: AP.Actor) => {
+        ${repeat(this.members, (member: AP.Actor) => {
           return html`
             <li>
-              <a href=${memberer.id}>
-                ${memberer.preferredUsername}
+              <a href=${member.id}>
+                ${member.preferredUsername}
               </a>
+              <button
+                @click=${() => this.block(member.id)}
+                type="button"
+                class="button">
+                Block
+              </button>
             </li>
           `;
         })}
