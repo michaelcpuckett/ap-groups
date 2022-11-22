@@ -55,7 +55,7 @@ export class HomePage extends LitElement {
   }
 
   private logOut() {
-    window.document.cookie = '';
+    document.cookie = '__session=; Max-Age=0; path=/; domain=' + location.hostname;
     window.location.reload();
   }
 
