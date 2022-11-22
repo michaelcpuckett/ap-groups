@@ -27,6 +27,9 @@ export class GroupEntity extends LitElement {
   @property({type: String, attribute: 'entity-feed-id'})
   private entityFeedId?: string;
 
+  @property({type: Object, attribute: 'entity-icon'})
+  private entityIcon?: AP.Image;
+
   @state()
   private feed: AP.ExtendedObject[] = [];
 
@@ -45,6 +48,14 @@ export class GroupEntity extends LitElement {
     return html`
       <h1>${this.entityName}</h1>
       <p>@${this.entityPreferredUsername}@chirp.social [Group]</h1>
+      ${this.entityIcon ?
+        html`
+          <img height="100" width="1005" src=${this.entityIcon.url} />
+        ` :
+        html`
+          <p>No avatar set.</p>
+        `
+      }
       ${this.entitySummary ? html`
         <p>${this.entitySummary}</p>
       ` : nothing}
