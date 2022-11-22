@@ -23,6 +23,10 @@ body {
   color: white;
 }
 
+img {
+  max-width: 100%;
+}
+
 a {
   color: lightpink;
 }
