@@ -47,7 +47,15 @@ export class HomePage extends LitElement {
   }
 
   private logOut() {
-    document.cookie = '__session=; Max-Age=0; path=/; domain=' + location.hostname;
+    const cookies = window.document.cookie.split(";");
+    
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i];
+      const eqPos = cookie.indexOf('=');
+      const name = eqPos > -1 ? cookie.slice(0, eqPos) : cookie;
+      window.document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+
     window.location.reload();
   }
 
