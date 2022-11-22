@@ -9,6 +9,10 @@ export const baseCss = css`
     max-width: 100%;
   }
 
+  a {
+    color: lightpink;
+  }
+
   button {
     appearance: none;
     padding: 0;
