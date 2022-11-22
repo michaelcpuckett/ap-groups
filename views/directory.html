@@ -3,6 +3,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="base.css" />
   <body>
-    <textarea>{{groups | dump}}</textarea>
+    <ul>
+      {% for group in groups %}
+        <li>
+          <a href="{{ group.url }}">
+            @{{ group.preferredUsername }}@chirp.social
+          </a>
+          <p>
+            {{ group.name }}
+          </p>
+          <p>
+            {{ group.summary }}
+          </p>
+        </li>
+      {% endfor %}
+    </ul>
   </body>
 </html>
