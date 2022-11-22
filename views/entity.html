@@ -1,9 +1,9 @@
 <!doctype html>
 <html>
   <body>
-    {% if entity.outbox %}
+    {% if entity.streams.shared %}
       <script type="module">
-        fetch('{{ entity.outbox }}', {
+        fetch('{{ entity.streams.shared }}', {
           headers: {
             'Accept': 'application/activity+json',
           },
