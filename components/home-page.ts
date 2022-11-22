@@ -24,6 +24,9 @@ export class HomePage extends LitElement {
   @property({type: Object})
   private members?: AP.Actor[];
 
+  @property({type: Object})
+  private blocked?: AP.Actor[];
+
   firstUpdated() {
     if (!this.groupId) {
       return;
@@ -38,11 +41,27 @@ export class HomePage extends LitElement {
     .then(async (actor: AP.Actor) => {
       this.groupActor = actor;
 
+      this.blocked = await fetch(this.groupActor.streams.find((id: string) => id.endsWith('blocked')), {
+        headers: {
+          'Accept': 'application/activity+json',
+        },
+      })
+      .then(res => res.json())
+      .then(collection => collection.items)
+      
+      const blockedIds = this.blocked.map((item: AP.Actor) => {
+        return item.id;
+      });
+
       this.members = await fetch(this.groupActor.followers, {
         headers: {
           'Accept': 'application/activity+json',
         },
-      }).then(res => res.json()).then(collection => collection.items);
+      }).then(res => res.json()).then(collection => collection.items.filter(({
+        id
+      }) => {
+        return !blockedIds.includes(id);
+      }));
     });
   }
 
@@ -102,6 +121,18 @@ export class HomePage extends LitElement {
           outbox-url=${this.groupActor.outbox}
           group-actor-id=${this.groupActor.id}
           members=${JSON.stringify(this.members)}>
+        </members-list>
+      </section>
+      <section
+        role="region"
+        aria-labelledby="manage-members-heading">
+        <h2 id="manage-members-heading">
+          Blocked
+        </h2>
+        <members-list
+          outbox-url=${this.groupActor.outbox}
+          group-actor-id=${this.groupActor.id}
+          members=${JSON.stringify(this.blocked)}>
         </members-list>
       </section>
     `;
