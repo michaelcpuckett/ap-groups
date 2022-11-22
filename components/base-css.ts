@@ -5,6 +5,10 @@ export const baseCss = css`
     box-sizing: border-box;
   }
 
+  img {
+    max-width: 100%;
+  }
+
   button {
     appearance: none;
     padding: 0;
