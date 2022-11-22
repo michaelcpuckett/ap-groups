@@ -50,7 +50,7 @@ export class GroupEntity extends LitElement {
       <p>@${this.entityPreferredUsername}@chirp.social [Group]</h1>
       ${this.entityIcon ?
         html`
-          <img height="100" width="1005" src=${this.entityIcon.url} />
+          <img height="100" width="100" src=${this.entityIcon.url} />
         ` :
         html`
           <p>No avatar set.</p>
