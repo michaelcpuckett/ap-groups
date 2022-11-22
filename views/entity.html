@@ -1,20 +1,17 @@
 <!doctype html>
 <html>
   <body>
-    {% if entity.streams %}
-      {% for stream in streams %}
-        {% if stream === entity.url + '/shared' %}
-          <script type="module">
-            fetch('{{ stream }}', {
-              headers: {
-                'Accept': 'application/activity+json',
-              },
-            }).then(res => res.json()).then(data => {
-              console.log(data);
-            })
-          </script>
+    {% for type in entity.type %}
+      {% if type === 'Group' %}
+        <h1>@{{ entity.preferredUsername }}</h1>
+        {% if entity.streams %}
+          {% for stream in entity.streams %}
+            {% if stream === (entity.url + '/shared') %}
+              <collection-list collection-id="{{stream}}"></collection-list>
+            {% endif %}
+          {% endfor %}
         {% endif %}
-      {% endfor %}
-    {% endif %}
+      {% endif %}
+    {% endfor %}
   </body>
 </html>
