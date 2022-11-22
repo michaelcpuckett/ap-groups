@@ -13,6 +13,18 @@ export class GroupEntity extends LitElement {
       border: 1px solid;
       border-radius: 4px;
     }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      padding: 1em;
+      border: 1px solid;
+      border-radius: 4px;
+    }
   `];
 
   @property({type: String, attribute: 'entity-name'})
@@ -46,15 +58,19 @@ export class GroupEntity extends LitElement {
 
   render() {
     return html`
-      <h1>${this.entityName}</h1>
-      <p>@${this.entityPreferredUsername}@chirp.social [Group]</h1>
+      <h1>
+        ${this.entityName}
+      </h1>
+      <p>
+        @${this.entityPreferredUsername}@chirp.social [Group]
+      </p>
       ${this.entityIcon ?
         html`
-          <img height="100" width="100" src=${this.entityIcon.url} />
+          <p>
+            <img height="100" width="100" src=${this.entityIcon.url} />
+          </p>
         ` :
-        html`
-          <p>No avatar set.</p>
-        `
+        nothing
       }
       ${this.entitySummary ? html`
         <p>${this.entitySummary}</p>
