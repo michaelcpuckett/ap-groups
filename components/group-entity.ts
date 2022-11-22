@@ -15,8 +15,14 @@ export class GroupEntity extends LitElement {
     }
   `];
 
+  @property({type: String, attribute: 'entity-name'})
+  private entityName?: string;
+
   @property({type: String, attribute: 'entity-preferred-username'})
   private entityPreferredUsername?: string;
+
+  @property({type: String, attribute: 'entity-summary'})
+  private entitySummary?: string;
 
   @property({type: String, attribute: 'entity-feed-id'})
   private entityFeedId?: string;
@@ -37,7 +43,12 @@ export class GroupEntity extends LitElement {
 
   render() {
     return html`
-      <h1>@${this.entityPreferredUsername}</h1>
+      <h1>${this.entityName}</h1>
+      <p>@${this.entityPreferredUsername}@chirp.social [Group]</h1>
+      ${this.entitySummary ? html`
+        <p>${this.entitySummary}</p>
+      ` : nothing}
+      <h2>Boosted Posts</h2>
       <ul>
         ${repeat(this.feed, (item: AP.ExtendedObject) => {
           const attachments = item.attachment ? Array.isArray(item.attachment) ? item.attachment : [item.attachment] : [];
