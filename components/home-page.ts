@@ -38,19 +38,11 @@ export class HomePage extends LitElement {
     .then(async (actor: AP.Actor) => {
       this.groupActor = actor;
 
-      const followersCollection: AP.Collection = await fetch(this.groupActor.followers, {
+      this.members = await fetch(this.groupActor.followers, {
         headers: {
           'Accept': 'application/activity+json',
         },
-      }).then(res => res.json());
-
-      this.members = await Promise.all(followersCollection.items.map(async (item: string) => {
-        return await fetch(item, {
-          headers: {
-            'Accept': 'application/activity+json',
-          },
-        }).then(res => res.json());
-      }));
+      }).then(res => res.json()).then(collection => collection.items);
     });
   }
 
