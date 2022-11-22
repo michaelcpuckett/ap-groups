@@ -40,9 +40,17 @@ export class GroupEntity extends LitElement {
       <h1>@${this.entityPreferredUsername}</h1>
       <ul>
         ${repeat(this.feed, (item: AP.ExtendedObject) => {
+          const attachments = item.attachment ? Array.isArray(item.attachment) ? item.attachment : [item.attachment] : [];
+
           return html`
             <li>
-              <p>${item.content}</p>
+              ${attachments.length ? repeat(attachments, (attachment: AP.ExtendedObject) => {
+                return html`
+                  <img src=${attachment.url} />
+                `;
+              }) : html`
+                <p>${item.content}</p>
+              `}
               <p>— @${item.attributedTo}</p>
             </li>
           `;
