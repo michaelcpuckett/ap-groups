@@ -20,7 +20,7 @@ body {
   display: grid;
   grid-template-columns: 100%;
   gap: 24px;
-  background-color: #010145;
+  background-color: #2f2f2f;
   color: white;
 }
 
