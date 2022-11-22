@@ -14,7 +14,8 @@
     "default": {
       "source": [
         "./pages/login.ts",
-        "./pages/home.ts"
+        "./pages/home.ts",
+        "./pages/group-entity.ts"
       ]
     }
   },

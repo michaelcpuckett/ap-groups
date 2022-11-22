@@ -22,6 +22,7 @@
       "members-list.ts",
       "login-page.ts",
       "member-requests.ts",
-      "group-details.ts"
+      "group-details.ts",
+      "group-entity.ts"
     ]
   }

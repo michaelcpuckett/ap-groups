@@ -18,6 +18,7 @@
     ],
     "include": [
       "login.ts",
-      "home.ts"
+      "home.ts",
+      "group-entity.ts"
     ]
   }

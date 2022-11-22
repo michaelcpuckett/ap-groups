@@ -1,0 +1,1 @@
+export { GroupEntity } from '../components/group-entity';

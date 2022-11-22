@@ -3,11 +3,19 @@
   <body>
     {% for type in entity.type %}
       {% if type === 'Group' %}
-        <h1>@{{ entity.preferredUsername }}</h1>
         {% if entity.streams %}
           {% for stream in entity.streams %}
             {% if stream === (entity.url + '/shared') %}
-              <collection-list collection-id="{{stream}}"></collection-list>
+              <group-entity
+                entity-type="Group"
+                entity-id="{{ entity.id }}"
+                entity-preferred-username="{{ entity.preferredUsername }}"
+                entity-name="{{ entity.name }}"
+                entity-summary="{{ entity.summary }}"
+                entity-icon="{{ entity.icon | dump }}"
+                entity-feed-id="{{ stream }}">
+              </group-entity>
+              <script type="module" src="group-entity.js"></script>
             {% endif %}
           {% endfor %}
         {% endif %}
