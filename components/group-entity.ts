@@ -73,7 +73,12 @@ export class GroupEntity extends LitElement {
               }) : html`
                 <p>${item.content}</p>
               `}
-              <p>— @${item.attributedTo}</p>
+              <p>
+                By
+                <a href=${item.attributedTo}>
+                  ${item.attributedTo}
+                </a>
+              </p>
             </li>
           `;
         })}
