@@ -18,6 +18,7 @@ body {
   font-family: system-ui, -apple-system, sans-serif;
   margin: 0;
   display: grid;
+  grid-template-columns: 100%;
   gap: 24px;
   background-color: #010145;
   color: white;
