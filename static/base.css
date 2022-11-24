@@ -45,6 +45,7 @@ body {
   color: var(--text-on-medium-background-color);
   font-size: 20x;
   line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
 }
 
 h2 {
