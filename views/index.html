@@ -8,92 +8,94 @@
 </head>
 
 <body>
-  <header role="banner">
-    <h1>
-      chirp.social is a place for groups
-    </h1>
-  </header>
-  <div class="container">
-    <section role="section" aria-labelledby="about-heading">
-      <h2 id="about-heading">
-        What is this?
-      </h2>
-      <p>
-        This is an <a target="_blank" href="https://activitypub.rocks">ActivityPub</a> server that can interact with <a
-          target="_blank" href="https://joinmastodon.org">Mastodon</a>.
-      </p>
-      <p>
-        Any post addressed to the group by a follower will be boosted
-        automatically by the group account, for all followers to see.
-      </p>
-      <figure>
-        <code>@group@chirp.social hello friends!</code>
-      </figure>
-      <details>
-        <summary class="button button--cta">
-          How does this work?
-        </summary>
-        <div>
-          <p>
-            All accounts created here are Group accounts.
-          </p>
-          <p>
-            Anyone that follows the account will be a group member.
-          </p>
-          <p>
-            Everything is public and shows up in the timeline.
-          </p>
-          <p>
-            Group accounts cannot post anything from here currently.
-          </p>
-          <p>
-            This server is where you login and manage your group.
-          </p>
-          <p>
-            This is a bare-bones work-in-progress solution. Currently there is no way to change
-            ownership, moderatation is limited, etc.
-          </p>
-        </div>
-      </details>
-    </section>
-    <nav role="navigation">
-      <p>
-        <a href="/directory" class="button button--cta">
-          Group Directory
-        </a>
-      </p>
-    </nav>
-    <div class="form-container">
-      <section role="region" aria-labelledby="signup-heading">
-        <h2 id="signup-heading">
-          Sign Up for a Group
+  <div class="root">
+    <header role="banner">
+      <h1>
+        chirp.social is a place for groups
+      </h1>
+    </header>
+    <div class="container">
+      <section role="section" aria-labelledby="about-heading">
+        <h2 id="about-heading">
+          What is this?
         </h2>
-        <signup-form></signup-form>
+        <p>
+          This is an <a target="_blank" href="https://activitypub.rocks">ActivityPub</a> server that can interact with
+          <a target="_blank" href="https://joinmastodon.org">Mastodon</a>.
+        </p>
+        <p>
+          Any post addressed to the group by a follower will be boosted
+          automatically by the group account, for all followers to see.
+        </p>
+        <figure>
+          <code>@group@chirp.social hello friends!</code>
+        </figure>
+        <details>
+          <summary class="button button--cta">
+            How does this work?
+          </summary>
+          <div>
+            <p>
+              All accounts created here are Group accounts.
+            </p>
+            <p>
+              Anyone that follows the account will be a group member.
+            </p>
+            <p>
+              Everything is public and shows up in the timeline.
+            </p>
+            <p>
+              Group accounts cannot post anything from here currently.
+            </p>
+            <p>
+              This server is where you login and manage your group.
+            </p>
+            <p>
+              This is a bare-bones work-in-progress solution. Currently there is no way to change
+              ownership, moderatation is limited, etc.
+            </p>
+          </div>
+        </details>
       </section>
-      <section role="region" aria-labelledby="login-heading">
-        <h2 id="login-heading">
-          Log In to Manage Your Group
-        </h2>
-        <login-form></login-form>
-      </section>
+      <div class="right-rail">
+        <nav role="navigation">
+          <p>
+            <a href="/directory" class="button button--cta">
+              Group Directory
+            </a>
+          </p>
+        </nav>
+        <section role="region" aria-labelledby="signup-heading">
+          <h2 id="signup-heading">
+            Sign Up for a Group
+          </h2>
+          <signup-form></signup-form>
+        </section>
+        <section role="region" aria-labelledby="login-heading">
+          <h2 id="login-heading">
+            Log In to Manage Your Group
+          </h2>
+          <login-form></login-form>
+        </section>
+      </div>
     </div>
+    <footer role="contentinfo">
+      <ul>
+        <li>
+          v0.0.1 &copy; <a target="_blank" href="https://github.com/michaelcpuckett">Michael Puckett</a>
+        </li>
+        <li>
+          Fork this project on
+          <a target="_blank" href="https://github.com/michaelcpuckett/ap-groups">
+            Github
+          </a>
+        </li>
+        <li>
+          (This is not a fork of Mastodon and is not affiliated with Mastodon.)
+        </li>
+      </ul>
+    </footer>
   </div>
-  <footer role="contentinfo">
-    <ul>
-      <li>
-        v0.0.1 &copy; <a target="_blank" href="https://github.com/michaelcpuckett">Michael Puckett</a>
-      </li>
-      <li>
-        Fork this project on
-        <a target="_blank" href="https://github.com/michaelcpuckett/ap-groups">
-          Github
-        </a>
-      </li>
-      <li>
-        (This is not a fork of Mastodon and is not affiliated with Mastodon.)
-      </li>
-    </ul>
-  </footer>
   <script type="module" src="login.js"></script>
 </body>
 

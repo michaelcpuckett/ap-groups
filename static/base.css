@@ -52,6 +52,7 @@ button {
   min-width: 48px;
   place-items: center;
   place-content: center;
+  width: max-content;
 }
 
 .button {
@@ -66,4 +67,5 @@ button {
 
 .button--cta {
   font-size: 1.5em;
+  padding: 12px 16px;
 }
