@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node ./src/index.ts",
     "format": "prettier --config .prettierrc \"**/*.ts\" --write",
-    "build": "parcel build --dist-dir=static && tsc",
+    "build": "parcel build --dist-dir=static && tsc --project src/tsconfig.json",
     "serve": "node ./lib/index.js",
     "watch": "parcel --dist-dir=static"
   },
