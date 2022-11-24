@@ -45,6 +45,7 @@ footer {
 .root {
   display: grid;
   grid-template-columns: 3fr 1fr;
+  grid-template-rows: max-content max-content;
   padding: 24px;
   gap: 24px;
 }
@@ -52,4 +53,8 @@ footer {
 .right-rail {
   grid-column: 2 / 3;
   grid-row: 2 / 3;
+}
+
+.container p {
+  font-size: 1.125em;
 }
