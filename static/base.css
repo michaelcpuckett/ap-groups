@@ -4,11 +4,15 @@
 
 :root {
   color-scheme: dark light;
-  --background-color: #2f2f2f;
-  --text-on-background-color: white;
-  --primary-color: #49d336;
-  --text-on-primary-color: black;
+
+  --background-color: #221a1b;
+  --text-on-background-color: #f3dede;
+
+  --primary-color: #208b0d;
+  --text-on-primary-color: #221a1b;
+
   --link-color: lightpink;
+
   --error-color: red;
 }
 
