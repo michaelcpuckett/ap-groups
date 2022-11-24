@@ -44,7 +44,7 @@ export const baseCss = css`
     font-size: .875em;
     font-weight: normal;
   }
-l
+
   .button {
     background-color: var(--accent-color);
     color: var(--text-on-accent-color);
