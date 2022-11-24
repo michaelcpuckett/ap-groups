@@ -10,9 +10,10 @@ ul {
   flex-direction: column;
 }
 
-.form-container {
+.root {
   display: grid;
-  max-width: max(480px, calc((1 / 3) * 100vw));
+  padding: 24px;
+  gap: 24px;
 }
 
 figure code {
@@ -27,32 +28,31 @@ footer {
   font-size: 1.25em;
 }
 
-header {
-  grid-column: 1 / 2;
-  grid-row: 1 / 2;
-}
+@media (min-width: 600px) {
+  header {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+  }
 
-footer {
-  grid-column: 2 / 3;
-  grid-row: 1 / 2;
-}
+  footer {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+  }
 
-.container {
-  grid-column: 1 / 2;
-  grid-row: 2 / 3;
-}
+  .container {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+  }
 
-.root {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  grid-template-rows: max-content max-content;
-  padding: 24px;
-  gap: 24px;
-}
+  .right-rail {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+  }
 
-.right-rail {
-  grid-column: 2 / 3;
-  grid-row: 2 / 3;
+  .root {
+    grid-template-columns: 3fr 1fr;
+    grid-template-rows: max-content max-content;
+  }
 }
 
 .container p {
