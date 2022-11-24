@@ -15,26 +15,6 @@ export class SignupForm extends LitElement {
       border: 1px solid;
       border-radius: 4px;
     }
-
-    label:has(input[name="username"]) {
-      position: relative;
-    }
-
-    label:has(input[name="username"]) input[name="username"] {
-      width: calc(100% - 3ch);
-      margin-left: 3ch;
-    }
-
-    label:has(input[name="username"]):after {
-      content: '@';
-      position: absolute;
-      line-height: 1;
-      top: 1.6em;
-      left: 0;
-      color: black;
-      font-size: 1.5em;
-      color: var(--medium-background-color);
-    }
   `];
 
   @query('input[name="username"]')
