@@ -29,10 +29,10 @@ export class SignupForm extends LitElement {
       content: '@';
       position: absolute;
       line-height: 1;
-      top: 1em;
+      top: 1.5em;
       left: 0;
       color: black;
-      font-size: 2em;
+      font-size: 1.5em;
       color: var(--medium-background-color);
     }
   `];
