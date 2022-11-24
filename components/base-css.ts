@@ -53,6 +53,7 @@ export const baseCss = css`
     font-size: 1.25em;
     padding: 4px 12px;
     font-weight: bold;
+    text-shadow: 0 2px 0 black;
   }
   
   .button--cta {

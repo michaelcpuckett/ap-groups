@@ -21,7 +21,7 @@
 
   --error-color: red;
 
-  --accent-color: #208b0d;
+  --accent-color: #ff36f0;
   --text-on-accent-color: #f6f6ef;
 }
 
@@ -84,6 +84,7 @@ button {
   padding: 4px 12px;
   font-weight: bold;
   text-decoration: none;
+  text-shadow: 0 2px 0 black;
 }
 
 .button--cta {
@@ -91,8 +92,6 @@ button {
   border-radius: 12px;
   margin: 24px;
   padding: 12px 16px;
-  background: var(--light-background-color);
-  color: var(--text-on-light-background-color);
   place-items: center;
   place-content: center;
   display: grid;

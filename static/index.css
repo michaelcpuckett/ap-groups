@@ -1,6 +1,7 @@
 h1 {
   text-align: center;
   color: var(--accent-color);
+  text-shadow: 0 3px 0 black;
 }
 
 @media (max-width: 1199px) {
