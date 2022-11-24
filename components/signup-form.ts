@@ -33,7 +33,7 @@ export class SignupForm extends LitElement {
       left: 0;
       color: black;
       font-size: 2em;
-      color: var(--accent-color);
+      color: var(--medium-background-color);
     }
   `];
 
