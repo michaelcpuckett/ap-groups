@@ -1,4 +1,4 @@
-import {css} from 'lit';
+import { css } from 'lit';
 
 export const baseCss = css`
   * {
@@ -44,8 +44,8 @@ export const baseCss = css`
   }
 
   .button {
-    background-color: LinkText;
-    color: white;
+    background-color: mediumspringgreen;
+    color: black;
     border: 1px solid;
     border-radius: 8px;
     padding: 4px 12px;
