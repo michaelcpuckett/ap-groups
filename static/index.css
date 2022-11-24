@@ -1,5 +1,5 @@
 h1 {
-  font-size: 1em;
+  font-size: 1.5em;
 }
 
 ul {
@@ -25,10 +25,18 @@ footer {
   padding: 24px;
   background: var(--primary-color);
   color: var(--text-on-primary-color);
-  font-size: 1.25em;
+}
+
+footer {
+  font-size: .75em;
 }
 
 @media (min-width: 600px) {
+  .root {
+    padding: 0px;
+    column-gap: 24px;
+  }
+
   header {
     grid-column: 1 / 2;
     grid-row: 1 / 2;
