@@ -29,7 +29,7 @@ export class SignupForm extends LitElement {
       content: '@';
       position: absolute;
       line-height: 1;
-      top: 1.5em;
+      top: 1.6em;
       left: 0;
       color: black;
       font-size: 1.5em;

@@ -93,6 +93,7 @@ footer {
   login-form {
     background-color: var(--light-background-color);
     color: var(--text-on-light-background-color);
+    border-radius: 24px;
   }
 
   .container section {
@@ -100,7 +101,6 @@ footer {
     border-radius: 24px;
     margin-bottom: 24px;
 
-    
     background-color: var(--primary-color);
     color: var(--text-on-primary-color);
   }
