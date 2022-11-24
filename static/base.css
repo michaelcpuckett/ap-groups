@@ -3,17 +3,26 @@
 }
 
 :root {
-  color-scheme: dark light;
+  color-scheme: dark only;
 
-  --background-color: #221a1b;
-  --text-on-background-color: #f3dede;
+  --dark-background-color: #222221;
+  --text-on-dark-background-color: #f3dede;
 
-  --primary-color: #208b0d;
-  --text-on-primary-color: #221a1b;
+  --medium-background-color:  #330a25;
+  --text-on-medium-background-color: #f6f6ef;
 
-  --link-color: lightpink;
+  --light-background-color: #f6f6ef;
+  --text-on-light-background-color: #222221;
+
+  --primary-color: #5f1b47;
+  --text-on-primary-color: #f6f6ef;
+
+  --link-color: #eca3e3;
 
   --error-color: red;
+
+  --accent-color: #208b0d;
+  --text-on-accent-color: #f6f6ef;
 }
 
 html {
@@ -22,16 +31,23 @@ html {
   flex-direction: column;
 }
 
+@font-face {
+  font-family: 'PT Mono';
+  src: url('PTMono-Regular.ttf');
+}
+
 body {
   flex: 1 0 auto;
   min-height: 100%;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'PT Mono', Courier, monospace;
   margin: 0;
   display: grid;
   grid-template-columns: 100%;
   gap: 24px;
-  background-color: var(--background-color);
-  color: var(--text-on-background-color);
+  background-color: var(--medium-background-color);
+  color: var(--text-on-medium-background-color);
+  font-size: 20x;
+  line-height: 1.5;
 }
 
 img {
@@ -72,10 +88,18 @@ button {
 .button--cta {
   font-size: 1.5em;
   border-radius: 12px;
+  margin: 24px;
   padding: 12px 16px;
-  background: var(--background-color);
-  color: var(--text-on-background-color);
+  background: var(--light-background-color);
+  color: var(--text-on-light-background-color);
   place-items: center;
   place-content: center;
   display: grid;
+  text-align: center;
+}
+
+@media (min-width: 1200px) {
+  .button-cta {
+    margin-bottom: 0;
+  }
 }

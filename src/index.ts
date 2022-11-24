@@ -12,9 +12,10 @@ import { ServerResponse, IncomingMessage } from 'http';
 import { LOCAL_DOMAIN } from 'activitypub-core-utilities';
 import * as nunjucks from 'nunjucks';
 import { AP } from 'activitypub-core-types';
+import * as path from 'path';
 
 const app = express.default();
-app.use(express.static('static/'));
+app.use(express.static(path.resolve(__dirname, '../static')));
 
 nunjucks.configure('views', {
   autoescape: true,
@@ -66,7 +67,7 @@ const renderDirectoryPage = async ({ groups }: { groups: AP.Group[] }): Promise<
 };
 
 (async () => {
-  const mongoClient = new MongoClient(process.env.AP_MONGO_CLIENT_URL ?? 'mongodb://localhost:27017');
+  const mongoClient = new MongoClient(process.env.AP_MONGO_CLIENT_URL ?? 'mongodb://127.0.0.1:27017');
   await mongoClient.connect();
   const mongoDb = mongoClient.db(process.env.AP_MONGO_DB_NAME ?? 'groups');
 

@@ -15,6 +15,26 @@ export class SignupForm extends LitElement {
       border: 1px solid;
       border-radius: 4px;
     }
+
+    label:has(input[name="username"]) {
+      position: relative;
+    }
+
+    label:has(input[name="username"]) input[name="username"] {
+      width: calc(100% - 35px);
+      margin-left: 35px;
+    }
+
+    label:has(input[name="username"]):after {
+      content: '@';
+      position: absolute;
+      line-height: 1;
+      top: 1em;
+      left: 0;
+      color: black;
+      font-size: 2em;
+      color: var(--accent-color);
+    }
   `];
 
   @query('input[name="username"]')
@@ -130,6 +150,7 @@ export class SignupForm extends LitElement {
             class="input"
             type="text"
             name="username"
+            placeholder="coolkids"
           />
           ${this.usernameError ? html`
             <span class="error-message">
@@ -149,7 +170,11 @@ export class SignupForm extends LitElement {
             class="input"
             type="email"
             name="email"
+            placeholder="something@domain.com"
           />
+          <span class="hint-text">
+            You won't have to verify, so this can be anything.
+          </span>
           ${this.emailError ? html`
             <span class="error-message">
               ${this.emailError}
@@ -169,6 +194,9 @@ export class SignupForm extends LitElement {
             type="password"
             name="password"
           />
+          <span class="hint-text">
+            At least 6 characters.
+          </span>
           ${this.passwordError ? html`
             <span class="error-message">
               ${this.passwordError}

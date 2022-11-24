@@ -40,14 +40,16 @@ export const baseCss = css`
   .input {
     padding: .5em;
     border: 1px solid;
-    border-radius: 4px;
+    border-radius: 8px;
+    font-size: .875em;
   }
 
   .button {
-    background-color: var(--primary-color);
-    color: var(--text-on-primary-color);
+    background-color: var(--accent-color);
+    color: var(--text-on-accent-color);
     border: 1px solid;
     border-radius: 8px;
+    font-size: 1.25em;
     padding: 4px 12px;
     font-weight: bold;
   }
@@ -59,17 +61,33 @@ export const baseCss = css`
   .label {
     display: flex;
     flex-direction: column;
+    letter-spacing: 1px;
+    font-size: 1.25em;
+    font-weight: bold;
+    padding-bottom: 12px;
+    border-bottom: 1px solid;
+    margin-bottom: 12px;
   }
 
-  .has-error .label-text {
-    color: var(--error-color);
+  .label-text {
+    display: block;
+    padding: 6px 0;
   }
 
   .has-error .input {
-    border-color: var(--error-color);
+    background-color: var(--error-color);
   }
 
   .error-message {
     color: var(--error-color);
+    font-size: .875em;
+    display: block;
+    padding: 6px;
+    font-weight: bold;
+  }
+
+  .hint-text {
+    padding: 6px;
+    font-size: 12px;
   }
 `;

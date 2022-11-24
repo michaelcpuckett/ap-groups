@@ -16,9 +16,10 @@
     </header>
     <div class="container">
       <h1>
-        chirp.social is a place for groups
+        chirp.social is the place for groups
       </h1>
-      <section role="section" aria-labelledby="about-heading">
+
+      <section role="region" aria-labelledby="about-heading">
         <h2 id="about-heading">
           What is this?
         </h2>
@@ -34,65 +35,70 @@
           <code>@group@chirp.social hello friends!</code>
         </figure>
       </section>
-      <section role="section" aria-labelledby="how-heading">
+
+      <section role="region" aria-labelledby="how-heading">
         <h2 id="how-heading">
           How does this work?
         </h2>
-        <div>
-          <p>
-            All accounts created here are Group accounts.
-          </p>
-          <p>
-            Anyone that follows the account will be a group member.
-          </p>
-          <p>
+        <ul>
+          <li>
+            Create an account. All accounts are Group accounts.
+          </li>
+          <li>
+            Anyone that follows the account can post to the group.
+          </li>
+          <li>
             Everything is public and shows up in the timeline.
-          </p>
-          <p>
+          </li>
+          <li>
             Group accounts cannot post anything from here currently.
-          </p>
-          <p>
+          </li>
+          <li>
             This server is where you login and manage your group.
-          </p>
-          <p>
-            Currently there is no way to change ownership, moderatation is limited, etc.
-            Please contribute ideas/code on
-            <a target="_blank" href="https://github.com/michaelcpuckett/ap-groups">
-              Github
-            </a>
-          </p>
-        </div>
+          </li>
+        </ul>
       </section>
-    </div>
-    <div class="right-rail">
-      <section role="region" aria-labelledby="signup-heading">
-        <h2 id="signup-heading">
-          Sign Up for a Group
+
+      <section role="region" aria-labelledby="who-heading">
+        <h2 id="who-heading">
+          Who made this?
         </h2>
-        <signup-form></signup-form>
-      </section>
-      <section role="region" aria-labelledby="login-heading">
-        <h2 id="login-heading">
-          Log In to Manage Your Group
-        </h2>
-        <login-form></login-form>
-      </section>
-    </div>
-    <footer role="contentinfo">
-      <ul>
-        <li>
-          v0.0.1 &copy; <a target="_blank" href="https://github.com/michaelcpuckett">Michael Puckett</a>
-        </li>
-        <li>
-          Fork this project on
+        <p>
+          This is primarily the work of a single developer, 
+          <a target="_blank" href="https://github.com/michaelcpuckett">
+            Michael Puckett
+          </a>
+        </p>
+        <p>
+          I'm using Firebase Authentication for sign-ups, so I can't see the passwords.
+        </p>
+        <p>
+          Currently there is no way to change ownership, moderatation is limited, etc.
+          Please contribute ideas/code on
           <a target="_blank" href="https://github.com/michaelcpuckett/ap-groups">
             Github
           </a>
-        </li>
-        <li>
-          (This is not a fork of Mastodon and is not affiliated with Mastodon.)
-        </li>
-      </ul>
+        </p>
+        <p>
+          I'm not a company, I just want to be able to have groups =)
+        </p>
+      </section>
+    </div>
+
+    <div class="right-rail">
+      <h2 id="signup-heading">
+        Sign Up for a Group
+      </h2>
+      <signup-form></signup-form>
+      <h2 id="login-heading">
+        Log In to Manage Your Group
+      </h2>
+      <login-form></login-form>
+    </div>
+    <footer role="contentinfo">
+      <p>
+        This is not a fork of Mastodon and is not affiliated with Mastodon.
+      </p>
     </footer>
   </div>
   <script type="module" src="login.js"></script>
