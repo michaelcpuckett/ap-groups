@@ -30,3 +30,7 @@
     display: grid;
     max-width: max(480px, 50vw);
   }
+
+  figure code {
+    font-size: 1.5em;
+  }
