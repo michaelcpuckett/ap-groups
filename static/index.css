@@ -25,3 +25,8 @@
     color: #010145;
     border-radius: .25em;
   }
+
+  .form-container {
+    display: grid;
+    max-width: max(480px, 50vw);
+  }
