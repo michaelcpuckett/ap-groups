@@ -25,10 +25,11 @@ footer {
   padding: 24px;
   background: var(--primary-color);
   color: var(--text-on-primary-color);
+  display: grid;
 }
 
 footer {
-  font-size: .75em;
+  font-size: .875em;
 }
 
 @media (min-width: 600px) {
@@ -50,10 +51,12 @@ footer {
   .container {
     grid-column: 1 / 2;
     grid-row: 2 / 3;
+    padding: 24px;
   }
 
   .right-rail {
     grid-column: 2 / 3;
+    padding: 24px;
     grid-row: 2 / 3;
   }
 
