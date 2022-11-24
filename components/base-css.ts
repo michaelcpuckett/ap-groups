@@ -73,10 +73,6 @@ export const baseCss = css`
     padding: 6px 0;
   }
 
-  .has-error .input {
-    background-color: var(--error-color);
-  }
-
   .error-message {
     color: var(--error-color);
     font-size: .875em;

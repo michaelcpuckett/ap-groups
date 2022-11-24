@@ -11,6 +11,7 @@ h1 {
 
 .container h2 {
   font-size: 2em;
+  margin-top: 0;
 }
 
 figure {
@@ -95,9 +96,12 @@ footer {
   }
 
   .container section {
-    padding: 0 24px 24px;
-    border: 1px solid;
+    padding: 24px;
     border-radius: 24px;
     margin-bottom: 24px;
+
+    
+    background-color: var(--primary-color);
+    color: var(--text-on-primary-color);
   }
 }

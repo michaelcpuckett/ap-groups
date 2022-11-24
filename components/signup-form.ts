@@ -21,8 +21,8 @@ export class SignupForm extends LitElement {
     }
 
     label:has(input[name="username"]) input[name="username"] {
-      width: calc(100% - 35px);
-      margin-left: 4ch;
+      width: calc(100% - 3ch);
+      margin-left: 3ch;
     }
 
     label:has(input[name="username"]):after {
