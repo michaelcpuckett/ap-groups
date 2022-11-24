@@ -31,15 +31,12 @@ html {
   flex-direction: column;
 }
 
-@font-face {
-  font-family: 'PT Mono';
-  src: url('PTMono-Regular.ttf');
-}
-
 body {
   flex: 1 0 auto;
   min-height: 100%;
-  font-family: 'PT Mono', Courier, monospace;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-family: system-ui, sans-serif;
   margin: 0;
   display: grid;
   grid-template-columns: 100%;
@@ -48,6 +45,10 @@ body {
   color: var(--text-on-medium-background-color);
   font-size: 20x;
   line-height: 1.5;
+}
+
+h2 {
+  font-weight: normal;
 }
 
 img {

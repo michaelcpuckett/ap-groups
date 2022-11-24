@@ -42,8 +42,9 @@ export const baseCss = css`
     border: 1px solid;
     border-radius: 8px;
     font-size: .875em;
+    font-weight: normal;
   }
-
+l
   .button {
     background-color: var(--accent-color);
     color: var(--text-on-accent-color);
@@ -61,9 +62,7 @@ export const baseCss = css`
   .label {
     display: flex;
     flex-direction: column;
-    letter-spacing: 1px;
     font-size: 1.25em;
-    font-weight: bold;
     padding-bottom: 12px;
     border-bottom: 1px solid;
     margin-bottom: 12px;
@@ -88,6 +87,6 @@ export const baseCss = css`
 
   .hint-text {
     padding: 6px;
-    font-size: 12px;
+    font-size: .75em;
   }
 `;
