@@ -1,55 +1,79 @@
 <!doctype html>
 <html>
+
+<head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="base.css" />
   <link rel="stylesheet" href="index.css" />
-  <body>
-    <div>
+</head>
+
+<body>
+  <div>
     <header role="banner">
       <h1>
-        chirp.social
+        chirp.social : A place for groups
       </h1>
     </header>
+    <section role="section" aria-labelledby="about-heading">
+      <h2 id="about-heading">
+        What is this?
+      </h2>
+      <p>
+        This is an <a target="_blank" href="https://activitypub.rocks">ActivityPub</a> server that can interact with <a
+          target="_blank" href="https://joinmastodon.org">Mastodon</a>.
+      </p>
+      <p>
+        Any post addressed to the group by a follower will be boosted
+        automatically by the group account, for all followers to see!
+      </p>
+      <figure>
+        <code>@group hello!</code>
+      </figure>
+      <details>
+        <summary>
+          How does this work?
+        </summary>
+        <div>
+          <p>
+            All accounts created here are Group accounts.
+          </p>
+          <p>
+            Anyone that follows the account will be a group member.
+          </p>
+          <p>
+            Everything is public and shows up in the timeline.
+          </p>
+          <p>
+            Group accounts cannot post anything from here currently.
+          </p>
+          <p>
+            This server is where you login and manage your group.
+          </p>
+          <p>
+            This is a bare-bones work-in-progress solution. Currently there is no way to change
+            ownership, moderatation is limited, etc.
+          </p>
+        </div>
+      </details>
+    </section>
     <nav role="navigation">
       <p>
         <a href="/directory" class="cta">
-          See All Groups
-        </a>
-      </p>
-      <p>
-        <a href="/home" class="cta">
-          Create a Group
+          Group Directory
         </a>
       </p>
     </nav>
-    <section role="section" aria-labelledby="about-heading">
-      <h2 id="about-heading">How does this work?</h2>
-      <p>
-        This is an <a target="_blank" href="https://activitypub.rocks">ActivityPub</a> server that can interact with <a target="_blank" href="https://joinmastodon.org">Mastodon</a>.
-      </p>
-      <p>
-        All accounts created here are Group accounts.
-      </p>
-      <p>
-        Anyone that follows the account will be a group member.
-      </p>
-      <p>
-        Any post addressed to the group by a group member will be boosted
-        automatically by the group account, for all group members to see.
-      </p>
-      <p>
-        Everything is public and shows up in the timeline.
-      </p>
-      <p>
-        Group accounts cannot post anything from here currently.
-      </p>
-      <p>
-        This server is where you login and manage your group.
-      </p>
-      <p>
-        This is a bare-bones work-in-progress solution. Currently there is no way to change
-        ownership, moderate, etc.
-      </p>
+    <section role="region" aria-labelledby="signup-heading">
+      <h2 id="signup-heading">
+        Sign Up for a Group
+      </h2>
+      <signup-form></signup-form>
+    </section>
+    <section role="region" aria-labelledby="login-heading">
+      <h2 id="login-heading">
+        Log In to Manage Your Group
+      </h2>
+      <login-form></login-form>
     </section>
     <footer role="contentinfo">
       <ul>
@@ -68,5 +92,7 @@
       </ul>
     </footer>
   </div>
-  </body>
+  <script type="module" src="login.js"></script>
+</body>
+
 </html>

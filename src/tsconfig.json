@@ -1,25 +1,23 @@
 {
+  "extends": "../tsconfig",
   "compilerOptions": {
     "module": "commonjs",
-    "declaration": true,
-    "noImplicitAny": false,
-    "removeComments": true,
-    "noLib": false,
     "esModuleInterop": true,
     "target": "ESNext",
     "jsx": "react",
     "skipLibCheck": true,
     "moduleResolution": "node",
     "sourceMap": true,
+    "declaration": true,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "noLib": false,
     "lib": [
       "ESNext"
     ],
-    "outDir": "./lib"
+    "outDir": "../lib"
   },
   "exclude": [
-    "./node_modules",
-  ],
-  "include": [
-    "./src/index.ts"
+    "../node_modules"
   ]
 }

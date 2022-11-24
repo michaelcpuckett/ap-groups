@@ -1,10 +1,11 @@
 import './group-details';
 import './members-list';
 
-import {LitElement, html, css, nothing} from 'lit';
-import {customElement, property, query} from 'lit/decorators';
+import { LitElement, html, css, nothing } from 'lit';
+import { customElement, property, query } from 'lit/decorators';
 import { baseCss } from './base-css';
 import { AP } from 'activitypub-core-types';
+import { getId } from 'activitypub-core-utilities';
 
 @customElement('home-page')
 export class HomePage extends LitElement {
@@ -15,16 +16,16 @@ export class HomePage extends LitElement {
     }
   `];
 
-  @property({type: String, reflect: true, attribute: 'group-id'})
+  @property({ type: String, reflect: true, attribute: 'group-id' })
   private groupId?: string;
 
-  @property({type: Object})
+  @property({ type: Object })
   private groupActor?: AP.Actor;
 
-  @property({type: Object})
+  @property({ type: Object })
   private members?: AP.Actor[];
 
-  @property({type: Object})
+  @property({ type: Object })
   private blocked?: AP.Actor[];
 
   firstUpdated() {
@@ -37,37 +38,37 @@ export class HomePage extends LitElement {
         'Accept': 'application/activity+json'
       }
     })
-    .then(res => res.json())
-    .then(async (actor: AP.Actor) => {
-      this.groupActor = actor;
-
-      this.blocked = await fetch(this.groupActor.streams.find((id: string) => id.endsWith('blocked')), {
-        headers: {
-          'Accept': 'application/activity+json',
-        },
-      })
       .then(res => res.json())
-      .then(collection => collection.items)
-      
-      const blockedIds = this.blocked.map((item: AP.Actor) => {
-        return item.id;
-      });
+      .then(async (actor: AP.Actor) => {
+        this.groupActor = actor;
 
-      this.members = await fetch(this.groupActor.followers, {
-        headers: {
-          'Accept': 'application/activity+json',
-        },
-      }).then(res => res.json()).then(collection => collection.items.filter(({
-        id
-      }) => {
-        return !blockedIds.includes(id);
-      }));
-    });
+        this.blocked = await fetch(getId(this.groupActor.streams.find(stream => getId(stream).toString().endsWith('blocked'))).toString(), {
+          headers: {
+            'Accept': 'application/activity+json',
+          },
+        })
+          .then(res => res.json())
+          .then(collection => collection.items)
+
+        const blockedIds = this.blocked.map((item: AP.Actor) => {
+          return item.id;
+        });
+
+        this.members = await fetch(getId(this.groupActor.followers).toString(), {
+          headers: {
+            'Accept': 'application/activity+json',
+          },
+        }).then(res => res.json()).then(collection => collection.items.filter(({
+          id
+        }) => {
+          return !blockedIds.includes(id);
+        }));
+      });
   }
 
   private logOut() {
     const cookies = window.document.cookie.split(";");
-    
+
     for (let i = 0; i < cookies.length; i++) {
       const cookie = cookies[i];
       const eqPos = cookie.indexOf('=');
