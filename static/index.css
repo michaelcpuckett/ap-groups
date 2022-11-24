@@ -10,6 +10,10 @@ h1 {
   }
 }
 
+h1 span {
+  display: block;
+}
+
 .container h2 {
   font-size: 2em;
   margin-top: 0;
@@ -20,7 +24,8 @@ figure {
   color: var(--text-on-light-background-color);
   max-width: max-content;
   padding: 4px;
-  margin: 0;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 figure code {
@@ -30,6 +35,12 @@ figure code {
 .root {
   display: grid;
   row-gap: 24px;
+}
+
+header a span {
+  display: block;
+  font-size: .75em;
+  font-weight: normal;
 }
 
 header,
