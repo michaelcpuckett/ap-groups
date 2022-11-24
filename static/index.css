@@ -18,7 +18,7 @@ h1 {
 figure {
   background-color: var(--light-background-color);
   color: var(--text-on-light-background-color);
-  width: max-content;
+  max-width: max-content;
   padding: 4px;
 }
 
