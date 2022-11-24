@@ -10,7 +10,7 @@ export const baseCss = css`
   }
 
   a {
-    color: lightpink;
+    color: var(--link-color);
   }
 
   button {
@@ -44,12 +44,16 @@ export const baseCss = css`
   }
 
   .button {
-    background-color: mediumspringgreen;
-    color: black;
+    background-color: var(--primary-color);
+    color: var(--text-on-primary-color);
     border: 1px solid;
     border-radius: 8px;
     padding: 4px 12px;
     font-weight: bold;
+  }
+  
+  .button--cta {
+    font-size: 1.5em;
   }
 
   .label {
@@ -58,14 +62,14 @@ export const baseCss = css`
   }
 
   .has-error .label-text {
-    color: red;
+    color: var(--error-color);
   }
 
   .has-error .input {
-    border-color: red;
+    border-color: var(--error-color);
   }
 
   .error-message {
-    color: red;
+    color: var(--error-color);
   }
 `;

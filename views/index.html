@@ -8,12 +8,12 @@
 </head>
 
 <body>
-  <div>
-    <header role="banner">
-      <h1>
-        chirp.social is a place for groups
-      </h1>
-    </header>
+  <header role="banner">
+    <h1>
+      chirp.social is a place for groups
+    </h1>
+  </header>
+  <div class="container">
     <section role="section" aria-labelledby="about-heading">
       <h2 id="about-heading">
         What is this?
@@ -30,7 +30,7 @@
         <code>@group@chirp.social hello friends!</code>
       </figure>
       <details>
-        <summary>
+        <summary class="button button--cta">
           How does this work?
         </summary>
         <div>
@@ -58,7 +58,7 @@
     </section>
     <nav role="navigation">
       <p>
-        <a href="/directory" class="cta">
+        <a href="/directory" class="button button--cta">
           Group Directory
         </a>
       </p>
@@ -77,23 +77,23 @@
         <login-form></login-form>
       </section>
     </div>
-    <footer role="contentinfo">
-      <ul>
-        <li>
-          v0.0.1 &copy; <a target="_blank" href="https://github.com/michaelcpuckett">Michael Puckett</a>
-        </li>
-        <li>
-          Fork this project on
-          <a target="_blank" href="https://github.com/michaelcpuckett/ap-groups">
-            Github
-          </a>
-        </li>
-        <li>
-          (This is not a fork of Mastodon and is not affiliated with Mastodon.)
-        </li>
-      </ul>
-    </footer>
   </div>
+  <footer role="contentinfo">
+    <ul>
+      <li>
+        v0.0.1 &copy; <a target="_blank" href="https://github.com/michaelcpuckett">Michael Puckett</a>
+      </li>
+      <li>
+        Fork this project on
+        <a target="_blank" href="https://github.com/michaelcpuckett/ap-groups">
+          Github
+        </a>
+      </li>
+      <li>
+        (This is not a fork of Mastodon and is not affiliated with Mastodon.)
+      </li>
+    </ul>
+  </footer>
   <script type="module" src="login.js"></script>
 </body>
 

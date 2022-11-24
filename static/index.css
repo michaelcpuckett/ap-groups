@@ -10,42 +10,23 @@ ul {
   flex-direction: column;
 }
 
-.cta {
-  font-size: 1.5em;
-  font-weight: bold;
-  text-decoration: none;
-  padding: .5em 1em;
-  border: 1px solid black;
-  display: inline-block;
-  background: mediumspringgreen;
-  color: black;
-  border-radius: .25em;
-}
-
 .form-container {
   display: grid;
-  max-width: max(480px, 50vw);
+  max-width: max(480px, calc((1 / 3) * 100vw));
 }
 
 figure code {
   font-size: 1.5em;
 }
 
-header {
+header,
+footer {
   padding: 24px;
-  background: mediumspringgreen;
-  color: black;
+  background: var(--primary-color);
+  color: var(--text-on-primary-color);
   font-size: 1.25em;
 }
 
-summary {
-  font-size: 1.5em;
-  font-weight: bold;
-  text-decoration: none;
-  padding: .5em 1em;
-  border: 1px solid black;
-  display: inline-block;
-  background: mediumspringgreen;
-  color: black;
-  border-radius: .25em;
+.container {
+  padding: 24px;
 }

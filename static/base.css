@@ -4,6 +4,12 @@
 
 :root {
   color-scheme: dark light;
+  --background-color: #2f2f2f;
+  --text-on-background-color: white;
+  --primary-color: #4af0b1;
+  --text-on-primary-color: black;
+  --link-color: lightpink;
+  --error-color: red;
 }
 
 html {
@@ -20,8 +26,8 @@ body {
   display: grid;
   grid-template-columns: 100%;
   gap: 24px;
-  background-color: #2f2f2f;
-  color: white;
+  background-color: var(--background-color);
+  color: var(--text-on-background-color);
 }
 
 img {
@@ -29,5 +35,35 @@ img {
 }
 
 a {
-  color: lightpink;
+  color: var(--link-color);
+}
+
+button {
+  appearance: none;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  font: inherit;
+  line-height: inherit;
+  background: transparent;
+  display: inline-flex;
+  min-height: 48px;
+  min-width: 48px;
+  place-items: center;
+  place-content: center;
+}
+
+.button {
+  background-color: var(--primary-color);
+  color: var(--text-on-primary-color);
+  border: 1px solid;
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.button--cta {
+  font-size: 1.5em;
 }
