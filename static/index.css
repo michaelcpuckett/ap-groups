@@ -20,6 +20,7 @@ figure {
   color: var(--text-on-light-background-color);
   max-width: max-content;
   padding: 4px;
+  margin: 0;
 }
 
 figure code {
