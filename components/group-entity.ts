@@ -26,6 +26,15 @@ export class GroupEntity extends LitElement {
       background: var(--light-background-color);
       color: var(--text-on-light-background-color)
     }
+
+    a {
+      color: var(--text-on-light-background-color);
+    }
+
+    .avatar-summary {
+      display: flex;
+      grid-auto-flow: column;
+    }
   `];
 
   @property({type: String, attribute: 'entity-name'})
@@ -62,21 +71,23 @@ export class GroupEntity extends LitElement {
       <h1>
         ${this.entityName}
       </h1>
-      <div>
+      <div class="avatar-summary">
         ${this.entityIcon ?
           html`
             <img height="100" width="100" src=${this.entityIcon.url} />
           ` :
           nothing
         }
-        <p>
-          @${this.entityPreferredUsername}@chirp.social
-        </p>
-        ${this.entitySummary ? html`
+        <div>
           <p>
-            ${this.entitySummary}
+            @${this.entityPreferredUsername}@chirp.social
           </p>
-        ` : nothing}
+          ${this.entitySummary ? html`
+            <p>
+              ${this.entitySummary}
+            </p>
+          ` : nothing}
+        </div>
       </div>
       <h2>Boosted Posts</h2>
       <ul>
