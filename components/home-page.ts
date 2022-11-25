@@ -174,12 +174,6 @@ export class HomePage extends LitElement {
 
     return html`
       <div class="container">
-        <header>
-          <h1>Manage Group</h1>
-          <button type="button" class="button" @click=${this.logOut}>
-            Log Out
-          </button>
-        </header>
         <section
           role="region"
           aria-labelledby="group-details-heading">
@@ -197,6 +191,12 @@ export class HomePage extends LitElement {
         </section>
       </div>
       <div class="right-rail">
+        <section>
+          <button type="button" class="button" @click=${this.logOut}>
+            Log Out
+          </button>
+        </section>
+
         <section
           role="region"
           aria-labelledby="manage-members-heading">
@@ -235,12 +235,14 @@ export class HomePage extends LitElement {
           <h2 id="delete-heading">
             Permanent Changes
           </h2>
-          <button
-            @click=${this.deleteGroup}
-            type="button"
-            class="button button--tag">
-            Delete Group
-          </button>
+          <p>
+            <button
+              @click=${this.deleteGroup}
+              type="button"
+              class="button button--tag">
+              Delete Group
+            </button>
+          </p>
         </section>
       </div>
     `;

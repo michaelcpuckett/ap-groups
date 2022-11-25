@@ -6,12 +6,17 @@
   <link rel="stylesheet" href="base.css" />
   <link rel="stylesheet" href="index.css" />
   <body>
-    <div class="root">
-      <div class="container">
-        {{ header() }}
+    <div>
+      <div class="root">
+        <div class="container">
+          {{ header() }}
+        </div>
+        <div class="right-rail">
+          
+        </div>
       </div>
+      <home-page group-id="{{actor.id}}"></home-page>
     </div>
-    <home-page group-id="{{actor.id}}"></home-page>
     <script type="module" src="home.js"></script>
   </body>
 </html>
