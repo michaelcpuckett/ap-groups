@@ -28,6 +28,13 @@ export class HomePage extends LitElement {
       .right-rail {
         grid-column: 2 / 3;
       }
+
+      header,
+      section {
+        background-color: var(--light-background-color);
+        color: var(--text-on-light-background-color);
+        border-radius: 32px;
+      }
     }
   `];
 
@@ -109,10 +116,12 @@ export class HomePage extends LitElement {
 
     return html`
       <div class="container">
-        <button type="button" class="button" @click=${this.logOut}>
-          Log Out
-        </button>
-        <h1>Manage Group</h1>
+        <header>
+          <button type="button" class="button" @click=${this.logOut}>
+            Log Out
+          </button>
+          <h1>Manage Group</h1>
+        </header>
         <section
           role="region"
           aria-labelledby="group-details-heading">
