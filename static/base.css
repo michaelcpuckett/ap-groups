@@ -74,9 +74,11 @@ a {
   color: var(--link-color);
 }
 
-ul {
+ol {
   list-style-position: inside;
+  display: grid;
   padding-left: 0;
+  gap: 12px;
 }
 
 button {
