@@ -12,6 +12,14 @@ export class GroupDetails extends LitElement {
       border: 1px solid;
       border-radius: 4px;
     }
+
+    [type="file"] {
+      clip: rect(1px, 1px, 1px, 1px);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      width: 1px;
+    }
   `];
 
   @query('input[name="name"]')
@@ -22,6 +30,9 @@ export class GroupDetails extends LitElement {
 
   @query('form[name="upload"]')
   uploadFormElement: HTMLFormElement|null;
+
+  @query('[type="file"]')
+  fileInputElement: HTMLInputElement|null;
 
   @property({type: String, attribute: 'outbox-url'})
   private outboxUrl?: string;
@@ -40,6 +51,9 @@ export class GroupDetails extends LitElement {
 
   @property({type: Object})
   private icon?: AP.Image;
+
+  @property({ type: Boolean })
+  private isFileReadyToUpload = false;
 
   private handleSubmit(event: SubmitEvent) {
     event.preventDefault();
@@ -124,23 +138,43 @@ export class GroupDetails extends LitElement {
     });    
   }
 
+  private handleFileInputChange() {
+    this.isFileReadyToUpload = !!this.fileInputElement?.files.length;
+  }
+
+  private handleFileInputTriggerClick() {
+    this.fileInputElement?.click();
+  }
+
   render() {
     return html`
       ${this.icon ? html`<img src=${this.icon.url} />` : html`<p>No avatar set.</p>`}
 
       <form name="upload" @submit=${this.handleAvatarUpload}>
-        <label>
-          <span>
+        <input type="hidden" name="object" value=${JSON.stringify({
+          "type": "Image"
+        })} />
+        <label class="label">
+          <span class="label-text">
             Profile Pic
           </span>
-          <input type="file" name="file" />
+          <input
+            type="file"
+            name="file"
+            @change=${this.handleFileInputChange}
+          />
+          <button
+            class="button"
+            type="button"
+            @click=${this.handleFileInputTriggerClick}>
+            Select File to Upload
+          </button>
         </label>
-        <input type="hidden" name="object" value=${JSON.stringify({
-          "type": "Image",
-        })} />
-        <button class="button" type="submit">
-          Upload
-        </button>
+        ${this.isFileReadyToUpload ? html`
+          <button class="button" type="submit">
+            Upload
+          </button>
+        ` : nothing}
       </form>
 
       <form
