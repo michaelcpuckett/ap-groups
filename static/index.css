@@ -79,6 +79,10 @@ figure {
   font-size: 1.125em;
 }
 
+.avatar {
+  border-radius: 50%;
+}
+
 .root {
   display: grid;
   row-gap: 24px;
@@ -102,7 +106,6 @@ header a span {
   gap: 24px;
   display: grid;
 }
-
 
 @media (min-width: 1200px) {
   .root {
