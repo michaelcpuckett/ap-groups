@@ -61,7 +61,6 @@ export const baseCss = css`
     border-radius: 8px;
     font-size: 1.25em;
     padding: 4px 12px;
-    font-weight: bold;
     max-width: max-content;
   }
 

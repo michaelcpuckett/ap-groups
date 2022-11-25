@@ -44,8 +44,9 @@ figure {
   border-radius: 8px;
 }
 
-figure code {
+figure p {
   font-size: 1.5em;
+  font-family: monoscpae;
 }
 
 .root {

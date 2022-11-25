@@ -83,7 +83,6 @@ button {
   border: 1px solid;
   border-radius: 8px;
   padding: 4px 12px;
-  font-weight: bold;
   text-decoration: none;
 }
 
@@ -95,6 +94,7 @@ button {
   place-content: center;
   display: grid;
   text-align: center;
+  font-weight: bold;
   background: var(--accent-color);
   color: var(--text-on-accent-color);
 }

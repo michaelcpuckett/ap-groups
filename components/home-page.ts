@@ -16,14 +16,13 @@ export class HomePage extends LitElement {
       gap: 32px;
     }
 
-
     header {
       display: flex;
       width: 100%;
     }
 
     h1 {
-      flex: 1 0 1fr;
+      flex: 1 1 100%;
     }
 
     button {
