@@ -16,6 +16,21 @@ export class HomePage extends LitElement {
       gap: 32px;
     }
 
+
+    header {
+      display: flex;
+      width: 100%;
+    }
+
+    h1 {
+      flex: 1 0 1fr;
+    }
+
+    button {
+      flex: 0 0 max-content;
+    }
+    
+
     @media (min-width: 1200px) {
       :host {
         grid-template-columns: 2.5fr 1fr;
@@ -125,10 +140,10 @@ export class HomePage extends LitElement {
     return html`
       <div class="container">
         <header>
+          <h1>Manage Group</h1>
           <button type="button" class="button" @click=${this.logOut}>
             Log Out
           </button>
-          <h1>Manage Group</h1>
         </header>
         <section
           role="region"

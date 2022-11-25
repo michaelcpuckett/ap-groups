@@ -20,6 +20,10 @@ export class GroupDetails extends LitElement {
       position: absolute;
       width: 1px;
     }
+
+    .avatar {
+      max-width: 200px;
+    }
   `];
 
   @query('input[name="name"]')
@@ -55,7 +59,7 @@ export class GroupDetails extends LitElement {
   @property({ type: Boolean })
   private isFileReadyToUpload = false;
 
-  private handleSubmit(event: SubmitEvent) {
+  private async handleSubmit(event: SubmitEvent) {
     event.preventDefault();
     
     if (!this.nameInputElement || !this.summaryTextareaElement || !this.uploadFormElement) {
@@ -64,6 +68,10 @@ export class GroupDetails extends LitElement {
 
     const name = this.nameInputElement.value;
     const summary = this.summaryTextareaElement.value;
+
+    if (this.isFileReadyToUpload) {
+      await this.handleAvatarUpload();
+    }
 
     fetch(this.outboxUrl, {
       method: 'POST',
@@ -90,10 +98,8 @@ export class GroupDetails extends LitElement {
     });
   }
 
-  private handleAvatarUpload(event: SubmitEvent) {
-    event.preventDefault();
-
-    fetch(this.uploadMediaUrl, {
+  private async handleAvatarUpload() {
+    await fetch(this.uploadMediaUrl, {
       method: 'POST',
       headers: {
         'Accept': 'application/activity+json',
@@ -148,9 +154,9 @@ export class GroupDetails extends LitElement {
 
   render() {
     return html`
-      ${this.icon ? html`<img src=${this.icon.url} />` : html`<p>No avatar set.</p>`}
+      ${this.icon ? html`<img class="avatar" src=${this.icon.url} />` : html`<p>No avatar set.</p>`}
 
-      <form name="upload" @submit=${this.handleAvatarUpload}>
+      <form name="upload">
         <input type="hidden" name="object" value=${JSON.stringify({
           "type": "Image"
         })} />
@@ -171,14 +177,7 @@ export class GroupDetails extends LitElement {
             ${this.isFileReadyToUpload ? html`Replace File` : html`Select File to Upload`}
           </button>
         </label>
-        ${this.isFileReadyToUpload ? html`
-          <button class="button" type="submit">
-            Ready to Upload
-          </button>
-        ` : nothing}
       </form>
-
-      <hr />
 
       <form
         @submit=${this.handleSubmit}
