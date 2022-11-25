@@ -33,47 +33,50 @@
     <div class="root">
       <div class="container">
         {{ header() }}
-        <ul class="list">
-          {% for group in groups | reverse %}
-            <li>
-              {% if group.icon.url %}
-              <a href="{{ group.url }}" style="display: block">
-                <img
-                  class="avatar"
-                  height="100"
-                  width="100"
-                  src="{{ group.icon.url }}"
-                />
-              </a>
-              {% endif %}
-              <a href="{{ group.url }}">
-                {{ group.name }}
-              </a>
-              <dl>
-                <dt>
-                  Fediverse Handle
-                </dt>
-                <dd>
-                  <a href="{{ group.url }}">
-                    @{{ group.preferredUsername }}@chirp.social
-                  </a>
-                </dd>
-                <dt>
-                  Bio
-                </dt>
-                <dd>
-                  {{ group.summary }}
-                </dd>
-                <dt>
-                  Added
-                </dt>
-                <dd>
-                  {{ group.published }}
-                </dd>
-              </dl>
-            </li>
-          {% endfor %}
-        </ul>
+        <section>
+          <h2>
+            Group Directory
+          </h2>
+        </section>
+        {% for group in groups | reverse %}
+          <section>
+            {% if group.icon.url %}
+            <a href="{{ group.url }}" style="display: block">
+              <img
+                class="avatar"
+                height="100"
+                width="100"
+                src="{{ group.icon.url }}"
+              />
+            </a>
+            {% endif %}
+            <a href="{{ group.url }}">
+              {{ group.name }}
+            </a>
+            <dl>
+              <dt>
+                Fediverse Handle
+              </dt>
+              <dd>
+                <a href="{{ group.url }}">
+                  @{{ group.preferredUsername }}@chirp.social
+                </a>
+              </dd>
+              <dt>
+                Bio
+              </dt>
+              <dd>
+                {{ group.summary }}
+              </dd>
+              <dt>
+                Added
+              </dt>
+              <dd>
+                {{ group.published }}
+              </dd>
+            </dl>
+          </section>
+        {% endfor %}
       </div>
       <div class="right-rail">
         {{ about() }}
