@@ -81,6 +81,15 @@ ol {
   gap: 12px;
 }
 
+dl {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr)
+}
+
+dt {
+  font-weight: bold;
+}
+
 button {
   appearance: none;
   padding: 0;
