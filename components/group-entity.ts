@@ -16,13 +16,13 @@ export class GroupEntity extends LitElement {
       margin: 0;
       padding: 0;
       display: grid;
-      gap: 32px;
+      gap: 24px;
     }
 
     li {
       padding: 1em;
-      border-radius: 24px;
-      padding: 32px;
+      border-radius: 12px;
+      padding: 24px;
       background: var(--light-background-color);
       color: var(--text-on-light-background-color)
     }
@@ -46,10 +46,11 @@ export class GroupEntity extends LitElement {
       border-radius: 50%;
     }
 
-    h2 {
-      margin-bottom: 24px;
-      border-bottom: 1px solid;
-      padding-bottom: 4px;
+    h1 {
+      text-align: center;
+      font-family: 'Passion';
+      font-size: 3em;
+      text-transform: uppercase;
     }
   `];
 
@@ -132,6 +133,10 @@ export class GroupEntity extends LitElement {
                 By
                 <a href=${item.attributedTo}>
                   ${item.attributedTo}
+                </a>
+                on
+                <a href=${item.url}>
+                  ${new Date(item.updated).toDateString()}
                 </a>
               </p>
             </li>
