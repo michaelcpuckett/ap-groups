@@ -127,6 +127,28 @@ export class HomePage extends LitElement {
     window.location.reload();
   }
 
+  private deleteGroup() {
+    fetch(this.groupActor.outbox, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/activity+json',
+      },
+      body: JSON.stringify({
+        '@context': 'https://www.w3.org/ns/activitystreams',
+        type: 'Delete',
+        actor: this.groupActor.id,
+        object: this.groupActor.id,
+      }),
+    })
+    .then((res) => {
+      if (res.headers.has('Location')) {
+        window.location.reload();
+      }
+    }).catch((error: unknown) => {
+      console.log('error', error);
+    });
+  }
+
   render() {
     if (!this.groupId) {
       return html`
@@ -188,6 +210,19 @@ export class HomePage extends LitElement {
             group-actor-id=${this.groupActor.id}
             members=${JSON.stringify(this.members)}>
           </members-list>
+        </section>
+        <section
+          role="region"
+          aria-labelledby="delete-heading">
+          <h2 id="delete-heading">
+            Permanent Changes
+          </h2>
+          <button
+            @click=${this.deleteGroup}
+            type="button"
+            class="button button--tag">
+            Delete Group
+          </button>
         </section>
       </div>
     `;
