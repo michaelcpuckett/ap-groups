@@ -39,16 +39,16 @@
           </h2>
         </section>
         {% for group in groups | reverse %}
-          <section>
+          <section class="directory-entry">
             {% if group.icon.url %}
-            <a href="{{ group.url }}" style="display: block">
-              <img
-                class="avatar"
-                height="100"
-                width="100"
-                src="{{ group.icon.url }}"
-              />
-            </a>
+              <a href="{{ group.url }}" style="display: block">
+                <img
+                  class="avatar"
+                  height="100"
+                  width="100"
+                  src="{{ group.icon.url }}"
+                />
+              </a>
             {% endif %}
             <a href="{{ group.url }}">
               <strong>
