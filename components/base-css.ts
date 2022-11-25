@@ -5,6 +5,15 @@ export const baseCss = css`
     box-sizing: border-box;
   }
 
+  h1 {
+    text-align: center;
+  }
+
+  h1,
+  h2 {
+    font-weight: normal;
+  }
+
   img {
     max-width: 100%;
   }
