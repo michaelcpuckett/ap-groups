@@ -36,22 +36,22 @@
         <ul class="list">
           {% for group in groups | reverse %}
             <li>
+              <a href="{{ group.url }}">
+                {% if group.icon.url %}
+                  <img
+                    class="avatar"
+                    height="100"
+                    width="100"
+                    src="{{ group.icon.url }}"
+                  />
+                {% endif %}
+              </a>
               <dl>
                 <dt>
                   Fediverse Handle
                 </dt>
                 <dd>
                   <a href="{{ group.url }}">
-                    <span style="display: inline-block; width: 100px; margin-right: 12px;">
-                      {% if group.icon.url %}
-                        <img
-                          class="avatar"
-                          height="100"
-                          width="100"
-                          src="{{ group.icon.url }}"
-                        />
-                      {% endif %}
-                    </span>
                     @{{ group.preferredUsername }}@chirp.social
                   </a>
                 </dd>
