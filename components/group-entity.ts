@@ -37,6 +37,8 @@ export class GroupEntity extends LitElement {
       gap: 24px;
       margin-bottom: 24px;
       font-size: 1.25em;
+      border-top: 1px solid;
+      padding-top: 24px;
       border-bottom: 1px solid;
       padding-bottom: 24px;
       align-items: center;
@@ -51,6 +53,10 @@ export class GroupEntity extends LitElement {
       font-family: 'Passion';
       font-size: 3em;
       text-transform: uppercase;
+    }
+
+    h2 {
+      margin-bottom: 24px;
     }
   `];
 
@@ -144,7 +150,7 @@ export class GroupEntity extends LitElement {
                 </a>
                 on
                 <a href=${item.url}>
-                  ${new Date(item.updated).toDateString()}
+                  ${new Date(`${item.updated}`.split('T')?.[0] ?? '').toDateString()}
                 </a>
               </p>
             </li>
