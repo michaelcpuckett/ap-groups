@@ -34,6 +34,11 @@ export class GroupEntity extends LitElement {
     .avatar-summary {
       display: flex;
       grid-auto-flow: column;
+      gap: 12px;
+    }
+
+    .avatar {
+      border-radius: 50%;
     }
   `];
 
@@ -74,7 +79,12 @@ export class GroupEntity extends LitElement {
       <div class="avatar-summary">
         ${this.entityIcon ?
           html`
-            <img height="100" width="100" src=${this.entityIcon.url} />
+            <img
+              class="avatar"
+              height="100"
+              width="100"
+              src=${this.entityIcon.url}
+            />
           ` :
           nothing
         }
@@ -89,7 +99,9 @@ export class GroupEntity extends LitElement {
           ` : nothing}
         </div>
       </div>
-      <h2>Boosted Posts</h2>
+      <h2>
+        Boosted Posts
+      </h2>
       <ul>
         ${repeat(this.feed, (item: AP.ExtendedObject) => {
           const attachments = item.attachment ? Array.isArray(item.attachment) ? item.attachment : [item.attachment] : [];
