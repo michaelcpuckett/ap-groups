@@ -207,7 +207,7 @@ export class HomePage extends LitElement {
             outbox-url=${this.groupActor.outbox}
             group-actor-id=${this.groupActor.id}
             members=${JSON.stringify(this.blocked)}>
-            No members are blocked.
+            <p>No members are blocked.</p>
           </members-list>
         </section>
         <section
@@ -220,13 +220,13 @@ export class HomePage extends LitElement {
             outbox-url=${this.groupActor.outbox}
             group-actor-id=${this.groupActor.id}
             members=${JSON.stringify(this.members)}>
-            <figure>
+            <p>
               You have no members following the group.
               To get started, go to your personal Mastodon
               account and search for
               <strong>@${this.groupActor.preferredUsername}@chirp.social</strong>
               then follow it.
-            </figure>
+            </p>
           </members-list>
         </section>
         <section
