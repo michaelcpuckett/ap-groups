@@ -5,13 +5,13 @@
 :root {
   color-scheme: dark only;
   --dark-background-color: #1d0101;
-  --text-on-dark-background-color: #f3dede;
+  --text-on-dark-background-color: white;
   --medium-background-color: #037d7e;
-  --text-on-medium-background-color: #f6f6ef;
+  --text-on-medium-background-color: white;
   --light-background-color: #eff3f6;
   --text-on-light-background-color: #002424;
   --primary-color: #002424;
-  --text-on-primary-color: #f6f6ef;
+  --text-on-primary-color: white;
   --link-color: #36c7ff;
   --error-color: red;
   --accent-color: #80f9ff;
@@ -19,8 +19,13 @@
 }
 
 @font-face {
-  font-family: 'Fredoka';
-  src: url('fredoka.ttf');
+  font-family: 'Passion';
+  src: url('passion.ttf');
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('lato.ttf');
 }
 
 html {
@@ -34,7 +39,7 @@ body {
   min-height: 100%;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  font-family: 'Helvetica Neue', 'Helvetica', sans-serif;
+  font-family: Lato, system-ui, sans-serif;
   margin: 0;
   display: grid;
   grid-template-columns: 100%;
@@ -44,6 +49,19 @@ body {
   font-size: 20x;
   line-height: 1.5;
   -webkit-text-size-adjust: 100%;
+}
+
+body:after {
+  content: '';
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: #408ca3;
+  mix-blend-mode: hue;
+  position: fixed;
+  pointer-events: none;
+  touch-action: none;
 }
 
 @media (min-width: 1200px) {
@@ -92,6 +110,7 @@ button {
 }
 
 .button--cta {
+  font-weight: bold;
   background: var(--accent-color);
   color: var(--text-on-accent-color);
   font-size: 1.5em;
@@ -101,7 +120,6 @@ button {
   place-content: center;
   display: grid;
   text-align: center;
-  font-family: 'Fredoka', sans-serif;
 }
 
 @media (min-width: 1200px) {

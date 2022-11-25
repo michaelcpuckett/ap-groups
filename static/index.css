@@ -1,27 +1,33 @@
 .h1 {
   text-align: center;
-  color: var(--accent-color);
+  color: white;
   text-shadow: 0 3px 0 black;
-  font-size: 3em;
+  font-size: 3.75em;
   line-height: 1.25;
-  padding: .5em 0 .75em 0;
+  padding: .5em 0;
   margin: 0;
   border-radius: 24px;
   background-color: var(--primary-color);
   text-decoration: none;
-  font-family: 'Fredoka', sans-serif;
+  font-family: 'passion', sans-serif;
   font-weight: normal;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+@media (max-width: 1199px) {
+  a.h1 { 
+    border: 1px solid;
+  }
 }
 
 .h1 span {
   display: block;
-  font-style: italic;
-  font-size: .5875em;
+  font-size: .48em;
 }
 
 h2 {
   margin: 0;
-  font-family: 'Fredoka', sans-serif;
 }
 
 .container {
@@ -47,7 +53,6 @@ figure {
   padding: 8px calc(8px + 1em);
   border-radius: 8px;
   font-size: 1.25em;
-  font-family: 'Fredoka', sans-serif;
 }
 
 .root {

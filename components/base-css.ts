@@ -75,6 +75,7 @@ export const baseCss = css`
   
   .button--cta {
     font-size: 1.5em;
+    font-weight: bold;
     background: var(--accent-color);
     color: var(--text-on-accent-color);
   }
