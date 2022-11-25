@@ -8,9 +8,6 @@ export class GroupDetails extends LitElement {
   static styles = [baseCss, css`
     :host {
       display: block;
-      padding: 1em;
-      border: 1px solid;
-      border-radius: 4px;
     }
 
     [type="file"] {
@@ -154,12 +151,21 @@ export class GroupDetails extends LitElement {
 
   render() {
     return html`
-      ${this.icon ? html`<img class="avatar" src=${this.icon.url} />` : html`<p>No avatar set.</p>`}
+      ${(this.icon && !this.isFileReadyToUpload) ? html`
+        <img
+          class="avatar"
+          src=${this.icon.url}
+        />
+      ` : nothing}
 
       <form name="upload">
-        <input type="hidden" name="object" value=${JSON.stringify({
-          "type": "Image"
-        })} />
+        <input
+          type="hidden"
+          name="object"
+          value=${JSON.stringify({
+            "type": "Image"
+          })}
+        />
         <label class="label">
           <span class="label-text">
             Change Profile Pic
@@ -171,10 +177,10 @@ export class GroupDetails extends LitElement {
             @change=${this.handleFileInputChange}
           />
           <button
-            class="button"
+            class="button button--tag"
             type="button"
             @click=${this.handleFileInputTriggerClick}>
-            ${this.isFileReadyToUpload ? html`Replace File` : html`Select File to Upload`}
+            ${this.isFileReadyToUpload ? 'Replace File' : 'Select File to Upload'}
           </button>
         </label>
       </form>
