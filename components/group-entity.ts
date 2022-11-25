@@ -35,10 +35,15 @@ export class GroupEntity extends LitElement {
       display: flex;
       grid-auto-flow: column;
       gap: 12px;
+      margin-bottom: 12px;
     }
 
     .avatar {
       border-radius: 50%;
+    }
+
+    h2 {
+      margin-bottom: 12px;
     }
   `];
 
