@@ -67,6 +67,8 @@ export const baseCss = css`
   .button--tag {
     font-size: .95em;
     padding: 4px 8px;
+    min-height: 32px;
+    min-width: 32px;
   }
   
   .button--cta {
