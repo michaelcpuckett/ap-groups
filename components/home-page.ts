@@ -40,6 +40,7 @@ export class HomePage extends LitElement {
         color: var(--text-on-primary-color);
         border-radius: 32px;
         padding: 32px;
+        margin: 32px;
       }
     }
 
