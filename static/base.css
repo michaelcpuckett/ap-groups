@@ -51,19 +51,6 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
-body:after {
-  content: '';
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background: #408ca3;
-  mix-blend-mode: hue;
-  position: fixed;
-  pointer-events: none;
-  touch-action: none;
-}
-
 @media (min-width: 1200px) {
   body {
     background-color: var(--medium-background-color);
