@@ -134,24 +134,24 @@ export class HomePage extends LitElement {
           role="region"
           aria-labelledby="manage-members-heading">
           <h2 id="manage-members-heading">
-            Members
-          </h2>
-          <members-list
-            outbox-url=${this.groupActor.outbox}
-            group-actor-id=${this.groupActor.id}
-            members=${JSON.stringify(this.members)}>
-          </members-list>
-        </section>
-        <section
-          role="region"
-          aria-labelledby="manage-members-heading">
-          <h2 id="manage-members-heading">
             Blocked
           </h2>
           <members-list
             outbox-url=${this.groupActor.outbox}
             group-actor-id=${this.groupActor.id}
             members=${JSON.stringify(this.blocked)}>
+          </members-list>
+        </section>
+        <section
+          role="region"
+          aria-labelledby="manage-members-heading">
+          <h2 id="manage-members-heading">
+            Members
+          </h2>
+          <members-list
+            outbox-url=${this.groupActor.outbox}
+            group-actor-id=${this.groupActor.id}
+            members=${JSON.stringify(this.members)}>
           </members-list>
         </section>
       </div>
