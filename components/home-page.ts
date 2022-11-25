@@ -29,6 +29,10 @@ export class HomePage extends LitElement {
       flex: 0 0 max-content;
     }
     
+    li {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
 
     @media (min-width: 1200px) {
       :host {

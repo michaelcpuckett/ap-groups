@@ -3,14 +3,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="base.css" />
   <link rel="stylesheet" href="index.css" />
+  <style>
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      padding-bottom: 24px;
+      border-bottom: 1px solid;
+      margin-bottom: 24px;
+    }
+
+    .list {
+      padding: 32px;
+      border-radius: 32px;
+      background-color: var(--primary-color);
+      color: var(--text-on-primary-color);
+    }
+  </style>
   <body>
     <div class="root">
       <div class="container">
-        <h1>
+        <a class="h1" href="/">
           chirp.social
           <span><i aria-hidden="true">~</i>fediverse groups<i aria-hidden="true">~</i></span>
-        </h1>
-        <ul>
+        </a>
+        <ul class="list">
           {% for group in groups %}
             <li>
               <a href="{{ group.url }}">
@@ -27,7 +47,23 @@
         </ul>
       </div>
       <div class="right-rail">
-
+        <section role="region" aria-labelledby="about-heading">
+          <h2 id="about-heading">
+            What is this?
+          </h2>
+          <p>
+            This is an <a target="_blank" href="https://activitypub.rocks">ActivityPub</a> server that can interact with
+            <a target="_blank" href="https://joinmastodon.org">Mastodon</a>.
+          </p>
+          <p>
+          </p>
+          <figure>
+            <p>
+              Any post addressed to a Group by a follower gets reboosted
+              automatically by the Group account, for all followers to see.
+            </p>
+          </figure>
+        </section>
       </div>
     </div>
   </body>

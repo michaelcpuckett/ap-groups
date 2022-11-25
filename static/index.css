@@ -1,4 +1,4 @@
-h1 {
+.h1 {
   text-align: center;
   color: var(--accent-color);
   text-shadow: 0 3px 0 black;
@@ -9,9 +9,10 @@ h1 {
   margin: 0;
   border-radius: 32px;
   background-color: var(--primary-color);
+  text-decoration: none;
 }
 
-h1 span {
+.h1 span {
   display: block;
   font-style: italic;
   font-size: .5875em;
@@ -40,12 +41,9 @@ figure {
   color: var(--text-on-light-background-color);
   max-width: max-content;
   margin: 8px auto;
-  padding: 8px 16px;
+  padding: 8px calc(8px + 1em);
   border-radius: 8px;
-}
-
-figure p {
-  font-size: 1.75em;
+  font-size: 1.333em;
   font-family: monospace;
 }
 
@@ -53,6 +51,7 @@ figure p {
   display: grid;
   row-gap: 32px;
   padding: 32px;
+  align-content: flex-start;
 }
 
 header a span {

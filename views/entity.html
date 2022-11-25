@@ -2,7 +2,12 @@
 <html>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="base.css" />
+  <link rel="stylesheet" href="index.css" />
   <body>
+    <a class="h1" href="/">
+      chirp.social
+      <span><i aria-hidden="true">~</i>fediverse groups<i aria-hidden="true">~</i></span>
+    </a>
     {% for type in entity.type %}
       {% if type === 'Group' %}
         {% if entity.streams %}
