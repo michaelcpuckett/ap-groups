@@ -34,6 +34,15 @@ export class HomePage extends LitElement {
       grid-template-columns: minmax(0, 1fr) auto;
     }
 
+    @media (max-width: 1199px) {
+      :host {
+        background-color: var(--primary-color);
+        color: var(--text-on-primary-color);
+        border-radius: 32px;
+        padding: 32px;
+      }
+    }
+
     @media (min-width: 1200px) {
       :host {
         grid-template-columns: 2.5fr 1fr;
