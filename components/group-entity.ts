@@ -168,10 +168,6 @@ export class GroupEntity extends LitElement {
                 <a href=${item.attributedTo}>
                   ${item.attributedTo}
                 </a>
-                on
-                <a href=${item.url}>
-                  ${`${item.updated ?? ''}`.split('T')?.[0] ?? ''}
-                </a>
               </p>
             </li>
           `;
