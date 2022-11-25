@@ -184,7 +184,7 @@ export class HomePage extends LitElement {
           role="region"
           aria-labelledby="group-details-heading">
           <h2 id="group-details-heading">
-            Edit Group Details
+            Edit Group Details for @${this.groupActor.preferredUsername}@chirp.social
           </h2>
           <group-details
             outbox-url=${this.groupActor.outbox}
@@ -207,6 +207,7 @@ export class HomePage extends LitElement {
             outbox-url=${this.groupActor.outbox}
             group-actor-id=${this.groupActor.id}
             members=${JSON.stringify(this.blocked)}>
+            No members are blocked.
           </members-list>
         </section>
         <section
@@ -219,6 +220,10 @@ export class HomePage extends LitElement {
             outbox-url=${this.groupActor.outbox}
             group-actor-id=${this.groupActor.id}
             members=${JSON.stringify(this.members)}>
+            You have no members following the group.
+            To get started, go to your personal Mastodon
+            account and follow
+            @<strong>${this.groupActor.preferredUsername}</strong>@chirp.social.
           </members-list>
         </section>
         <section

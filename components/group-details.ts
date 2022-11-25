@@ -191,7 +191,7 @@ export class GroupDetails extends LitElement {
         <div role="table">
           <label role="row" class="label">
             <span role="columnheader" class="label-text">
-              Name
+              Group Name
             </span>
             <span role="cell">
               <input type="text" value=${this.name ?? ''} name="name" />
@@ -199,7 +199,7 @@ export class GroupDetails extends LitElement {
           </label>
           <label role="row" class="label">
             <span class="label-text" role="columnheader">
-              Summary
+              Bio
             </span>
             <span role="cell">
               <textarea name="summary">${this.summary ?? ''}</textarea>

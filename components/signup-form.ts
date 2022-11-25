@@ -131,7 +131,11 @@ export class SignupForm extends LitElement {
             type="text"
             name="username"
             placeholder="coolkids"
+            autocapitalize="off"
           />
+          <span class="hint-text">
+            All accounts are Group accounts.
+          </span>
           ${this.usernameError ? html`
             <span class="error-message">
               ${this.usernameError}
