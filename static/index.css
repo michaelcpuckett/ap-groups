@@ -9,6 +9,8 @@
   border-radius: 24px;
   background-color: var(--primary-color);
   text-decoration: none;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: normal;
 }
 
 .h1 span {
@@ -19,6 +21,7 @@
 
 h2 {
   margin: 0;
+  font-family: 'Fredoka', sans-serif;
 }
 
 .container {
@@ -43,8 +46,8 @@ figure {
   margin: 8px auto;
   padding: 8px calc(8px + 1em);
   border-radius: 8px;
-  font-size: 1.333em;
-  font-family: monospace;
+  font-size: 1.25em;
+  font-family: 'Fredoka', sans-serif;
 }
 
 .root {

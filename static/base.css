@@ -9,13 +9,18 @@
   --medium-background-color: #037d7e;
   --text-on-medium-background-color: #f6f6ef;
   --light-background-color: #eff3f6;
-  --text-on-light-background-color: #222221;
+  --text-on-light-background-color: #002424;
   --primary-color: #002424;
   --text-on-primary-color: #f6f6ef;
   --link-color: #36c7ff;
   --error-color: red;
   --accent-color: #80f9ff;
-  --text-on-accent-color: #222221;
+  --text-on-accent-color: #300303;
+}
+
+@font-face {
+  font-family: 'Fredoka';
+  src: url('fredoka.ttf');
 }
 
 html {
@@ -29,7 +34,7 @@ body {
   min-height: 100%;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  font-family: system-ui, sans-serif;
+  font-family: 'Helvetica Neue', 'Helvetica', sans-serif;
   margin: 0;
   display: grid;
   grid-template-columns: 100%;
@@ -96,7 +101,7 @@ button {
   place-content: center;
   display: grid;
   text-align: center;
-  font-weight: bold;
+  font-family: 'Fredoka', sans-serif;
 }
 
 @media (min-width: 1200px) {
