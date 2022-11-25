@@ -34,8 +34,8 @@ body {
   display: grid;
   grid-template-columns: 100%;
   gap: 24px;
-  background-color: var(--dark-background-color);
-  color: var(--text-on-dark-background-color);
+  background-color: var(--primary-color);
+  color: var(--text-on-primary-color);
   font-size: 20x;
   line-height: 1.5;
   -webkit-text-size-adjust: 100%;
