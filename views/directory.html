@@ -31,7 +31,7 @@
           <span><i aria-hidden="true">~</i>fediverse groups<i aria-hidden="true">~</i></span>
         </a>
         <ul class="list">
-          {% for group in groups %}
+          {% for group in groups | reverse %}
             <li>
               <a href="{{ group.url }}">
                 @{{ group.preferredUsername }}@chirp.social
@@ -41,6 +41,9 @@
               </p>
               <p>
                 {{ group.summary }}
+              </p>
+              <p>
+                Added {{ group.published }}
               </p>
             </li>
           {% endfor %}

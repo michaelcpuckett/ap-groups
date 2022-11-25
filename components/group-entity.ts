@@ -15,12 +15,16 @@ export class GroupEntity extends LitElement {
       list-style: none;
       margin: 0;
       padding: 0;
+      display: grid;
+      gap: 32px;
     }
 
     li {
       padding: 1em;
-      border: 1px solid;
-      border-radius: 4px;
+      border-radius: 32px;
+      padding: 32px;
+      background: var(--light-background-color);
+      color: var(--text-on-light-background-color)
     }
   `];
 
@@ -58,20 +62,22 @@ export class GroupEntity extends LitElement {
       <h1>
         ${this.entityName}
       </h1>
-      <p>
-        @${this.entityPreferredUsername}@chirp.social [Group]
-      </p>
-      ${this.entityIcon ?
-        html`
-          <p>
+      <div>
+        ${this.entityIcon ?
+          html`
             <img height="100" width="100" src=${this.entityIcon.url} />
+          ` :
+          nothing
+        }
+        <p>
+          @${this.entityPreferredUsername}@chirp.social
+        </p>
+        ${this.entitySummary ? html`
+          <p>
+            ${this.entitySummary}
           </p>
-        ` :
-        nothing
-      }
-      ${this.entitySummary ? html`
-        <p>${this.entitySummary}</p>
-      ` : nothing}
+        ` : nothing}
+      </div>
       <h2>Boosted Posts</h2>
       <ul>
         ${repeat(this.feed, (item: AP.ExtendedObject) => {
