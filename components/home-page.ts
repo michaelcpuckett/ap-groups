@@ -11,8 +11,17 @@ import { getId } from 'activitypub-core-utilities';
 export class HomePage extends LitElement {
   static styles = [baseCss, css`
     :host {
-      display: block;
+      display: grid;
       padding: 1em;
+      grid-template-columns: 2.5fr 1fr;
+    }
+
+    .container {
+      grid-column: 1 / 2;
+    }
+
+    .right-rail {
+      grid-column: 2 / 3;
     }
   `];
 
@@ -93,49 +102,53 @@ export class HomePage extends LitElement {
     }
 
     return html`
-      <button type="button" class="button" @click=${this.logOut}>
-        Log Out
-      </button>
-      <h1>Manage Group</h1>
-      <section
-        role="region"
-        aria-labelledby="group-details-heading">
-        <h2 id="group-details-heading">
-          Edit Group Details
-        </h2>
-        <group-details
-          outbox-url=${this.groupActor.outbox}
-          upload-media-url=${this.groupActor.endpoints.uploadMedia}
-          group-actor-id=${this.groupActor.id}
-          icon=${JSON.stringify(this.groupActor.icon)}
-          name=${this.groupActor.name}
-          summary=${this.groupActor.summary}>
-        </group-details>
-      </section>
-      <section
-        role="region"
-        aria-labelledby="manage-members-heading">
-        <h2 id="manage-members-heading">
-          Members
-        </h2>
-        <members-list
-          outbox-url=${this.groupActor.outbox}
-          group-actor-id=${this.groupActor.id}
-          members=${JSON.stringify(this.members)}>
-        </members-list>
-      </section>
-      <section
-        role="region"
-        aria-labelledby="manage-members-heading">
-        <h2 id="manage-members-heading">
-          Blocked
-        </h2>
-        <members-list
-          outbox-url=${this.groupActor.outbox}
-          group-actor-id=${this.groupActor.id}
-          members=${JSON.stringify(this.blocked)}>
-        </members-list>
-      </section>
+      <div class="container">
+        <button type="button" class="button" @click=${this.logOut}>
+          Log Out
+        </button>
+        <h1>Manage Group</h1>
+        <section
+          role="region"
+          aria-labelledby="group-details-heading">
+          <h2 id="group-details-heading">
+            Edit Group Details
+          </h2>
+          <group-details
+            outbox-url=${this.groupActor.outbox}
+            upload-media-url=${this.groupActor.endpoints.uploadMedia}
+            group-actor-id=${this.groupActor.id}
+            icon=${JSON.stringify(this.groupActor.icon)}
+            name=${this.groupActor.name}
+            summary=${this.groupActor.summary}>
+          </group-details>
+        </section>
+      </div>
+      <div class="right-rail">
+        <section
+          role="region"
+          aria-labelledby="manage-members-heading">
+          <h2 id="manage-members-heading">
+            Members
+          </h2>
+          <members-list
+            outbox-url=${this.groupActor.outbox}
+            group-actor-id=${this.groupActor.id}
+            members=${JSON.stringify(this.members)}>
+          </members-list>
+        </section>
+        <section
+          role="region"
+          aria-labelledby="manage-members-heading">
+          <h2 id="manage-members-heading">
+            Blocked
+          </h2>
+          <members-list
+            outbox-url=${this.groupActor.outbox}
+            group-actor-id=${this.groupActor.id}
+            members=${JSON.stringify(this.blocked)}>
+          </members-list>
+        </section>
+      </div>
     `;
   }
 }
