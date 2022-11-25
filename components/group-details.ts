@@ -161,6 +161,7 @@ export class GroupDetails extends LitElement {
           <input
             type="file"
             name="file"
+            accept="image/*"
             @change=${this.handleFileInputChange}
           />
           <button
