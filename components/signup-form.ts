@@ -130,11 +130,10 @@ export class SignupForm extends LitElement {
             class="input"
             type="text"
             name="username"
-            placeholder="coolkids"
             autocapitalize="off"
           />
           <span class="hint-text">
-            Do not include the @ sign.
+            No @ sign, please.
           </span>
           ${this.usernameError ? html`
             <span class="error-message">
@@ -154,7 +153,6 @@ export class SignupForm extends LitElement {
             class="input"
             type="email"
             name="email"
-            placeholder="something@domain.com"
           />
           <span class="hint-text">
             You won't have to verify, so this can be anything.

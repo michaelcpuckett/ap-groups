@@ -58,12 +58,14 @@ export const baseCss = css`
   }
 
   .button {
-    background-color: var(--dark-background-color);
-    color: var(--text-on-dark-background-color);
+    background-color: var(--light-background-color);
+    color: var(--text-on-light-background-color);
     border-radius: 8px;
     font-size: 1.125em;
     padding: .5em .875em;
     max-width: max-content;
+    box-shadow: 1px 2px 1px black;
+    border: 1px solid;
   }
 
   .button--tag {
