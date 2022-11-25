@@ -13,11 +13,29 @@
   font-weight: normal;
   text-transform: uppercase;
   line-height: 1;
+  position: relative;
+}
+
+.h1 svg {
+  width: 80px;
+  height: 80px;
 }
 
 @media (max-width: 1199px) {
   a.h1 { 
     border: 1px solid;
+  }
+
+  .h1 svg {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1200px) {
+  .h1 svg {
+    margin-left: -80px;
+    position: absolute;
   }
 }
 
@@ -38,6 +56,7 @@ h2 {
 
 .container h2 {
   font-size: 2em;
+  border: 1px 
 }
 
 .container p,

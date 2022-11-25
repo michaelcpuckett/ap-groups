@@ -1,3 +1,5 @@
+{% from "header.html" import header with context %}
+
 <!doctype html>
 <html>
   <title>Directory | chirp.social: groups for the fediverse</title>
@@ -29,10 +31,7 @@
   <body>
     <div class="root">
       <div class="container">
-        <a class="h1" href="/">
-          chirp.social
-          <span>groups for the Fediverse</span>
-        </a>
+        {{ header() }}
         <ul class="list">
           {% for group in groups | reverse %}
             <li>

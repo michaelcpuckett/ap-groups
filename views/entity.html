@@ -1,3 +1,5 @@
+{% from "header.html" import header with context %}
+
 {% for type in entity.type %}
   {% if type === 'Group' %}
     {% if entity.streams %}
@@ -13,10 +15,7 @@
             <body>
               <div class="root">
                 <div class="container">
-                  <a class="h1" href="/">
-                    chirp.social
-                    <span>groups for the Fediverse</span>
-                  </a>
+                  {{ header() }}
                   <section role="region">
                     <group-entity
                       entity-type="Group"

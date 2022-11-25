@@ -35,7 +35,11 @@ export class GroupEntity extends LitElement {
       display: flex;
       grid-auto-flow: column;
       gap: 12px;
-      margin-bottom: 12px;
+      margin-bottom: 24px;
+      font-size: 1.25em;
+      border-bottom: 1px solid;
+      padding-bottom: 24px;
+      align-items: center;
     }
 
     .avatar {
@@ -43,7 +47,9 @@ export class GroupEntity extends LitElement {
     }
 
     h2 {
-      margin-bottom: 12px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid;
+      padding-bottom: 4px;
     }
   `];
 
@@ -95,7 +101,9 @@ export class GroupEntity extends LitElement {
         }
         <div>
           <p>
-            @${this.entityPreferredUsername}@chirp.social
+            <strong>
+              @${this.entityPreferredUsername}@chirp.social
+            </strong>
           </p>
           ${this.entitySummary ? html`
             <p>

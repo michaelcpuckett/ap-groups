@@ -1,3 +1,6 @@
+{% from "header.html" import header with context %}
+
+
 <!doctype html>
 <html>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -15,6 +18,7 @@
     }
   </style>
   <body>
+    {{ header() }}
     <section role="region" aria-labelledby="login-heading">
       <h2 id="login-heading">
         Log In
