@@ -21,6 +21,13 @@ export class HomePage extends LitElement {
         grid-template-columns: 2.5fr 1fr;
       }
 
+      .container,.
+      .right-rail {
+        display: grid;
+        gap: 32px;
+        align-content: flex-start;
+      }
+
       .container {
         grid-column: 1 / 2;
       }
@@ -31,8 +38,8 @@ export class HomePage extends LitElement {
 
       header,
       section {
-        background-color: var(--light-background-color);
-        color: var(--text-on-light-background-color);
+        background-color: var(--primary-color);
+        color: var(--text-on-primary-color);
         border-radius: 32px;
       }
     }

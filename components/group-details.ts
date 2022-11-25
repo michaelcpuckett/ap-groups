@@ -129,7 +129,12 @@ export class GroupDetails extends LitElement {
       ${this.icon ? html`<img src=${this.icon.url} />` : html`<p>No avatar set.</p>`}
 
       <form name="upload" @submit=${this.handleAvatarUpload}>
-        <input type="file" name="file" />
+        <label>
+          <span>
+            Profile Pic
+          </span>
+          <input type="file" name="file" />
+        </label>
         <input type="hidden" name="object" value=${JSON.stringify({
           "type": "Image",
         })} />
