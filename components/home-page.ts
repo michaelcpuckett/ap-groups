@@ -13,15 +13,21 @@ export class HomePage extends LitElement {
     :host {
       display: grid;
       padding: 1em;
-      grid-template-columns: 2.5fr 1fr;
+      gap: 32px;
     }
 
-    .container {
-      grid-column: 1 / 2;
-    }
+    @media (min-width: 1200px) {
+      :host {
+        grid-template-columns: 2.5fr 1fr;
+      }
 
-    .right-rail {
-      grid-column: 2 / 3;
+      .container {
+        grid-column: 1 / 2;
+      }
+
+      .right-rail {
+        grid-column: 2 / 3;
+      }
     }
   `];
 
