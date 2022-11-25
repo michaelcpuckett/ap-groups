@@ -123,7 +123,7 @@ export class SignupForm extends LitElement {
           'has-error': this.usernameError,
         })}>
           <span class="label-text">
-            Username
+            Group Username
           </span>
           <input
             @input=${this.clearUsernameError}
@@ -134,7 +134,7 @@ export class SignupForm extends LitElement {
             autocapitalize="off"
           />
           <span class="hint-text">
-            All accounts are Group accounts.
+            Do not include the @ sign.
           </span>
           ${this.usernameError ? html`
             <span class="error-message">

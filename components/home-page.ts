@@ -220,10 +220,13 @@ export class HomePage extends LitElement {
             outbox-url=${this.groupActor.outbox}
             group-actor-id=${this.groupActor.id}
             members=${JSON.stringify(this.members)}>
-            You have no members following the group.
-            To get started, go to your personal Mastodon
-            account and follow
-            @<strong>${this.groupActor.preferredUsername}</strong>@chirp.social.
+            <figure>
+              You have no members following the group.
+              To get started, go to your personal Mastodon
+              account and search for
+              <strong>@${this.groupActor.preferredUsername}@chirp.social</strong>
+              then follow it.
+            </figure>
           </members-list>
         </section>
         <section

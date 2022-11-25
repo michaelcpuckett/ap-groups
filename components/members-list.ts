@@ -49,7 +49,7 @@ export class MembersList extends LitElement {
 
     if (!this.members.length) {
       return html`
-        No members.
+        <slot></slot>
       `;
     }
 
