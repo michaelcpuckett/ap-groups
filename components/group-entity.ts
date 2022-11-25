@@ -156,7 +156,7 @@ export class GroupEntity extends LitElement {
 
           return html`
             <li>
-              <a href=${item.url}>
+              <a target="_blank" href=${item.url}>
                 ${attachments.length ? repeat(attachments, (attachment: AP.ExtendedObject) => {
                   return html`
                     <img src=${attachment.url} />
@@ -167,7 +167,7 @@ export class GroupEntity extends LitElement {
               </a>
               <p>
                 By
-                <a href=${item.attributedTo}>
+                <a target="_blank" href=${item.attributedTo}>
                   ${item.attributedTo}
                 </a>
               </p>
