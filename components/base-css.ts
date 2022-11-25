@@ -56,8 +56,8 @@ export const baseCss = css`
   }
 
   .button {
-    background-color: var(--accent-color);
-    color: var(--text-on-accent-color);
+    background-color: var(--dark-background-color);
+    color: var(--text-on-dark-background-color);
     border-radius: 8px;
     font-size: 1.333em;
     padding: 4px 12px;
@@ -73,6 +73,8 @@ export const baseCss = css`
   
   .button--cta {
     font-size: 1.5em;
+    background-color: var(--accent-color);
+    color: var(--text-on-accent-color);
   }
 
   .label {
