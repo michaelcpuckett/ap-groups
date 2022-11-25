@@ -13,7 +13,7 @@ export class HomePage extends LitElement {
     :host {
       display: grid;
       padding: 1em;
-      gap: 32px;
+      gap: 24px;
     }
 
     header {
@@ -39,8 +39,8 @@ export class HomePage extends LitElement {
         background-color: var(--primary-color);
         color: var(--text-on-primary-color);
         border-radius: 24px;
-        padding: 32px;
-        margin: 32px;
+        padding: 24px;
+        margin: 24px;
       }
     }
 
@@ -52,7 +52,7 @@ export class HomePage extends LitElement {
       .container,
       .right-rail {
         display: grid;
-        gap: 32px;
+        gap: 24px;
         align-content: flex-start;
       }
 
@@ -69,7 +69,7 @@ export class HomePage extends LitElement {
         background-color: var(--primary-color);
         color: var(--text-on-primary-color);
         border-radius: 24px;
-        padding: 32px;
+        padding: 24px;
       }
     }
   `];

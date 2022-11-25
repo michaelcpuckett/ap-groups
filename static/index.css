@@ -55,7 +55,7 @@ h2 {
 
 .container {
   display: grid;
-  grid-gap: 32px;
+  grid-gap: 24px;
   align-content: flex-start;
 }
 
@@ -81,8 +81,8 @@ figure {
 
 .root {
   display: grid;
-  row-gap: 32px;
-  padding: 32px;
+  row-gap: 24px;
+  padding: 24px;
   align-content: flex-start;
 }
 
@@ -94,20 +94,20 @@ header a span {
 
 .forms,
 .form {
-  gap: 32px;
+  gap: 24px;
   display: grid;
 }
 
 .right-rail {
-  gap: 32px;
+  gap: 24px;
   display: grid;
 }
 
 
 @media (min-width: 1200px) {
   .root {
-    padding: 32px;
-    column-gap: 32px;
+    padding: 24px;
+    column-gap: 24px;
     row-gap: 0;
     grid-template-columns: 2.5fr 1fr;
   }
@@ -115,11 +115,11 @@ header a span {
   .container {
     grid-column: 1 / 2;
     display: grid;
-    gap: 32px;
+    gap: 24px;
   }
 
   .right-rail {
-    padding: 32px;
+    padding: 24px;
     grid-column: 2 / 3;
     background-color: var(--primary-color);
     color: var(--text-on-primary-color);
@@ -138,7 +138,7 @@ header a span {
   }
 
   .container section {
-    padding: 32px;
+    padding: 24px;
     border-radius: 24px;
     box-shadow: var(--box-shadow);
     background-color: var(--primary-color);
