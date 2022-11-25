@@ -38,7 +38,7 @@ export class HomePage extends LitElement {
       :host {
         background-color: var(--primary-color);
         color: var(--text-on-primary-color);
-        border-radius: 32px;
+        border-radius: 24px;
         padding: 32px;
         margin: 32px;
       }
@@ -68,7 +68,7 @@ export class HomePage extends LitElement {
       section {
         background-color: var(--primary-color);
         color: var(--text-on-primary-color);
-        border-radius: 32px;
+        border-radius: 24px;
         padding: 32px;
       }
     }

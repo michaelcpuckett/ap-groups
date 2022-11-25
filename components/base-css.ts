@@ -53,14 +53,16 @@ export const baseCss = css`
     border-radius: 8px;
     font-size: .875em;
     font-weight: normal;
+    background-color: var(--dark-background-color);
+    color: var(--text-on-dark-background-color);
   }
 
   .button {
-    background: var(--accent-color);
-    color: var(--text-on-accent-color);
+    background-color: var(--dark-background-color);
+    color: var(--text-on-dark-background-color);
     border-radius: 8px;
-    font-size: 1.333em;
-    padding: 4px 12px;
+    font-size: 1.125em;
+    padding: .5em .875em;
     max-width: max-content;
   }
 
@@ -73,6 +75,8 @@ export const baseCss = css`
   
   .button--cta {
     font-size: 1.5em;
+    background: var(--accent-color);
+    color: var(--text-on-accent-color);
   }
 
   .label {

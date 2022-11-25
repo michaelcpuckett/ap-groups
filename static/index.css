@@ -2,12 +2,11 @@
   text-align: center;
   color: var(--accent-color);
   text-shadow: 0 3px 0 black;
-  font-weight: normal;
   font-size: 3em;
   line-height: 1.25;
   padding: .5em 0 .75em 0;
   margin: 0;
-  border-radius: 32px;
+  border-radius: 24px;
   background-color: var(--primary-color);
   text-decoration: none;
 }
@@ -92,7 +91,7 @@ header a span {
     grid-column: 2 / 3;
     background-color: var(--primary-color);
     color: var(--text-on-primary-color);
-    border-radius: 32px;
+    border-radius: 24px;
     overflow: hidden;
     align-content: flex-start;
   }
@@ -101,12 +100,12 @@ header a span {
   login-form {
     background-color: var(--light-background-color);
     color: var(--text-on-light-background-color);
-    border-radius: 32px;
+    border-radius: 24px;
   }
 
   .container section {
     padding: 32px;
-    border-radius: 32px;
+    border-radius: 24px;
     background-color: var(--primary-color);
     color: var(--text-on-primary-color);
   }

@@ -4,7 +4,7 @@
 
 :root {
   color-scheme: dark only;
-  --dark-background-color: #222221;
+  --dark-background-color: #300303;
   --text-on-dark-background-color: #f3dede;
   --medium-background-color: #037d7e;
   --text-on-medium-background-color: #f6f6ef;
@@ -78,15 +78,17 @@ button {
 }
 
 .button {
-  background: var(--accent-color);
-  color: var(--text-on-accent-color);
+  background-color: var(--dark-background-color);
+  color: var(--text-on-dark-background-color);
   border: 1px solid;
   border-radius: 8px;
-  padding: 4px 12px;
+  padding: .5em .875em;
   text-decoration: none;
 }
 
 .button--cta {
+  background: var(--accent-color);
+  color: var(--text-on-accent-color);
   font-size: 1.5em;
   border-radius: 12px;
   padding: 12px 16px;
