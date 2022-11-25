@@ -3,20 +3,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="base.css" />
   <body>
-    <ul>
-      {% for group in groups %}
-        <li>
-          <a href="{{ group.url }}">
-            @{{ group.preferredUsername }}@chirp.social
-          </a>
-          <p>
-            {{ group.name }}
-          </p>
-          <p>
-            {{ group.summary }}
-          </p>
-        </li>
-      {% endfor %}
-    </ul>
+    <div class="root">
+      <div class="container">
+        <h1>
+          chirp.social
+          <span><i aria-hidden="true">~</i>fediverse groups<i aria-hidden="true">~</i></span>
+        </h1>
+        <ul>
+          {% for group in groups %}
+            <li>
+              <a href="{{ group.url }}">
+                @{{ group.preferredUsername }}@chirp.social
+              </a>
+              <p>
+                {{ group.name }}
+              </p>
+              <p>
+                {{ group.summary }}
+              </p>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="right-rail">
+
+      </div>
+    </div>
   </body>
 </html>
