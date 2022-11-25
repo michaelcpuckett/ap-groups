@@ -25,6 +25,7 @@ h2 {
 .container {
   display: grid;
   grid-gap: 32px;
+  align-content: flex-start;
 }
 
 .container h2 {

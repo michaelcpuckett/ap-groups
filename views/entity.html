@@ -4,29 +4,35 @@
   <link rel="stylesheet" href="base.css" />
   <link rel="stylesheet" href="index.css" />
   <body>
-    <a class="h1" href="/">
-      chirp.social
-      <span><i aria-hidden="true">~</i>fediverse groups<i aria-hidden="true">~</i></span>
-    </a>
-    {% for type in entity.type %}
-      {% if type === 'Group' %}
-        {% if entity.streams %}
-          {% for stream in entity.streams %}
-            {% if stream === (entity.url + '/shared') %}
-              <group-entity
-                entity-type="Group"
-                entity-id="{{ entity.id }}"
-                entity-preferred-username="{{ entity.preferredUsername }}"
-                entity-name="{{ entity.name }}"
-                entity-summary="{{ entity.summary }}"
-                entity-icon="{{ entity.icon | dump }}"
-                entity-feed-id="{{ stream }}">
-              </group-entity>
-              <script type="module" src="group-entity.js"></script>
+    <div class="root">
+      <div class="container">
+        <a class="h1" href="/">
+          chirp.social
+          <span><i aria-hidden="true">~</i>fediverse groups<i aria-hidden="true">~</i></span>
+        </a>
+        {% for type in entity.type %}
+          {% if type === 'Group' %}
+            {% if entity.streams %}
+              {% for stream in entity.streams %}
+                {% if stream === (entity.url + '/shared') %}
+                  <section role="region">
+                    <group-entity
+                      entity-type="Group"
+                      entity-id="{{ entity.id }}"
+                      entity-preferred-username="{{ entity.preferredUsername }}"
+                      entity-name="{{ entity.name }}"
+                      entity-summary="{{ entity.summary }}"
+                      entity-icon="{{ entity.icon | dump }}"
+                      entity-feed-id="{{ stream }}">
+                    </group-entity>
+                  </section>
+                  <script type="module" src="group-entity.js"></script>
+                {% endif %}
+              {% endfor %}
             {% endif %}
-          {% endfor %}
-        {% endif %}
-      {% endif %}
-    {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
   </body>
 </html>
