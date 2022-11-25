@@ -67,7 +67,7 @@ export class MembersList extends LitElement {
               <button
                 @click=${() => this.block(member.id)}
                 type="button"
-                class="button">
+                class="button button--tag">
                 Block
               </button>
             </li>

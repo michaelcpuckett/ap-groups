@@ -162,7 +162,7 @@ export class GroupDetails extends LitElement {
         })} />
         <label class="label">
           <span class="label-text">
-            Profile Pic
+            Change Profile Pic
           </span>
           <input
             type="file"

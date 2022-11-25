@@ -12,6 +12,7 @@ export const baseCss = css`
   h1,
   h2 {
     font-weight: normal;
+    margin: 0;
   }
 
   img {
@@ -61,6 +62,12 @@ export const baseCss = css`
     font-size: 1.25em;
     padding: 4px 12px;
     font-weight: bold;
+    max-width: max-content;
+  }
+
+  .button--tag {
+    font-size: .95em;
+    padding: 4px 8px;
   }
   
   .button--cta {
