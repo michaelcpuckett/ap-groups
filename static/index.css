@@ -6,7 +6,7 @@
   line-height: 1.25;
   padding: .5em 0;
   margin: 0;
-  border-radius: 24px;
+  border-radius: 18px;
   background-color: var(--primary-color);
   text-decoration: none;
   font-family: 'passion', sans-serif;
@@ -123,7 +123,7 @@ header a span {
     grid-column: 2 / 3;
     background-color: var(--primary-color);
     color: var(--text-on-primary-color);
-    border-radius: 24px;
+    border-radius: 18px;
     overflow: hidden;
     align-content: flex-start;
     box-shadow: var(--box-shadow);
@@ -133,13 +133,13 @@ header a span {
   login-form {
     background-color: var(--light-background-color);
     color: var(--text-on-light-background-color);
-    border-radius: 24px;
+    border-radius: 18px;
     box-shadow: var(--box-shadow);
   }
 
   .container section {
     padding: 24px;
-    border-radius: 24px;
+    border-radius: 18px;
     box-shadow: var(--box-shadow);
     background-color: var(--primary-color);
     color: var(--text-on-primary-color);
