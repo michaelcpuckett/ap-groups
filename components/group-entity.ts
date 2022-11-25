@@ -150,7 +150,7 @@ export class GroupEntity extends LitElement {
                 </a>
                 on
                 <a href=${item.url}>
-                  ${new Date(`${item.updated}`.split('T')?.[0] ?? '').toDateString()}
+                  ${`${item.updated ?? ''}`.split('T')?.[0] ?? ''}
                 </a>
               </p>
             </li>
