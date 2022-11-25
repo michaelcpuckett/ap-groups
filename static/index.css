@@ -33,6 +33,11 @@
 }
 
 @media (min-width: 1200px) {
+  .h1 {
+    text-align: left;
+    padding-left: 104px;
+  }
+
   .h1 svg {
     margin-left: -80px;
     position: absolute;
@@ -121,6 +126,7 @@ header a span {
     border-radius: 24px;
     overflow: hidden;
     align-content: flex-start;
+    box-shadow: var(--box-shadow);
   }
 
   signup-form,
@@ -128,11 +134,13 @@ header a span {
     background-color: var(--light-background-color);
     color: var(--text-on-light-background-color);
     border-radius: 24px;
+    box-shadow: var(--box-shadow);
   }
 
   .container section {
     padding: 32px;
     border-radius: 24px;
+    box-shadow: var(--box-shadow);
     background-color: var(--primary-color);
     color: var(--text-on-primary-color);
   }

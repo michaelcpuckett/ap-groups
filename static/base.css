@@ -16,6 +16,7 @@
   --error-color: red;
   --accent-color: #80f9ff;
   --text-on-accent-color: #300303;
+  --box-shadow: 0 4px 2px var(--dark-background-color);
 }
 
 @font-face {
@@ -71,6 +72,11 @@ img {
 
 a {
   color: var(--link-color);
+}
+
+ul {
+  list-style-position: inside;
+  padding-left: 0;
 }
 
 button {
