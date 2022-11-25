@@ -78,8 +78,8 @@ button {
 }
 
 .button {
-  background-color: var(--dark-background-color);
-  color: var(--text-on-dark-background-color);
+  background: var(--accent-color);
+  color: var(--text-on-accent-color);
   border: 1px solid;
   border-radius: 8px;
   padding: 4px 12px;
@@ -95,8 +95,6 @@ button {
   display: grid;
   text-align: center;
   font-weight: bold;
-  background: var(--accent-color);
-  color: var(--text-on-accent-color);
 }
 
 @media (min-width: 1200px) {
