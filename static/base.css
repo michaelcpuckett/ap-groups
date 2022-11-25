@@ -4,7 +4,7 @@
 
 :root {
   color-scheme: dark only;
-  --dark-background-color: #1d0101;
+  --dark-background-color: #001616;
   --text-on-dark-background-color: white;
   --medium-background-color: #037d7e;
   --text-on-medium-background-color: white;
@@ -26,6 +26,13 @@
 @font-face {
   font-family: 'Lato';
   src: url('lato.ttf');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Lato';
+  src: url('lato-bold.ttf');
+  font-weight: bold;
 }
 
 html {
@@ -56,10 +63,6 @@ body {
     background-color: var(--medium-background-color);
     color: var(--text-on-medium-background-color);
   }
-}
-
-h2 {
-  font-weight: normal;
 }
 
 img {
