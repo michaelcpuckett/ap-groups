@@ -167,15 +167,17 @@ export class GroupDetails extends LitElement {
             class="button"
             type="button"
             @click=${this.handleFileInputTriggerClick}>
-            Select File to Upload
+            ${this.isFileReadyToUpload ? html`Replace File` : html`Select File to Upload`}
           </button>
         </label>
         ${this.isFileReadyToUpload ? html`
           <button class="button" type="submit">
-            Upload
+            Ready to Upload
           </button>
         ` : nothing}
       </form>
+
+      <hr />
 
       <form
         @submit=${this.handleSubmit}
@@ -199,7 +201,7 @@ export class GroupDetails extends LitElement {
           </label>
         </div>
         <button type="submit" class="button">
-          Save
+          Save Profile
         </button>
       </form>
     `;
