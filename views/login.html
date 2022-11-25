@@ -1,36 +1,32 @@
 {% from "header.html" import header with context %}
-
+{% from "about.html" import about with context %}
 
 <!doctype html>
 <html>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="base.css" />
-  <style>
-    body {
-      display: grid;
-      place-items: center;
-      place-content: center;
-    }
-    section {
-      max-width: min(100vw, 480px);
-      margin: 0 auto;
-      width: 100%;
-    }
-  </style>
+  <link rel="stylesheet" href="index.css" />
   <body>
-    {{ header() }}
-    <section role="region" aria-labelledby="login-heading">
-      <h2 id="login-heading">
-        Log In
-      </h2>
-      <login-form></login-form>
-    </section>
-    <section role="region" aria-labelledby="signup-heading">
-      <h2 id="signup-heading">
-        Sign Up
-      </h2>
-      <signup-form></signup-form>
-    </section>
+    <div class="root">
+      <div class="container">
+        {{ header() }}
+        {{ about() }}
+      </div>
+      <div class="right-rail">
+        <section role="region" aria-labelledby="login-heading">
+          <h2 id="login-heading">
+            Log In
+          </h2>
+          <login-form></login-form>
+        </section>
+        <section role="region" aria-labelledby="signup-heading">
+          <h2 id="signup-heading">
+            Sign Up
+          </h2>
+          <signup-form></signup-form>
+        </section>
+      </div>
+    </div>
     <script type="module" src="login.js"></script>
   </body>
 </html>

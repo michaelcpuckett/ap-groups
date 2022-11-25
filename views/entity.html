@@ -30,21 +30,7 @@
                   <script type="module" src="group-entity.js"></script>
                 </div>
                 <div class="right-rail">
-                  <section role="region" aria-labelledby="about-heading">
-                    <h2 id="about-heading">
-                      What is this?
-                    </h2>
-                    <p>
-                      This is an <a target="_blank" href="https://activitypub.rocks">ActivityPub</a> server that can interact with
-                      <a target="_blank" href="https://joinmastodon.org">Mastodon</a>.
-                    </p>
-                    <figure>
-                      <p>
-                        Any post addressed to a Group by a follower gets reboosted
-                        by the Group account, for all followers to see.
-                      </p>
-                    </figure>
-                  </section>
+                  {{ about() }}
                 </div>
               </div>
             </body>
