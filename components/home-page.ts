@@ -25,6 +25,7 @@ export class HomePage extends LitElement {
       .right-rail {
         display: grid;
         gap: 32px;
+        padding: 32px;
         align-content: flex-start;
       }
 
