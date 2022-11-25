@@ -36,15 +36,18 @@
         <ul class="list">
           {% for group in groups | reverse %}
             <li>
+              {% if group.icon.url %}
+              <a href="{{ group.url }}" style="display: block">
+                <img
+                  class="avatar"
+                  height="100"
+                  width="100"
+                  src="{{ group.icon.url }}"
+                />
+              </a>
+              {% endif %}
               <a href="{{ group.url }}">
-                {% if group.icon.url %}
-                  <img
-                    class="avatar"
-                    height="100"
-                    width="100"
-                    src="{{ group.icon.url }}"
-                  />
-                {% endif %}
+                {{ group.name }}
               </a>
               <dl>
                 <dt>
@@ -54,12 +57,6 @@
                   <a href="{{ group.url }}">
                     @{{ group.preferredUsername }}@chirp.social
                   </a>
-                </dd>
-                <dt>
-                  Display Name
-                </dt>
-                <dd>
-                  {{ group.name }}
                 </dd>
                 <dt>
                   Bio
