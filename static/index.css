@@ -40,12 +40,12 @@ figure {
   color: var(--text-on-light-background-color);
   max-width: max-content;
   margin: 8px auto;
-  padding: 8px;
+  padding: 8px 16px;
   border-radius: 8px;
 }
 
 figure p {
-  font-size: 1.5em;
+  font-size: 1.75em;
   font-family: monospace;
 }
 
