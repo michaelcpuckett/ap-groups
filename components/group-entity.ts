@@ -34,7 +34,7 @@ export class GroupEntity extends LitElement {
     .avatar-summary {
       display: flex;
       grid-auto-flow: column;
-      gap: 12px;
+      gap: 24px;
       margin-bottom: 24px;
       font-size: 1.25em;
       border-bottom: 1px solid;
@@ -119,6 +119,14 @@ export class GroupEntity extends LitElement {
       <ul>
         ${repeat(this.feed, (item: AP.ExtendedObject) => {
           const attachments = item.attachment ? Array.isArray(item.attachment) ? item.attachment : [item.attachment] : [];
+
+          if (item.type === AP.ExtendedObjectTypes.TOMBSTONE) {
+            return html`
+              <li>
+                [Deleted]
+              </li>
+            `;
+          }
 
           return html`
             <li>
