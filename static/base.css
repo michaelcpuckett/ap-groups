@@ -4,25 +4,18 @@
 
 :root {
   color-scheme: dark only;
-
   --dark-background-color: #222221;
   --text-on-dark-background-color: #f3dede;
-
-  --medium-background-color:  #330a25;
+  --medium-background-color: #037d7e;
   --text-on-medium-background-color: #f6f6ef;
-
-  --light-background-color: #f6f6ef;
+  --light-background-color: #eff3f6;
   --text-on-light-background-color: #222221;
-
-  --primary-color: #5f1b47;
+  --primary-color: #002424;
   --text-on-primary-color: #f6f6ef;
-
-  --link-color: #eca3e3;
-
+  --link-color: #36c7ff;
   --error-color: red;
-
-  --accent-color: pink;
-  --text-on-accent-color: black;
+  --accent-color: #80f9ff;
+  --text-on-accent-color: #222221;
 }
 
 html {
