@@ -1,20 +1,22 @@
-<!doctype html>
-<html>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="base.css" />
-  <link rel="stylesheet" href="index.css" />
-  <body>
-    <div class="root">
-      <div class="container">
-        <a class="h1" href="/">
-          chirp.social
-          <span><i aria-hidden="true">~</i>fediverse groups<i aria-hidden="true">~</i></span>
-        </a>
-        {% for type in entity.type %}
-          {% if type === 'Group' %}
-            {% if entity.streams %}
-              {% for stream in entity.streams %}
-                {% if stream === (entity.url + '/shared') %}
+{% for type in entity.type %}
+  {% if type === 'Group' %}
+    {% if entity.streams %}
+      {% for stream in entity.streams %}
+        {% if stream === (entity.url + '/shared') %}
+        <!doctype html>
+          <html>
+            <title>{{group.name}} | chirp.social: groups for the fediverse</title>
+            <meta name="description" content="{{ group.summary }}" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+            <link rel="stylesheet" href="base.css" />
+            <link rel="stylesheet" href="index.css" />
+            <body>
+              <div class="root">
+                <div class="container">
+                  <a class="h1" href="/">
+                    chirp.social
+                    <span><i aria-hidden="true">~</i>fediverse groups<i aria-hidden="true">~</i></span>
+                  </a>
                   <section role="region">
                     <group-entity
                       entity-type="Group"
@@ -27,27 +29,27 @@
                     </group-entity>
                   </section>
                   <script type="module" src="group-entity.js"></script>
-                {% endif %}
-              {% endfor %}
-            {% endif %}
-          {% endif %}
-        {% endfor %}
-      </div>
-      <section role="region" aria-labelledby="about-heading">
-        <h2 id="about-heading">
-          What is this?
-        </h2>
-        <p>
-          This is an <a target="_blank" href="https://activitypub.rocks">ActivityPub</a> server that can interact with
-          <a target="_blank" href="https://joinmastodon.org">Mastodon</a>.
-        </p>
-        <figure>
-          <p>
-            Any post addressed to a Group by a follower gets reboosted
-            automatically by the Group account, for all followers to see.
-          </p>
-        </figure>
-      </section>
-    </div>
-  </body>
-</html>
+                </div>
+                <section role="region" aria-labelledby="about-heading">
+                  <h2 id="about-heading">
+                    What is this?
+                  </h2>
+                  <p>
+                    This is an <a target="_blank" href="https://activitypub.rocks">ActivityPub</a> server that can interact with
+                    <a target="_blank" href="https://joinmastodon.org">Mastodon</a>.
+                  </p>
+                  <figure>
+                    <p>
+                      Any post addressed to a Group by a follower gets reboosted
+                      automatically by the Group account, for all followers to see.
+                    </p>
+                  </figure>
+                </section>
+              </div>
+            </body>
+          </html>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
