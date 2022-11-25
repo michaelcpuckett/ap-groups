@@ -106,7 +106,6 @@ header a span {
 
 @media (min-width: 1200px) {
   .root {
-    padding: 32px;
     column-gap: 24px;
     row-gap: 0;
     grid-template-columns: 2.5fr 1fr;
