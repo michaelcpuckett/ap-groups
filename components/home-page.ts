@@ -39,7 +39,7 @@ export class HomePage extends LitElement {
         background-color: var(--primary-color);
         color: var(--text-on-primary-color);
         border-radius: 18px;
-        padding: 24px;
+        padding: 32px;
         margin: 24px;
       }
     }
@@ -69,7 +69,7 @@ export class HomePage extends LitElement {
         background-color: var(--primary-color);
         color: var(--text-on-primary-color);
         border-radius: 18px;
-        padding: 24px;
+        padding: 32px;
       }
     }
   `];

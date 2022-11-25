@@ -22,7 +22,7 @@ export class GroupEntity extends LitElement {
     li {
       padding: 1em;
       border-radius: 12px;
-      padding: 24px;
+      padding: 32px;
       background: var(--light-background-color);
       color: var(--text-on-light-background-color)
     }
