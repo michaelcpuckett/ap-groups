@@ -11,12 +11,6 @@
 
 <body>
   <div class="root">
-    <header role="banner">
-      <a href="/directory" class="button button--cta">
-        Group Directory
-        <span>See All Groups</span>
-      </a>
-    </header>
     <div class="container">
       <h1>
         chirp.social
@@ -32,11 +26,14 @@
           <a target="_blank" href="https://joinmastodon.org">Mastodon</a>.
         </p>
         <p>
-          Any post addressed to a Group by a follower get boosted
-          automatically by the Group account, for all followers to see.
         </p>
         <figure>
-          <code>@group@chirp.social hello friends!</code>
+          <p>
+            <code>
+              Any post addressed to a Group by a follower get reboosted
+              automatically by the Group account, for all followers to see.
+            </code>
+          </p>
         </figure>
       </section>
 
@@ -46,10 +43,13 @@
         </h2>
         <ul>
           <li>
-            Create an account. All accounts are Group accounts.
+            Create an account on this page. All accounts are Group accounts.
           </li>
           <li>
             Anyone that follows the account can post to the Group.
+          </li>
+          <li>
+            You can block people from getting reboosted by the Group.
           </li>
           <li>
             Everything is public and shows up in the timeline.
@@ -79,7 +79,7 @@
           Who made this?
         </h2>
         <p>
-          This is primarily the work of a single developer, 
+          This is primarily a side project made by a single developer, 
           <a target="_blank" href="https://github.com/michaelcpuckett">
             Michael Puckett
           </a>
@@ -98,20 +98,32 @@
     </div>
 
     <div class="right-rail">
-      <h2 id="signup-heading">
-        Sign Up for a Group
-      </h2>
-      <signup-form></signup-form>
-      <h2 id="login-heading">
-        Log In to Manage Your Group
-      </h2>
-      <login-form></login-form>
+      <header>
+        <a href="/directory" class="button button--cta">
+          Group Directory
+          <span>See All Groups</span>
+        </a>
+      </header>
+      <div class="forms">
+        <div class="form">
+          <h2 id="signup-heading">
+            Sign Up for a Group
+          </h2>
+          <signup-form></signup-form>
+        </div>
+        <div class="form">
+          <h2 id="login-heading">
+            Log In to Manage Your Group
+          </h2>
+          <login-form></login-form>
+        </div>
+      </div>
+      <footer role="contentinfo">
+        <p>
+          This is not a fork of Mastodon and is not affiliated with Mastodon. Everything is MIT licensed.
+        </p>
+      </footer>
     </div>
-    <footer role="contentinfo">
-      <p>
-        This is not a fork of Mastodon and is not affiliated with Mastodon. Everything is MIT licensed.
-      </p>
-    </footer>
   </div>
   <script type="module" src="login.js"></script>
 </body>

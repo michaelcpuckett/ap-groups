@@ -48,12 +48,10 @@ export const baseCss = css`
   .button {
     background-color: var(--accent-color);
     color: var(--text-on-accent-color);
-    border: 1px solid;
     border-radius: 8px;
     font-size: 1.25em;
     padding: 4px 12px;
     font-weight: bold;
-    text-shadow: 0 2px 0 black;
   }
   
   .button--cta {
