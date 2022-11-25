@@ -1,8 +1,15 @@
+{% from "header.html" import header with context %}
+
 <!doctype html>
 <html>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="base.css" />
   <body>
+    <div class="root">
+      <div class="container">
+        {{ header() }}
+      </div>
+    </div>
     <home-page group-id="{{actor.id}}"></home-page>
     <script type="module" src="home.js"></script>
   </body>
