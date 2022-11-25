@@ -21,7 +21,7 @@ export class HomePage extends LitElement {
         grid-template-columns: 2.5fr 1fr;
       }
 
-      .container,.
+      .container,
       .right-rail {
         display: grid;
         gap: 32px;
