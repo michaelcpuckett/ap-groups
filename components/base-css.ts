@@ -59,7 +59,7 @@ export const baseCss = css`
     background-color: var(--accent-color);
     color: var(--text-on-accent-color);
     border-radius: 8px;
-    font-size: 1.25em;
+    font-size: 1.333em;
     padding: 4px 12px;
     max-width: max-content;
   }
