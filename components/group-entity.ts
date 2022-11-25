@@ -72,11 +72,17 @@ export class GroupEntity extends LitElement {
   @property({type: String, attribute: 'entity-feed-id'})
   private entityFeedId?: string;
 
+  @property({type: String, attribute: 'entity-followers-id'})
+  private entityFollowersId?: string;
+
   @property({type: Object, attribute: 'entity-icon'})
   private entityIcon?: AP.Image;
 
   @state()
   private feed: AP.ExtendedObject[] = [];
+
+  @state()
+  private followersCount = -1;
 
   firstUpdated() {
     fetch(this.entityFeedId, {
@@ -86,6 +92,15 @@ export class GroupEntity extends LitElement {
     }).then(res => res.json())
     .then((collection: AP.CollectionTypes.COLLECTION|AP.CollectionTypes.ORDERED_COLLECTION) => {
       this.feed = collection.orderedItems ?? collection.items;
+    });
+
+    fetch(this.entityFollowersId, {
+      headers: {
+        'Accept': 'application/activity+json'
+      }
+    }).then(res => res.json())
+    .then((collection: AP.CollectionTypes.COLLECTION) => {
+      this.followersCount = collection.items.length;
     });
   }
 
@@ -115,6 +130,11 @@ export class GroupEntity extends LitElement {
           ${this.entitySummary ? html`
             <p>
               ${this.entitySummary}
+            </p>
+          ` : nothing}
+          ${this.followersCount > -1 ? html`
+            <p>
+              ${this.followersCount} followers
             </p>
           ` : nothing}
         </div>
