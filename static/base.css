@@ -34,11 +34,18 @@ body {
   display: grid;
   grid-template-columns: 100%;
   gap: 24px;
-  background-color: var(--medium-background-color);
-  color: var(--text-on-medium-background-color);
+  background-color: var(--dark-background-color);
+  color: var(--text-on-dark-background-color);
   font-size: 20x;
   line-height: 1.5;
   -webkit-text-size-adjust: 100%;
+}
+
+@media (min-width: 1200px) {
+  body {
+    background-color: var(--medium-background-color);
+    color: var(--text-on-medium-background-color);
+  }
 }
 
 h2 {
