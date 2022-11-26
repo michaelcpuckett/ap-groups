@@ -5,11 +5,10 @@
 <html>
 
 <head>
-  <title>chirp.social: groups for the fediverse</title>
-  <meta name="description" content="Create groups for Mastodon and other ActivityPub-enabled apps." />
+  <title>socialweb.id</title>
+  <meta name="description" content="An ActivityPub-enabled app." />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="base.css" />
-  <link rel="stylesheet" href="index.css" />
 </head>
 
 <body>
@@ -17,93 +16,20 @@
     <div class="container">
       {{ header() }}
 
-      {{ about() }}
-
-      <section role="region" aria-labelledby="how-heading">
-        <h2 id="how-heading">
-          How does this work?
+      <div class="section">
+        <h2 id="signup-heading">
+          Sign Up for an Account
         </h2>
-        <ol>
-          <li>
-            Create an account on this page.
-          </li>
-          <li>
-            Follow the Group.
-          </li>
-          <li>
-            Post a message addressed to the Group.
-          </li>
-          <li>
-            The Group will repost it immediately, for all followers to see.
-          </li>
-          <li>
-            Log in to manage your Group.
-            You can block people from getting reposted or delete the Group.
-          </li>
-        </ol>
-      </section>
-
-      <section role="region" aria-labelledby="featured-heading">
-        <h2 id="featured-heading">
-          Featured Groups
-        </h2>
-        <ul>
-          <li>
-            <a href="/@art">@art</a>
-          </li>
-        </ul>
-      </section>
-
-      <section role="region" aria-labelledby="who-heading">
-        <h2 id="who-heading">
-          Who made this?
-        </h2>
-        <p>
-          This is primarily a side project made by 
-          <a target="_blank" href="https://github.com/michaelcpuckett">
-            Michael Puckett
-          </a>
-        </p>
-        <p>
-          I'm using Firebase Authentication for sign-ups, so I can't see the passwords.
-        </p>
-        <p>
-          Currently the features are limited only because I have limited time.
-          For example, there is no way to change ownership.
-          You can contribute ideas or code on
-          <a target="_blank" href="https://github.com/michaelcpuckett/ap-groups">
-            Github
-          </a>
-        </p>
-      </section>
-    </div>
-
-    <div class="right-rail">
-      <header>
-        <a href="/directory" class="button button--cta">
-          Group Directory
-          <span>See All Groups</span>
-        </a>
-      </header>
-      <div class="forms">
-        <div class="form">
-          <h2 id="signup-heading">
-            Sign Up for a Group
-          </h2>
-          <signup-form></signup-form>
-        </div>
-        <div class="form">
-          <h2 id="login-heading">
-            Log In to Manage Your Group
-          </h2>
-          <login-form></login-form>
-        </div>
+        <signup-form></signup-form>
       </div>
-      <footer role="contentinfo">
-        <p>
-          This is not a fork of Mastodon and is not affiliated with Mastodon. Everything is MIT licensed.
-        </p>
-      </footer>
+
+      <div class="section">
+        <h2 id="login-heading">
+          Log In to Your Account
+        </h2>
+        <login-form></login-form>
+      </div>
+
     </div>
   </div>
   <script type="module" src="login.js"></script>

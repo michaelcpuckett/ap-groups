@@ -68,7 +68,7 @@ export class SignupForm extends LitElement {
         'Accept': 'application/activity+json',
       },
       body: JSON.stringify({
-        type: AP.ActorTypes.GROUP,
+        type: AP.ActorTypes.PERSON,
         email,
         password,
         preferredUsername: username,
@@ -123,7 +123,7 @@ export class SignupForm extends LitElement {
           'has-error': this.usernameError,
         })}>
           <span class="label-text">
-            Group Username
+            Username
           </span>
           <input
             @input=${this.clearUsernameError}
@@ -154,9 +154,6 @@ export class SignupForm extends LitElement {
             type="email"
             name="email"
           />
-          <span class="hint-text">
-            You won't have to verify, so this can be anything.
-          </span>
           ${this.emailError ? html`
             <span class="error-message">
               ${this.emailError}

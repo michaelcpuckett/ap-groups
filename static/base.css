@@ -6,7 +6,7 @@
   color-scheme: dark only;
   --dark-background-color: #001616;
   --text-on-dark-background-color: white;
-  --medium-background-color: #037d7e;
+  --medium-background-color: #3f36d5;
   --text-on-medium-background-color: white;
   --light-background-color: #eff3f6;
   --text-on-light-background-color: #002424;
@@ -133,5 +133,99 @@ button {
 @media (min-width: 1200px) {
   .button-cta {
     margin-bottom: 0;
+  }
+}
+
+.h1 {
+  text-align: center;
+  color: white;
+  text-shadow: 0 3px 0 black;
+  font-size: 3.75em;
+  line-height: 1.25;
+  padding: .5em;
+  margin: 0;
+  border-radius: 18px;
+  background-color: var(--primary-color);
+  text-decoration: none;
+  font-family: 'passion', sans-serif;
+  font-weight: normal;
+  text-transform: uppercase;
+  line-height: 1;
+  position: relative;
+}
+
+.h1 svg {
+  width: 80px;
+  height: 80px;
+}
+
+@media (max-width: 1199px) {
+  a.h1 { 
+    border: 1px solid;
+  }
+}
+
+@media (min-width: 1200px) {
+  .h1 {
+    text-align: left;
+  }
+}
+
+.h1 span {
+  display: block;
+  font-size: .48em;
+}
+
+h2 {
+  margin: 0;
+}
+
+.container {
+  display: grid;
+  grid-gap: 24px;
+  align-content: flex-start;
+}
+
+
+.right-rail {
+  gap: 24px;
+  display: grid;
+}
+
+.root {
+  display: grid;
+  padding: 24px;
+}
+
+@media (min-width: 1200px) {
+  .root {
+    column-gap: 24px;
+    row-gap: 0;
+    grid-template-columns: 360px;
+  }
+  
+  .container {
+    grid-column: 1 / 2;
+    display: grid;
+    gap: 24px;
+  }
+
+  .right-rail {
+    padding: 32px;
+    grid-column: 2 / 3;
+    background-color: var(--primary-color);
+    color: var(--text-on-primary-color);
+    border-radius: 18px;
+    overflow: hidden;
+    align-content: flex-start;
+    box-shadow: var(--box-shadow);
+  }
+
+  .section {
+    padding: 32px;
+    border-radius: 18px;
+    box-shadow: var(--box-shadow);
+    background-color: var(--primary-color);
+    color: var(--text-on-primary-color);
   }
 }
