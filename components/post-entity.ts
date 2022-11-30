@@ -21,7 +21,10 @@ export class PostEntity extends LitElement {
   private entityId = '';
 
   @property({ type: Object })
-  private entity: AP.Entity;
+  private entity: AP.Entity|null = null;
+
+  @property({ type: Boolean })
+  private isDeleted = false;
 
   override firstUpdated() {
     fetch(`/proxy?resource=${this.entityId}`, {
@@ -32,20 +35,23 @@ export class PostEntity extends LitElement {
     .then(res => res.json())
     .then(entity => {
       this.entity = entity;
+      this.isDeleted = this.entity.type === AP.ExtendedObjectTypes.TOMBSTONE || (Array.isArray(this.entity.type) && this.entity.type.includes(AP.ExtendedObjectTypes.TOMBSTONE));
     })
     .catch(() => {
-      this.entity = 'Not found.';
+      this.isDeleted = true;
     });
   }
 
   render() {
-    if (!this.entity) {
-      return html`Loading...`;
-    }
-
-    if (this.entity.type === AP.ExtendedObjectTypes.TOMBSTONE || (Array.isArray(this.entity.type) && this.entity.type.includes(AP.ExtendedObjectTypes.TOMBSTONE))) {
+    if (this.isDeleted) {
       return html`
-        [Deleted]
+        Deleted.
+      `;
+    }
+    
+    if (!this.entity) {
+      return html`
+        Loading...
       `;
     }
     
