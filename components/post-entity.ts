@@ -95,13 +95,11 @@ export class PostEntity extends LitElement {
     }
     
     const attachments = this.entity.attachment ? Array.isArray(this.entity.attachment) ? this.entity.attachment : [this.entity.attachment] : [];
-    const contentHtml = attachments.length ? repeat(attachments, (attachment: AP.ExtendedObject) => {
+    const attachmentHtml = attachments.length ? repeat(attachments, (attachment: AP.ExtendedObject) => {
       return html`
         <img src=${attachment.url} />
       `;
-    }) : html`
-      ${unsafeHTML(this.entity.content)}
-    `;
+    }) : nothing;
 
     return html`
       Published by <a target="_blank" href=${this.entity.attributedTo}>
@@ -112,7 +110,8 @@ export class PostEntity extends LitElement {
         ${this.entity.published}
       </a>
       <figure>
-        ${contentHtml}
+        ${attachmentHtml}
+        ${unsafeHTML(this.entity.content)}
       </figure>
       <p>
         <a href=${this.entity.likes}>
