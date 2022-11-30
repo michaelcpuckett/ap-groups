@@ -29,7 +29,7 @@ export class PostEntity extends LitElement {
   private entity: AP.Entity;
 
   override firstUpdated() {
-    fetch(this.entityId, {
+    fetch(`/proxy?resource=${this.entityId}`, {
       headers: {
         'Accept': 'application/activity+json'
       }
@@ -38,7 +38,7 @@ export class PostEntity extends LitElement {
     .then(entity => {
       this.entity = entity;
 
-      fetch(this.entity.likes, {
+      fetch(`/proxy?resource=${this.entity.likes}`, {
         headers: {
           'Accept': 'application/activity+json'
         }
@@ -48,7 +48,7 @@ export class PostEntity extends LitElement {
         this.likesCount = likes.totalItems;
       });
       
-      fetch(this.entity.shares, {
+      fetch(`/proxy?resource=${this.entity.shares}`, {
         headers: {
           'Accept': 'application/activity+json'
         }
@@ -58,17 +58,7 @@ export class PostEntity extends LitElement {
         this.sharesCount = shares.totalItems;
       });
       
-      fetch(this.entity.shares, {
-        headers: {
-          'Accept': 'application/activity+json'
-        }
-      })
-      .then(res => res.json())
-      .then(shares => {
-        this.sharesCount = shares.totalItems;
-      });
-      
-      fetch(this.entity.replies, {
+      fetch(`/proxy?resource=${this.entity.replies}`, {
         headers: {
           'Accept': 'application/activity+json'
         }
