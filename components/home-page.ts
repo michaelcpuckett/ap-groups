@@ -5,7 +5,6 @@ import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, query } from 'lit/decorators';
 import { baseCss } from './base-css';
 import { AP } from 'activitypub-core-types';
-import { getId } from 'activitypub-core-utilities';
 
 @customElement('home-page')
 export class HomePage extends LitElement {
@@ -100,7 +99,7 @@ export class HomePage extends LitElement {
       .then(async (actor: AP.Actor) => {
         this.groupActor = actor;
 
-        this.blocked = await fetch(getId(this.groupActor.streams.find(stream => getId(stream).toString().endsWith('blocked'))).toString(), {
+        this.blocked = await fetch(this.groupActor.streams.find(stream => stream.endsWith('blocked')), {
           headers: {
             'Accept': 'application/activity+json',
           },
@@ -112,7 +111,7 @@ export class HomePage extends LitElement {
           return item.id;
         });
 
-        this.members = await fetch(getId(this.groupActor.followers).toString(), {
+        this.members = await fetch(this.groupActor.followers, {
           headers: {
             'Accept': 'application/activity+json',
           },

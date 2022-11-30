@@ -1,8 +1,9 @@
+import './post-entity';
+
 import {LitElement, html, css, nothing} from 'lit';
 import {customElement, property, state, query} from 'lit/decorators';
 import { baseCss } from './base-css';
 import {repeat} from 'lit/directives/repeat';
-import {unsafeHTML} from 'lit/directives/unsafe-html';
 import { AP } from 'activitypub-core-types';
 
 @customElement('group-entity')
@@ -145,33 +146,9 @@ export class GroupEntity extends LitElement {
       </h2>
       <ul>
         ${repeat(this.feed, (item: AP.ExtendedObject) => {
-          const attachments = item.attachment ? Array.isArray(item.attachment) ? item.attachment : [item.attachment] : [];
-
-          if (item.type === AP.ExtendedObjectTypes.TOMBSTONE) {
-            return html`
-              <li>
-                [Deleted]
-              </li>
-            `;
-          }
-
           return html`
             <li>
-              <a target="_blank" href=${item.url}>
-                ${attachments.length ? repeat(attachments, (attachment: AP.ExtendedObject) => {
-                  return html`
-                    <img src=${attachment.url} />
-                  `;
-                }) : html`
-                  ${unsafeHTML(item.content)}
-                `}
-              </a>
-              <p>
-                By
-                <a target="_blank" href=${item.attributedTo}>
-                  ${item.attributedTo}
-                </a>
-              </p>
+              <post-entity entity-id=${item.id}></post-entity>
             </li>
           `;
         })}
