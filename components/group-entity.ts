@@ -27,11 +27,6 @@ export class GroupEntity extends LitElement {
       padding: 32px;
       background: var(--light-background-color);
       color: var(--text-on-light-background-color);
-
-      a {
-        color: var(--text-on-light-background-color);
-        text-decoration: underline;
-      }
     }
 
     a {
