@@ -105,12 +105,16 @@ export class PostEntity extends LitElement {
     `;
 
     return html`
-      Published by <a target="_blank" href=${this.entity.attributedTo}
-        >${this.entity.attributedTo}</a>
+      Published by <a target="_blank" href=${this.entity.attributedTo}>
+        ${this.entity.attributedTo}
+      </a>
       on
-      <a target="_blank"> href=${this.entity.url}>
+      <a target="_blank" href=${this.entity.url}>
         ${this.entity.published}
       </a>
+      <figure>
+        ${contentHtml}
+      </figure>
       <p>
         <a href=${this.entity.likes}>
         ${this.likesCount > -1 ? this.likesCount : '... Loading'} Likes
