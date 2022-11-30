@@ -13,8 +13,7 @@ export class PostEntity extends LitElement {
     }
   `];
 
-
-  @property({ type: Boolean, reflect: true, attribute: 'entity-id' })
+  @property({ type: String, reflect: true, attribute: 'entity-id' })
   private entityId = '';
 
   @property({ type: Number })

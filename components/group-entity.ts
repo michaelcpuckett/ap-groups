@@ -148,7 +148,7 @@ export class GroupEntity extends LitElement {
         ${repeat(this.feed, (item: AP.ExtendedObject) => {
           return html`
             <li>
-              <post-entity entity-id=${item}></post-entity>
+              <post-entity entity-id=${item.id}></post-entity>
             </li>
           `;
         })}
