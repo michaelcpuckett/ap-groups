@@ -130,7 +130,7 @@ export const baseCss = css`
     border-radius: 8px;
   }
 
-  .toggle-button:checked {
+  .toggle-button:checked:after {
     left: unset;
     right: 4px;
   }
