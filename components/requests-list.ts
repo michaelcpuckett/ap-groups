@@ -12,12 +12,6 @@ export class RequestsList extends LitElement {
     }
   `];
 
-  @property({type: String, attribute: 'outbox-url'})
-  private outboxUrl?: string;
-
-  @property({type: String, attribute: 'group-actor-id'})
-  private groupActorId?: string;
-
   @property({type: Array})
   private requestIds?: string[];
 

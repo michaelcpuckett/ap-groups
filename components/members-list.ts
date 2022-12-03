@@ -12,12 +12,6 @@ export class MembersList extends LitElement {
     }
   `];
 
-  @property({type: String, attribute: 'outbox-url'})
-  private outboxUrl?: string;
-
-  @property({type: String, attribute: 'group-actor-id'})
-  private groupActorId?: string;
-
   @property({type: Object})
   private members?: AP.Actor[];
 
@@ -66,7 +60,7 @@ export class MembersList extends LitElement {
               </a>
               ${this.primaryAction ? html`
                 <button
-                  @click=${() => this.handlePrimaryButtonClick(member.id)}
+                  @click=${() => this.handlePrimaryButtonClick(`${member.id}`)}
                   type="button"
                   class="button button--tag">
                   ${this.primaryAction}
@@ -74,7 +68,7 @@ export class MembersList extends LitElement {
               ` : nothing}
               ${this.secondaryAction ? html`
                 <button
-                  @click=${() > this.handleSecondaryButtonClick(member.id)}
+                  @click=${() => this.handleSecondaryButtonClick(`${member.id}`)}
                   type="button"
                   class="button button--tag">
                   ${this.secondaryAction}

@@ -275,8 +275,6 @@ export class HomePage extends LitElement {
           <requests-list
             @requests-list:primary-action-click=${({ detail }: CustomEvent) => this.accept(detail.followActivityId)}
             @requests-list:secondary-action-click=${({ detail }: CustomEvent) => this.block(detail.memberId)}
-            outbox-url=${this.groupActor.outbox}
-            group-actor-id=${this.groupActor.id}
             request-ids=${JSON.stringify(this.requests.map(request => request.id))}
             primary-action="Accept"
             secondary-action="Block">
@@ -292,8 +290,6 @@ export class HomePage extends LitElement {
           </h2>
           <members-list
             @members-list:primary-action-click=${({ detail }: CustomEvent) => this.block(detail.memberId)}
-            outbox-url=${this.groupActor.outbox}
-            group-actor-id=${this.groupActor.id}
             members=${JSON.stringify(this.members)}
             primary-action="Block">
             <p>
