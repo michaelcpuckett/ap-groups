@@ -109,8 +109,8 @@ export class HomePage extends LitElement {
         })
           .then(res => res.json())
           .then(collection => collection.items)
-          .catch(() => [])
-
+          .catch(() => []);
+        
         this.blocked = await fetch(this.groupActor.streams.find(stream => stream.endsWith('blocked')), {
           headers: {
             'Accept': 'application/activity+json',
@@ -218,7 +218,8 @@ export class HomePage extends LitElement {
           <members-list
             outbox-url=${this.groupActor.outbox}
             group-actor-id=${this.groupActor.id}
-            members=${JSON.stringify(this.blocked)}>
+            members=${JSON.stringify(this.blocked)}
+            primary-action="Unblock">
             <p>No members are blocked.</p>
           </members-list>
         </section>
@@ -229,12 +230,14 @@ export class HomePage extends LitElement {
           <h2 id="manage-members-heading">
             Follower Requests
           </h2>
-          <members-list
+          <requests-list
             outbox-url=${this.groupActor.outbox}
             group-actor-id=${this.groupActor.id}
-            members=${JSON.stringify(this.requests)}>
+            requests=${JSON.stringify(this.requests)}
+            primary-action="Accept"
+            secondary-action="Block">
             <p>No follower requests.</p>
-          </members-list>
+          </requests-list>
         </section>
 
         <section
@@ -246,7 +249,8 @@ export class HomePage extends LitElement {
           <members-list
             outbox-url=${this.groupActor.outbox}
             group-actor-id=${this.groupActor.id}
-            members=${JSON.stringify(this.members)}>
+            members=${JSON.stringify(this.members)}
+            primary-action="Block">
             <p>
               You have no members following the group.
               To get started, go to your personal Mastodon
