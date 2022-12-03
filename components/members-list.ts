@@ -21,23 +21,26 @@ export class MembersList extends LitElement {
   @property({type: Object})
   private members?: AP.Actor[];
 
-  private block(memberId: string) {
-    fetch(this.outboxUrl, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/activity+json',
-      },
-      body: JSON.stringify({
-        '@context': 'https://www.w3.org/ns/activitystreams',
-        type: 'Block',
-        actor: this.groupActorId,
-        object: memberId,
-      }),
-    }).then(res => {
-      if (res.headers.has('Location')) {
-        window.location.reload();
+  @property({type: String, attribute: 'primary-action'})
+  private primaryAction: string;
+
+  @property({type: String, attribute: 'secondary-action'})
+  private secondaryAction: string;
+
+  private handlePrimaryButtonClick(memberId: string) {
+    this.dispatchEvent(new CustomEvent('members-list:primary-button-click', {
+      detail: {
+        memberId,
       }
-    });
+    }));
+  }
+
+  private handleSecondaryButtonClick(memberId: string) {
+    this.dispatchEvent(new CustomEvent('members-list:secondary-button-click', {
+      detail: {
+        memberId,
+      }
+    }));
   }
 
   render() {
@@ -61,12 +64,22 @@ export class MembersList extends LitElement {
               <a href=${member.id}>
                 ${member.preferredUsername}
               </a>
-              <button
-                @click=${() => this.block(member.id)}
-                type="button"
-                class="button button--tag">
-                Block
-              </button>
+              ${this.primaryAction ? html`
+                <button
+                  @click=${() => this.handlePrimaryButtonClick(member.id)}
+                  type="button"
+                  class="button button--tag">
+                  ${this.primaryAction}
+                </button>
+              ` : nothing}
+              ${this.secondaryAction ? html`
+                <button
+                  @click=${() > this.handleSecondaryButtonClick(member.id)}
+                  type="button"
+                  class="button button--tag">
+                  ${this.secondaryAction}
+                </button>
+              ` : nothing}
             </li>
           `;
         })}

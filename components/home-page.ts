@@ -171,6 +171,46 @@ export class HomePage extends LitElement {
     });
   }
 
+  private block(memberId: string) {
+    fetch(this.groupActor.outbox, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/activity+json',
+      },
+      body: JSON.stringify({
+        '@context': 'https://www.w3.org/ns/activitystreams',
+        type: 'Block',
+        actor: this.groupActorId,
+        object: memberId,
+      }),
+    }).then(res => {
+      if (res.headers.has('Location')) {
+        window.location.reload();
+      }
+    });
+  }
+
+  private unblock(memberId: string) {}
+
+  private accept(followActivityId: string) {
+    fetch(this.groupActor.outbox, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/activity+json',
+      },
+      body: JSON.stringify({
+        '@context': 'https://www.w3.org/ns/activitystreams',
+        type: 'Accept',
+        actor: this.groupActorId,
+        object: followActivityId,
+      }),
+    }).then(res => {
+      if (res.headers.has('Location')) {
+        window.location.reload();
+      }
+    });
+  }
+
   render() {
     if (!this.groupId) {
       return html`
@@ -217,6 +257,7 @@ export class HomePage extends LitElement {
             Blocked
           </h2>
           <members-list
+            @members-list:primary-action-click=${({ detail }: CustomEvent) => this.unblock(detail.memberId)}
             outbox-url=${this.groupActor.outbox}
             group-actor-id=${this.groupActor.id}
             members=${JSON.stringify(this.blocked)}
@@ -232,9 +273,11 @@ export class HomePage extends LitElement {
             Follower Requests
           </h2>
           <requests-list
+            @requests-list:primary-action-click=${({ detail }: CustomEvent) => this.accept(detail.followActivityId)}
+            @requests-list:secondary-action-click=${({ detail }: CustomEvent) => this.block(detail.memberId)}
             outbox-url=${this.groupActor.outbox}
             group-actor-id=${this.groupActor.id}
-            requests=${JSON.stringify(this.requests)}
+            request-ids=${JSON.stringify(this.requests.map(request => request.id))}
             primary-action="Accept"
             secondary-action="Block">
             <p>No follower requests.</p>
@@ -248,6 +291,7 @@ export class HomePage extends LitElement {
             Members
           </h2>
           <members-list
+            @members-list:primary-action-click=${({ detail }: CustomEvent) => this.block(detail.memberId)}
             outbox-url=${this.groupActor.outbox}
             group-actor-id=${this.groupActor.id}
             members=${JSON.stringify(this.members)}
