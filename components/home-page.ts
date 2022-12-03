@@ -85,6 +85,9 @@ export class HomePage extends LitElement {
   @property({ type: Object })
   private blocked?: AP.Actor[];
 
+  @property({ type: Object })
+  private requests?: AP.Follow[];
+
   firstUpdated() {
     if (!this.groupId) {
       return;
@@ -98,6 +101,14 @@ export class HomePage extends LitElement {
       .then(res => res.json())
       .then(async (actor: AP.Actor) => {
         this.groupActor = actor;
+
+        this.requests = await fetch(this.groupActor.streams.find(stream => stream.endsWith('requests')), {
+          headers: {
+            'Accept': 'application/activity+json',
+          },
+        })
+          .then(res => res.json())
+          .then(collection => collection.items);
 
         this.blocked = await fetch(this.groupActor.streams.find(stream => stream.endsWith('blocked')), {
           headers: {
@@ -210,6 +221,21 @@ export class HomePage extends LitElement {
             <p>No members are blocked.</p>
           </members-list>
         </section>
+
+        <section
+          role="region"
+          aria-labelledby="manage-members-heading">
+          <h2 id="manage-members-heading">
+            Follower Requests
+          </h2>
+          <members-list
+            outbox-url=${this.groupActor.outbox}
+            group-actor-id=${this.groupActor.id}
+            members=${JSON.stringify(this.requests)}>
+            <p>No follower requests.</p>
+          </members-list>
+        </section>
+
         <section
           role="region"
           aria-labelledby="manage-members-heading">
