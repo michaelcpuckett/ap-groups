@@ -131,11 +131,10 @@ export const baseCss = css`
   }
 
   .toggle-button:checked {
-    background: var(--primary-color);
+    background: var(--accent-color);
   }
 
   .toggle-button:checked:after {
-    color: gray;
     left: unset;
     right: 4px;
   }
