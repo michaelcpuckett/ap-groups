@@ -12,7 +12,7 @@ export class RequestsList extends LitElement {
     }
   `];
 
-  @property({type: Array})
+  @property({type: Object})
   private requestIds?: string[];
 
   @property({type: String, attribute: 'primary-action'})
