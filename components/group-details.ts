@@ -29,6 +29,9 @@ export class GroupDetails extends LitElement {
   @query('textarea[name="summary"]')
   summaryTextareaElement: HTMLTextAreaElement|null;
 
+  @query('input[name="inverseManuallyApprovesFollowers"]')
+  inverseManuallyApprovesFollowersElement: HTMLInputElement|null;
+
   @query('form[name="upload"]')
   uploadFormElement: HTMLFormElement|null;
 
@@ -40,6 +43,9 @@ export class GroupDetails extends LitElement {
 
   @property({type: String, attribute: 'upload-media-url'})
   private uploadMediaUrl?: string;
+
+  @property({type: Boolean, attribute: 'manually-approves-followers'})
+  private manuallyApprovesFollowers?: boolean;
 
   @property({type: String, attribute: 'group-actor-id'})
   private groupActorId?: string;
@@ -59,12 +65,13 @@ export class GroupDetails extends LitElement {
   private async handleSubmit(event: SubmitEvent) {
     event.preventDefault();
     
-    if (!this.nameInputElement || !this.summaryTextareaElement || !this.uploadFormElement) {
+    if (!this.nameInputElement || !this.summaryTextareaElement || !this.uploadFormElement || !this.inverseManuallyApprovesFollowersElement) {
       return;
     }
 
     const name = this.nameInputElement.value;
     const summary = this.summaryTextareaElement.value;
+    const manuallyApprovesFollowers = !this.inverseManuallyApprovesFollowersElement.checked;
 
     if (this.isFileReadyToUpload) {
       await this.handleAvatarUpload();
@@ -83,6 +90,7 @@ export class GroupDetails extends LitElement {
           id: this.groupActorId,
           name,
           summary,
+          manuallyApprovesFollowers,
         },
       }),
     })
@@ -195,6 +203,14 @@ export class GroupDetails extends LitElement {
             </span>
             <span role="cell">
               <input type="text" value=${this.name ?? ''} name="name" />
+            </span>
+          </label>
+          <label role="row" class="label">
+            <span role="columnheader" class="label-text">
+              Automatically Approve All Followers
+            </span>
+            <span role="cell">
+              <input type="checkbox" name="inverseManuallyApprovesFollowers" ?checked=${!this.manuallyApprovesFollowers} />
             </span>
           </label>
           <label role="row" class="label">
