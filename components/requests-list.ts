@@ -22,7 +22,7 @@ export class RequestsList extends LitElement {
   private secondaryAction: string;
 
   @state()
-  requests: Array<{
+  private requests: Array<{
     originalFollow: AP.Follow;
     actor: AP.Actor;
   }> = [];
