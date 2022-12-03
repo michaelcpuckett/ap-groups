@@ -87,6 +87,9 @@ export class HomePage extends LitElement {
   private blocked?: AP.Actor[];
 
   @property({ type: Object })
+  private blockedIds?: string[];
+
+  @property({ type: Object })
   private requests?: AP.Follow[];
 
   firstUpdated() {
@@ -120,7 +123,7 @@ export class HomePage extends LitElement {
           .then(res => res.json())
           .then(collection => collection.items)
 
-        const blockedIds = this.blocked.map((item: AP.Actor) => {
+        this.blockedIds = this.blocked.map((item: AP.Actor) => {
           return item.id;
         });
 
@@ -131,7 +134,7 @@ export class HomePage extends LitElement {
         }).then(res => res.json()).then(collection => collection.items.filter(({
           id
         }) => {
-          return !blockedIds.includes(id);
+          return !this.blockedIds.includes(id);
         }));
       });
   }
@@ -279,7 +282,7 @@ export class HomePage extends LitElement {
           <requests-list
             @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.accept(detail.memberId, detail.followActivityId)}
             @requests-list:secondary-button-click=${({ detail }: CustomEvent) => this.block(detail.memberId)}
-            request-ids=${JSON.stringify(this.requests.map(request => request.id))}
+            request-ids=${JSON.stringify(this.requests.map(request => request.id).filter(id => !this.blockedIds.includes(`${id}`)))}
             primary-action="Accept"
             secondary-action="Block">
             <p>No follower requests.</p>
