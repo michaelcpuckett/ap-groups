@@ -46,7 +46,7 @@ export class RequestsList extends LitElement {
   }
 
   private handlePrimaryButtonClick(memberId: string, followActivityId: string) {
-    this.dispatchEvent(new CustomEvent('request-list:primary-button-click', {
+    this.dispatchEvent(new CustomEvent('requests-list:primary-button-click', {
       detail: {
         memberId,
         followActivityId,
@@ -56,7 +56,7 @@ export class RequestsList extends LitElement {
 
 
   private handleSecondaryButtonClick(memberId: string, followActivityId: string) {
-    this.dispatchEvent(new CustomEvent('request-list:secondary-button-click', {
+    this.dispatchEvent(new CustomEvent('requests-list:secondary-button-click', {
       detail: {
         memberId,
         followActivityId,
