@@ -273,7 +273,7 @@ export class HomePage extends LitElement {
             Follower Requests
           </h2>
           <requests-list
-            @requests-list:primary-actionc-click=${({ detail }: CustomEvent) => this.accept(detail.followActivityId)}
+            @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.accept(detail.followActivityId)}
             @requests-list:secondary-button-click=${({ detail }: CustomEvent) => this.block(detail.memberId)}
             request-ids=${JSON.stringify(this.requests.map(request => request.id))}
             primary-action="Accept"
