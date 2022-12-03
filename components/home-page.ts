@@ -108,7 +108,8 @@ export class HomePage extends LitElement {
           },
         })
           .then(res => res.json())
-          .then(collection => collection.items);
+          .then(collection => collection.items)
+          .catch(() => [])
 
         this.blocked = await fetch(this.groupActor.streams.find(stream => stream.endsWith('blocked')), {
           headers: {
