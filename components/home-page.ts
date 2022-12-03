@@ -106,15 +106,6 @@ export class HomePage extends LitElement {
       .then(async (actor: AP.Actor) => {
         this.groupActor = actor;
 
-        this.requests = await fetch(this.groupActor.streams.find(stream => stream.endsWith('requests')), {
-          headers: {
-            'Accept': 'application/activity+json',
-          },
-        })
-          .then(res => res.json())
-          .then(collection => collection.items)
-          .catch(() => []);
-        
         this.blocked = await fetch(this.groupActor.streams.find(stream => stream.endsWith('blocked')), {
           headers: {
             'Accept': 'application/activity+json',
@@ -124,7 +115,7 @@ export class HomePage extends LitElement {
           .then(collection => collection.items)
 
         this.blockedIds = this.blocked.map((item: AP.Actor) => {
-          return item.id;
+          return `${item.id}`;
         });
 
         this.members = await fetch(this.groupActor.followers, {
@@ -136,6 +127,16 @@ export class HomePage extends LitElement {
         }) => {
           return !this.blockedIds.includes(id);
         }));
+
+        this.members = await fetch(this.groupActor.streams.find(stream => stream.endsWith('requests')), {
+          headers: {
+            'Accept': 'application/activity+json',
+          },
+        }).then(res => res.json()).then(collection => collection.items.filter(({
+          id
+        }) => {
+          return !this.blockedIds.includes(id);
+        })); 
       });
   }
 
@@ -282,7 +283,7 @@ export class HomePage extends LitElement {
           <requests-list
             @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.accept(detail.memberId, detail.followActivityId)}
             @requests-list:secondary-button-click=${({ detail }: CustomEvent) => this.block(detail.memberId)}
-            request-ids=${JSON.stringify(this.requests.map(request => request.id).filter(id => !this.blockedIds.includes(`${id}`)))}
+            request-ids=${JSON.stringify(this.requests.map(request => request.id))}
             primary-action="Accept"
             secondary-action="Block">
             <p>No follower requests.</p>
