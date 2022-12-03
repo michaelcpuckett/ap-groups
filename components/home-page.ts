@@ -1,5 +1,6 @@
 import './group-details';
 import './members-list';
+import './requests-list';
 
 import { LitElement, html, css, nothing } from 'lit';
 import { customElement, property, query } from 'lit/decorators';
