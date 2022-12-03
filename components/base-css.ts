@@ -121,13 +121,17 @@ export const baseCss = css`
 
   .toggle-button:after {
     content: '';
-    background: var(--primary-color);
+    background: gray;
     position: absolute;
     top: 4px;
     left: 4px;
     height: calc(100% - 8px);
     width: calc(50% - 8px);
     border-radius: 8px;
+  }
+
+  .toggle-button:checked {
+    background: var(--primary-color);
   }
 
   .toggle-button:checked:after {
