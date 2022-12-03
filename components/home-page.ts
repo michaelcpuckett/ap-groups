@@ -180,7 +180,7 @@ export class HomePage extends LitElement {
       body: JSON.stringify({
         '@context': 'https://www.w3.org/ns/activitystreams',
         type: 'Block',
-        actor: this.groupActorId,
+        actor: this.groupActor.id,
         object: memberId,
       }),
     }).then(res => {
@@ -201,7 +201,7 @@ export class HomePage extends LitElement {
       body: JSON.stringify({
         '@context': 'https://www.w3.org/ns/activitystreams',
         type: 'Accept',
-        actor: this.groupActorId,
+        actor: this.groupActor.id,
         object: followActivityId,
       }),
     }).then(res => {
