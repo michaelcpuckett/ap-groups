@@ -206,19 +206,24 @@ export class GroupDetails extends LitElement {
             </span>
           </label>
           <label role="row" class="label">
-            <span role="columnheader" class="label-text">
-              Automatically Approve All Followers
-            </span>
-            <span role="cell">
-              <input type="checkbox" name="inverseManuallyApprovesFollowers" ?checked=${!this.manuallyApprovesFollowers} />
-            </span>
-          </label>
-          <label role="row" class="label">
             <span class="label-text" role="columnheader">
               Bio
             </span>
             <span role="cell">
               <textarea name="summary">${this.summary ?? ''}</textarea>
+            </span>
+          </label>
+          <label role="row" class="label">
+            <span role="columnheader" class="label-text">
+              Automatically Approve All Followers
+            </span>
+            <span role="cell">
+              <input
+                type="checkbox"
+                class="toggle-button"
+                name="inverseManuallyApprovesFollowers"
+                ?checked=${!this.manuallyApprovesFollowers}
+              />
             </span>
           </label>
         </div>

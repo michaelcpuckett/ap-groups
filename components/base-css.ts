@@ -108,4 +108,30 @@ export const baseCss = css`
     padding: 6px;
     font-size: .75em;
   }
+
+  .toggle-button {
+    width: auto;
+    appearance: none;
+    background: var(--accent-color);
+    width: 60px;
+    height: 30px;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .toggle-button:after {
+    content: '';
+    background: var(--primary-color);
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    height: calc(100% - 8px);
+    width: calc(50% - 8px);
+    border-radius: 8px;
+  }
+
+  .toggle-button:checked {
+    left: unset;
+    right: 4px;
+  }
 `;
