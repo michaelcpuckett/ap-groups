@@ -128,7 +128,7 @@ export class HomePage extends LitElement {
           return !this.blockedIds.includes(id);
         }));
 
-        this.members = await fetch(this.groupActor.streams.find(stream => stream.endsWith('requests')), {
+        this.requests = await fetch(this.groupActor.streams.find(stream => stream.endsWith('requests')), {
           headers: {
             'Accept': 'application/activity+json',
           },
