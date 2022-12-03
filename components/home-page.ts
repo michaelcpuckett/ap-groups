@@ -192,7 +192,7 @@ export class HomePage extends LitElement {
 
   private unblock(memberId: string) {}
 
-  private accept(followActivityId: string) {
+  private accept(memberId: string, followActivityId: string) {
     fetch(this.groupActor.outbox, {
       method: 'POST',
       headers: {
@@ -203,6 +203,10 @@ export class HomePage extends LitElement {
         type: 'Accept',
         actor: this.groupActor.id,
         object: followActivityId,
+        to: [
+          'https://www.w3.org/ns/activitystreams#Public',
+          memberId
+        ],
       }),
     }).then(res => {
       if (res.headers.has('Location')) {
@@ -273,7 +277,7 @@ export class HomePage extends LitElement {
             Follower Requests
           </h2>
           <requests-list
-            @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.accept(detail.followActivityId)}
+            @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.accept(detail.memberId, detail.followActivityId)}
             @requests-list:secondary-button-click=${({ detail }: CustomEvent) => this.block(detail.memberId)}
             request-ids=${JSON.stringify(this.requests.map(request => request.id))}
             primary-action="Accept"
