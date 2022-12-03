@@ -112,7 +112,7 @@ export const baseCss = css`
   .toggle-button {
     width: auto;
     appearance: none;
-    background: var(--accent-color);
+    background: gray;
     width: 60px;
     height: 30px;
     border-radius: 8px;
@@ -121,7 +121,7 @@ export const baseCss = css`
 
   .toggle-button:after {
     content: '';
-    background: gray;
+    background: var(--primary-color);
     position: absolute;
     top: 4px;
     left: 4px;
@@ -135,6 +135,7 @@ export const baseCss = css`
   }
 
   .toggle-button:checked:after {
+    color: gray;
     left: unset;
     right: 4px;
   }
