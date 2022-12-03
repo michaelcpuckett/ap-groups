@@ -29,7 +29,7 @@ export class RequestsList extends LitElement {
 
   async firstUpdated() {
     this.requests = await Promise.all(
-      this.requestIds.map(async id => await fetch(id, {
+      this.requestIds.map(async id => await fetch(`/proxy?resource=${id}`, {
         headers: {
           'Accept': 'application/activity+json'
         }
@@ -37,7 +37,7 @@ export class RequestsList extends LitElement {
       .then(res => res.json())
       .then(async follow => ({
         originalFollow: follow,
-        actor: await fetch(follow.actor, {
+        actor: await fetch(`/proxy?resource=${follow.actor}`, {
           headers: {
             'Accept': 'application/activity+json'
           }
