@@ -29,8 +29,8 @@ export class GroupDetails extends LitElement {
   @query('textarea[name="summary"]')
   summaryTextareaElement: HTMLTextAreaElement|null;
 
-  @query('input[name="inverseManuallyApprovesFollowers"]')
-  inverseManuallyApprovesFollowersElement: HTMLInputElement|null;
+  @query('input[name="manuallyApprovesFollowers"]')
+  manuallyApprovesFollowersElement: HTMLInputElement|null;
 
   @query('form[name="upload"]')
   uploadFormElement: HTMLFormElement|null;
@@ -65,13 +65,13 @@ export class GroupDetails extends LitElement {
   private async handleSubmit(event: SubmitEvent) {
     event.preventDefault();
     
-    if (!this.nameInputElement || !this.summaryTextareaElement || !this.uploadFormElement || !this.inverseManuallyApprovesFollowersElement) {
+    if (!this.nameInputElement || !this.summaryTextareaElement || !this.uploadFormElement || !this.manuallyApprovesFollowersElement) {
       return;
     }
 
     const name = this.nameInputElement.value;
     const summary = this.summaryTextareaElement.value;
-    const manuallyApprovesFollowers = !this.inverseManuallyApprovesFollowersElement.checked;
+    const manuallyApprovesFollowers = this.manuallyApprovesFollowersElement.checked;
 
     if (this.isFileReadyToUpload) {
       await this.handleAvatarUpload();
@@ -215,14 +215,14 @@ export class GroupDetails extends LitElement {
           </label>
           <label role="row" class="label">
             <span role="columnheader" class="label-text">
-              Automatically Approve All Followers
+              Manually Approve Members
             </span>
             <span role="cell">
               <input
                 type="checkbox"
                 class="toggle-button"
-                name="inverseManuallyApprovesFollowers"
-                ?checked=${!this.manuallyApprovesFollowers}
+                name="manuallyApprovesFollowers"
+                ?checked=${this.manuallyApprovesFollowers}
               />
             </span>
           </label>
