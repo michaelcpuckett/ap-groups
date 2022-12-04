@@ -294,8 +294,8 @@ export class HomePage extends LitElement {
             Blocked
           </h2>
           <requests-list
-            @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.accept(detail.memberId, detail.activityId)}
-            request-ids=${JSON.stringify(this.requests.map(request => request.id))}
+            @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.unblock(detail.activityId)}
+            request-ids=${JSON.stringify(this.blockIds)}
             primary-action="Unblock">
             <p>No one is blocked.</p>
           </requests-list>
