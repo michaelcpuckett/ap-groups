@@ -94,7 +94,7 @@ export class RequestsList extends LitElement {
           return html`
             <li>
               <a href=${request[this.accountReference].id}>
-                ${request[this.accountReference].preferredUsername}
+                ${request[this.accountReference].preferredUsername}@${new URL(`${request[this.accountReference].url}`).hostname}
               </a>
               ${this.primaryAction ? html`
                 <button

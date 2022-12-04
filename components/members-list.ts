@@ -56,7 +56,7 @@ export class MembersList extends LitElement {
           return html`
             <li>
               <a href=${member.id}>
-                ${member.preferredUsername}
+                ${member.preferredUsername}@${new URL(`${member.url}`).hostname}
               </a>
               ${this.primaryAction ? html`
                 <button
