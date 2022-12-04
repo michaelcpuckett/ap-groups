@@ -296,6 +296,7 @@ export class HomePage extends LitElement {
           <requests-list
             @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.unblock(detail.activityId)}
             request-ids=${JSON.stringify(this.blockIds)}
+            account-reference="object"
             primary-action="Unblock">
             <p>No one is blocked.</p>
           </requests-list>
@@ -308,9 +309,10 @@ export class HomePage extends LitElement {
             Follower Requests
           </h2>
           <requests-list
-            @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.accept(detail.memberId, detail.activityId)}
-            @requests-list:secondary-button-click=${({ detail }: CustomEvent) => this.block(detail.memberId)}
+            @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.accept(detail.actorId, detail.activityId)}
+            @requests-list:secondary-button-click=${({ detail }: CustomEvent) => this.block(detail.actorId)}
             request-ids=${JSON.stringify(this.requests.map(request => request.id))}
+            account-reference="actor"
             primary-action="Accept"
             secondary-action="Block">
             <p>No follower requests.</p>

@@ -15,6 +15,9 @@ export class RequestsList extends LitElement {
   @property({type: Array, attribute: 'request-ids'})
   private requestIds?: string[];
 
+  @property({type: String, attribute: 'account-reference' })
+  private accountReference = 'object';
+
   @property({type: String, attribute: 'primary-action'})
   private primaryAction: string;
 
@@ -24,6 +27,7 @@ export class RequestsList extends LitElement {
   @state()
   private requests: Array<{
     originalActivity: AP.Activity;
+    object: AP.Actor;
     actor: AP.Actor;
   }> = [];
 
@@ -37,6 +41,11 @@ export class RequestsList extends LitElement {
       .then(res => res.json())
       .then(async (activity: AP.Activity) => ({
         originalActivity: activity,
+        object: await fetch(`/proxy?resource=${activity.actor}`, {
+          headers: {
+            'Accept': 'application/activity+json'
+          }
+        }).then(res => res.json()) as AP.Actor,
         actor: await fetch(`/proxy?resource=${activity.actor}`, {
           headers: {
             'Accept': 'application/activity+json'
@@ -45,20 +54,22 @@ export class RequestsList extends LitElement {
       }))));
   }
 
-  private handlePrimaryButtonClick(memberId: string, activityId: string) {
+  private handlePrimaryButtonClick(actorId: string, objectId: string, activityId: string) {
     this.dispatchEvent(new CustomEvent('requests-list:primary-button-click', {
       detail: {
-        memberId,
+        actorId,
+        objectId,
         activityId,
       }
     }));
   }
 
 
-  private handleSecondaryButtonClick(memberId: string, activityId: string) {
+  private handleSecondaryButtonClick(actorId: string, objectId: string, activityId: string) {
     this.dispatchEvent(new CustomEvent('requests-list:secondary-button-click', {
       detail: {
-        memberId,
+        actorId,
+        objectId,
         activityId,
       }
     }));
@@ -82,10 +93,12 @@ export class RequestsList extends LitElement {
         ${repeat(this.requests, (request) => {
           return html`
             <li>
-              <a href=${request.actor.id}>${request.actor.preferredUsername}</a>
+              <a href=${request[this.accountReference].id}>
+                ${request[this.accountReference].preferredUsername}
+              </a>
               ${this.primaryAction ? html`
                 <button
-                  @click=${() => this.handlePrimaryButtonClick(`${request.actor.id}`, `${request.originalActivity.id}`)}
+                  @click=${() => this.handlePrimaryButtonClick(`${request.actor.id}`, `${request.object.id}`, `${request.originalActivity.id}`)}
                   type="button"
                   class="button button--tag">
                   ${this.primaryAction}
@@ -93,7 +106,7 @@ export class RequestsList extends LitElement {
               ` : nothing}
               ${this.secondaryAction ? html`
                 <button
-                  @click=${() => this.handleSecondaryButtonClick(`${request.actor.id}`, `${request.originalActivity.id}`)}
+                  @click=${() => this.handleSecondaryButtonClick(`${request.actor.id}`, `${request.object.id}`, `${request.originalActivity.id}`)}
                   type="button"
                   class="button button--tag">
                   ${this.secondaryAction}
