@@ -84,10 +84,10 @@ export class HomePage extends LitElement {
   private members?: AP.Actor[];
 
   @property({ type: Object })
-  private blocked?: AP.Actor[];
+  private blockedIds?: string[];
 
   @property({ type: Object })
-  private blockedIds?: string[];
+  private blockIds?: string[];
 
   @property({ type: Object })
   private requests?: AP.Follow[];
@@ -106,7 +106,7 @@ export class HomePage extends LitElement {
       .then(async (actor: AP.Actor) => {
         this.groupActor = actor;
 
-        this.blocked = await fetch(this.groupActor.streams.find(stream => stream.endsWith('blocked')), {
+        const blocked = await fetch(this.groupActor.streams.find(stream => stream.endsWith('blocked')), {
           headers: {
             'Accept': 'application/activity+json',
           },
@@ -114,7 +114,19 @@ export class HomePage extends LitElement {
           .then(res => res.json())
           .then(collection => collection.items)
 
-        this.blockedIds = this.blocked.map((item: AP.Actor) => {
+        this.blockedIds = blocked.map((item: AP.Actor) => {
+          return `${item.id}`;
+        });
+
+        const blocks = await fetch(this.groupActor.streams.find(stream => stream.endsWith('blocks')), {
+          headers: {
+            'Accept': 'application/activity+json',
+          },
+        })
+          .then(res => res.json())
+          .then(collection => collection.items);
+
+        this.blockIds = blocks.map((item: AP.Block) => {
           return `${item.id}`;
         });
 
@@ -194,7 +206,24 @@ export class HomePage extends LitElement {
     });
   }
 
-  private unblock(memberId: string) {}
+  private unblock(blockId: string) {
+    fetch(this.groupActor.outbox, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/activity+json',
+      },
+      body: JSON.stringify({
+        '@context': 'https://www.w3.org/ns/activitystreams',
+        type: 'Undo',
+        actor: this.groupActor.id,
+        object: blockId,
+      }),
+    }).then(res => {
+      if (res.headers.has('Location')) {
+        window.location.reload();
+      }
+    });
+  }
 
   private accept(memberId: string, followActivityId: string) {
     fetch(this.groupActor.outbox, {
@@ -264,14 +293,12 @@ export class HomePage extends LitElement {
           <h2 id="manage-members-heading">
             Blocked
           </h2>
-          <members-list
-            @members-list:primary-button-click=${({ detail }: CustomEvent) => this.unblock(detail.memberId)}
-            outbox-url=${this.groupActor.outbox}
-            group-actor-id=${this.groupActor.id}
-            members=${JSON.stringify(this.blocked)}
+          <requests-list
+            @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.accept(detail.memberId, detail.activityId)}
+            request-ids=${JSON.stringify(this.requests.map(request => request.id))}
             primary-action="Unblock">
-            <p>No members are blocked.</p>
-          </members-list>
+            <p>No one is blocked.</p>
+          </requests-list>
         </section>
 
         <section
@@ -281,7 +308,7 @@ export class HomePage extends LitElement {
             Follower Requests
           </h2>
           <requests-list
-            @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.accept(detail.memberId, detail.followActivityId)}
+            @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.accept(detail.memberId, detail.activityId)}
             @requests-list:secondary-button-click=${({ detail }: CustomEvent) => this.block(detail.memberId)}
             request-ids=${JSON.stringify(this.requests.map(request => request.id))}
             primary-action="Accept"

@@ -23,7 +23,7 @@ export class RequestsList extends LitElement {
 
   @state()
   private requests: Array<{
-    originalFollow: AP.Follow;
+    originalActivity: AP.Activity;
     actor: AP.Actor;
   }> = [];
 
@@ -35,31 +35,31 @@ export class RequestsList extends LitElement {
         }
       })
       .then(res => res.json())
-      .then(async follow => ({
-        originalFollow: follow,
-        actor: await fetch(`/proxy?resource=${follow.actor}`, {
+      .then(async (activity: AP.Activity) => ({
+        originalActivity: activity,
+        actor: await fetch(`/proxy?resource=${activity.actor}`, {
           headers: {
             'Accept': 'application/activity+json'
           }
-        }).then(res => res.json())
+        }).then(res => res.json()) as AP.Actor,
       }))));
   }
 
-  private handlePrimaryButtonClick(memberId: string, followActivityId: string) {
+  private handlePrimaryButtonClick(memberId: string, activityId: string) {
     this.dispatchEvent(new CustomEvent('requests-list:primary-button-click', {
       detail: {
         memberId,
-        followActivityId,
+        activityId,
       }
     }));
   }
 
 
-  private handleSecondaryButtonClick(memberId: string, followActivityId: string) {
+  private handleSecondaryButtonClick(memberId: string, activityId: string) {
     this.dispatchEvent(new CustomEvent('requests-list:secondary-button-click', {
       detail: {
         memberId,
-        followActivityId,
+        activityId,
       }
     }));
   }
@@ -85,7 +85,7 @@ export class RequestsList extends LitElement {
               <a href=${request.actor.id}>${request.actor.preferredUsername}</a>
               ${this.primaryAction ? html`
                 <button
-                  @click=${() => this.handlePrimaryButtonClick(`${request.actor.id}`, `${request.originalFollow.id}`)}
+                  @click=${() => this.handlePrimaryButtonClick(`${request.actor.id}`, `${request.originalActivity.id}`)}
                   type="button"
                   class="button button--tag">
                   ${this.primaryAction}
@@ -93,7 +93,7 @@ export class RequestsList extends LitElement {
               ` : nothing}
               ${this.secondaryAction ? html`
                 <button
-                  @click=${() => this.handleSecondaryButtonClick(`${request.actor.id}`, `${request.originalFollow.id}`)}
+                  @click=${() => this.handleSecondaryButtonClick(`${request.actor.id}`, `${request.originalActivity.id}`)}
                   type="button"
                   class="button button--tag">
                   ${this.secondaryAction}
