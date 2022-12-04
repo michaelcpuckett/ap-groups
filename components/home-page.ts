@@ -90,6 +90,9 @@ export class HomePage extends LitElement {
   private blockIds?: string[];
 
   @property({ type: Object })
+  private sharedIds?: string[];
+
+  @property({ type: Object })
   private requests?: AP.Follow[];
 
   firstUpdated() {
@@ -134,7 +137,9 @@ export class HomePage extends LitElement {
           headers: {
             'Accept': 'application/activity+json',
           },
-        }).then(res => res.json()).then(collection => collection.items.filter(({
+        })
+        .then(res => res.json())
+        .then(collection => collection.items.filter(({
           id
         }) => {
           return !this.blockedIds.includes(id);
@@ -144,11 +149,20 @@ export class HomePage extends LitElement {
           headers: {
             'Accept': 'application/activity+json',
           },
-        }).then(res => res.json()).then(collection => collection.items.filter(({
+        })
+        .then(res => res.json()).then(collection => collection.items.filter(({
           id
         }) => {
           return !this.blockedIds.includes(id);
         })); 
+
+        this.sharedIds = await fetch(this.groupActor.streams.find(stream => stream.endsWith('shared')), {
+          headers: {
+            'Accept': 'application/activity+json',
+          }
+        })
+        .then(res => res.json())
+        .then(collection => collection.items.map(({ id }) => id));
       });
   }
 
@@ -248,6 +262,10 @@ export class HomePage extends LitElement {
     });
   }
 
+  private undoAnnounce() {
+
+  }
+
   render() {
     if (!this.groupId) {
       return html`
@@ -278,6 +296,20 @@ export class HomePage extends LitElement {
             name=${this.groupActor.name}
             summary=${this.groupActor.summary}>
           </group-details>
+        </section>
+        <section
+          role="region"
+          aria-labelledby="group-shared">
+          <h2 id="group=shared">
+            Reposted
+          </h2>
+          <requests-list
+            @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.undoAnnounce()}
+            request-ids=${JSON.stringify(this.sharedIds)}
+            account-reference="object"
+            primary-action="Unshare">
+            <p>Nothing has been reposted yet.</p>
+          </requests-list>
         </section>
       </div>
       <div class="right-rail">
