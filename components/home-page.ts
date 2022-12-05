@@ -257,6 +257,10 @@ export class HomePage extends LitElement {
         type: 'Undo',
         actor: this.groupActor.id,
         object: activityId,
+        to: [
+          'https://www.w3.org/ns/activitystreams#Public',
+          `${this.groupActor.followers}`,
+        ],
       }),
     }).then(res => {
       if (res.headers.has('Location')) {
