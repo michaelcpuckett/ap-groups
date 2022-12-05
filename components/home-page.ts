@@ -295,126 +295,134 @@ export class HomePage extends LitElement {
       `;
     }
 
-    if (!this.members) {
-      return html`
-        Loading...
-      `;
-    }
-
     return html`
       <div class="container">
-        <section
-          role="region"
-          aria-labelledby="group-details-heading">
-          <h2 id="group-details-heading">
-            Edit Group Details for @${this.groupActor.preferredUsername}@chirp.social
-          </h2>
-          <group-details
-            outbox-url=${this.groupActor.outbox}
-            upload-media-url=${this.groupActor.endpoints.uploadMedia}
-            group-actor-id=${this.groupActor.id}
-            ?manually-approves-followers=${this.groupActor.manuallyApprovesFollowers}
-            icon=${JSON.stringify(this.groupActor.icon)}
-            name=${this.groupActor.name}
-            summary=${this.groupActor.summary}>
-          </group-details>
+        <section>
+          <h1>
+            Managing 
+            @${this.groupActor.preferredUsername}@chirp.social
+          </h1>
         </section>
-        <section
-          role="region"
-          aria-labelledby="group-shared">
-          <h2 id="group=shared">
-            Reposted
-          </h2>
-          <div class="regions">
-            ${this.shared.map(({ id, object }) => html`
-              <div class="region">
-                <post-entity
-                  entity-id=${object}>
-                </post-entity>
-                <button
-                  @click=${() => this.undoAnnounce(id)}
-                  class="button"
-                  type="button">
-                  Delete Repost
-                </button>
-              </div>
-            `)}
-          </div>
+
+        <section>
+          <details>
+            <summary>
+              Edit Profile
+            </summary>
+            <group-details
+              outbox-url=${this.groupActor.outbox}
+              upload-media-url=${this.groupActor.endpoints.uploadMedia}
+              group-actor-id=${this.groupActor.id}
+              ?manually-approves-followers=${this.groupActor.manuallyApprovesFollowers}
+              icon=${JSON.stringify(this.groupActor.icon)}
+              name=${this.groupActor.name}
+              summary=${this.groupActor.summary}>
+            </group-details>
+          </details>
+        </section>
+
+        <section>
+          <details>
+            <summary>
+              Reposts
+            </summary>
+            <div class="regions">
+              ${this.shared.map(({ id, object }) => html`
+                <div class="region">
+                  <post-entity
+                    entity-id=${object}>
+                  </post-entity>
+                  <button
+                    @click=${() => this.undoAnnounce(id)}
+                    class="button"
+                    type="button">
+                    Delete Repost
+                  </button>
+                </div>
+              `)}
+            </div>
+          </details>
         </section>
       </div>
+
       <div class="right-rail">
         <section>
-          <button type="button" class="button" @click=${this.logOut}>
+          <button
+            type="button"
+            class="button"
+            @click=${this.logOut}>
             Log Out
           </button>
         </section>
 
-        <section
-          role="region"
-          aria-labelledby="manage-members-heading">
-          <h2 id="manage-members-heading">
-            Blocked
-          </h2>
-          <requests-list
-            @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.unblock(detail.activityId)}
-            request-ids=${JSON.stringify(this.blockIds)}
-            account-reference="object"
-            primary-action="Unblock">
-            <p>No one is blocked.</p>
-          </requests-list>
+        <section>
+          <details>
+            <summary>
+              Blocked (${this.blockIds.length})
+            </h2>
+            <requests-list
+              @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.unblock(detail.activityId)}
+              request-ids=${JSON.stringify(this.blockIds)}
+              account-reference="object"
+              primary-action="Unblock">
+              <p>No one is blocked.</p>
+            </requests-list>
+          </details>
         </section>
 
-        <section
-          role="region"
-          aria-labelledby="manage-members-heading">
-          <h2 id="manage-members-heading">
-            Follower Requests
-          </h2>
-          <requests-list
-            @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.accept(detail.actorId, detail.activityId)}
-            @requests-list:secondary-button-click=${({ detail }: CustomEvent) => this.block(detail.actorId)}
-            request-ids=${JSON.stringify(this.requests.map(request => request.id))}
-            account-reference="actor"
-            primary-action="Accept"
-            secondary-action="Block">
-            <p>No follower requests.</p>
-          </requests-list>
+        <section>
+          <details>
+            <summary>
+              Follower Requests (${this.requests.length})
+            </summary>
+            <requests-list
+              @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.accept(detail.actorId, detail.activityId)}
+              @requests-list:secondary-button-click=${({ detail }: CustomEvent) => this.block(detail.actorId)}
+              request-ids=${JSON.stringify(this.requests.map(request => request.id))}
+              account-reference="actor"
+              primary-action="Accept"
+              secondary-action="Block">
+              <p>No follower requests.</p>
+            </requests-list>
+          </details>
         </section>
 
-        <section
-          role="region"
-          aria-labelledby="manage-members-heading">
-          <h2 id="manage-members-heading">
-            Members
-          </h2>
-          <members-list
-            @members-list:primary-button-click=${({ detail }: CustomEvent) => this.block(detail.memberId)}
-            members=${JSON.stringify(this.members)}
-            primary-action="Block">
-            <p>
-              You have no members following the group.
-              To get started, go to your personal Mastodon
-              account and search for
-              <strong>@${this.groupActor.preferredUsername}@chirp.social</strong>
-              then follow it.
-            </p>
-          </members-list>
+        <section>
+          <details>
+            <summary>
+              Members (${this.members.length})
+            </summary>
+            <members-list
+              @members-list:primary-button-click=${({ detail }: CustomEvent) => this.block(detail.memberId)}
+              members=${JSON.stringify(this.members)}
+              primary-action="Block">
+              <p>
+                You have no members following the group.
+                To get started, go to your personal Mastodon
+                account and search for
+                <strong>@${this.groupActor.preferredUsername}@chirp.social</strong>
+                then follow it.
+              </p>
+            </members-list>
+          </details>
         </section>
-        <section
-          role="region"
-          aria-labelledby="delete-heading">
-          <h2 id="delete-heading">
-            Permanent Changes
-          </h2>
-          <p>
-            <button
-              @click=${this.deleteGroup}
-              type="button"
-              class="button button--tag">
-              Delete Group
-            </button>
-          </p>
+
+        <section>
+          <details>
+            <summary>
+              Permanent Changes
+            </summary>
+            <div>
+              <button
+                @click=${this.deleteGroup}
+                type="button"
+                class="button button--tag">
+                Delete Group
+              </button>
+            </div>
+          </details>
         </section>
+
       </div>
     `;
   }
