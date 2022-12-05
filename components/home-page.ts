@@ -325,14 +325,18 @@ export class HomePage extends LitElement {
               <div class="regions">
                 ${this.shared.map(({ id, context, object }) => html`
                   <div class="region">
+                    ${context !== object ? html`
+                      <p>
+                        <post-entity
+                          entity-id=${context}>
+                        </post-entity>
+                      </p>
+                    ` : nothing}
                     <figure>
                       <post-entity
                         entity-id=${object}>
                       </post-entity>
                     </figure>
-                    <p>
-                      <post-entity entity-id=${context}></post-entity>
-                    </p>
                     <button
                       @click=${() => this.undoAnnounce(id)}
                       class="button"
