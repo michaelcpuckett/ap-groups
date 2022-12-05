@@ -314,7 +314,7 @@ export class HomePage extends LitElement {
                 ${this.shared.map(({ id, object }) => html`
                   <div class="region">
                     <post-entity
-                      entity-id=${object.id}>
+                      entity-id=${object}>
                     </post-entity>
                     <button
                       @click=${() => this.undoAnnounce(id)}
