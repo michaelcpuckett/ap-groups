@@ -91,7 +91,7 @@ export class HomePage extends LitElement {
   private blockIds?: string[];
 
   @property({ type: Object })
-  private sharedIds?: string[];
+  private shared?: string[];
 
   @property({ type: Object })
   private requests?: AP.Follow[];
@@ -157,13 +157,12 @@ export class HomePage extends LitElement {
           return !this.blockedIds.includes(id);
         })); 
 
-        this.sharedIds = await fetch(this.groupActor.streams.find(stream => stream.endsWith('shared')), {
+        this.shared = await fetch(this.groupActor.streams.find(stream => stream.endsWith('shared')), {
           headers: {
             'Accept': 'application/activity+json',
           }
         })
-        .then(res => res.json())
-        .then(collection => collection.orderedItems.map(({ id }) => id));
+        .then(res => res.json());
       });
   }
 
@@ -320,10 +319,10 @@ export class HomePage extends LitElement {
             Reposted
           </h2>
           <div class="regions">
-            ${this.sharedIds.map(id => html`
+            ${this.shared.map(({ id, object }) => html`
               <div class="region">
                 <post-entity
-                  entity-id=${id}>
+                  entity-id=${object}>
                 </post-entity>
                 <button
                   @click=${() => this.undoAnnounce(id)}
