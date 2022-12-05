@@ -85,9 +85,6 @@ export class HomePage extends LitElement {
   private members?: AP.Actor[];
 
   @property({ type: Object })
-  private blockedIds?: string[];
-
-  @property({ type: Object })
   private blockIds?: string[];
 
   @property({ type: Object })
@@ -109,18 +106,6 @@ export class HomePage extends LitElement {
       .then(res => res.json())
       .then(async (actor: AP.Actor) => {
         this.groupActor = actor;
-
-        const blocked = await fetch(this.groupActor.streams.find(stream => stream.endsWith('blocked')), {
-          headers: {
-            'Accept': 'application/activity+json',
-          },
-        })
-          .then(res => res.json())
-          .then(collection => collection.items)
-
-        this.blockedIds = blocked.map((item: AP.Actor) => {
-          return `${item.id}`;
-        });
 
         const [
           blocks,
@@ -157,18 +142,10 @@ export class HomePage extends LitElement {
           .then(res => res.json()),
         ]);
 
-        this.blockIds = blocks.items.map((item: AP.Block) => {
-          return `${item.id}`;
-        });
-
-        this.members = members.items.filter(({
-          id
-        }) => !this.blockedIds.includes(id));
-
-        this.requests = requests.items.filter(({
-          id
-        }) => !this.blockedIds.includes(id));
-
+        const blockedIds = blocks.items.map((item: AP.Block) => `${item.object}`);
+        this.blockIds = blocks.items.map((item: AP.Block) => `${item.id}`);
+        this.members = members.items.filter(({ id }) => !blockedIds.includes(id));
+        this.requests = requests.items.filter(({ id }) => !blockedIds.includes(id));
         this.shared = shared.orderedItems;
       });
   }
@@ -311,7 +288,7 @@ export class HomePage extends LitElement {
         </section>
 
         <section>
-          <details>
+          <details open>
             <summary>
               Edit Profile
             </summary>
@@ -329,7 +306,7 @@ export class HomePage extends LitElement {
 
         <section>
           ${this.shared ? html`
-            <details>
+            <details open>
               <summary>
                 Reposts (${this.shared.length})
               </summary>
@@ -388,7 +365,7 @@ export class HomePage extends LitElement {
 
         <section>
           ${this.members ? html`
-            <details>
+            <details ?open=${!this.members.length}>
               <summary>
                 Members (${this.members.length})
               </summary>
@@ -415,7 +392,7 @@ export class HomePage extends LitElement {
             <details>
               <summary>
                 Blocked (${this.blockIds.length})
-              </h2>
+              </summary>
               <requests-list
                 @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.unblock(detail.activityId)}
                 request-ids=${JSON.stringify(this.blockIds)}
@@ -432,7 +409,7 @@ export class HomePage extends LitElement {
         <section>
           <details>
             <summary>
-              Permanent Changes
+              Delete Group
             </summary>
             <div>
               <button
