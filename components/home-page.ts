@@ -118,35 +118,39 @@ export class HomePage extends LitElement {
               'Accept': 'application/activity+json',
             },
           })
-            .then(res => res.json()),
+            .then(res => res.json())
+            .catch(() => null),
 
           fetch(this.groupActor.followers, {
               headers: {
                 'Accept': 'application/activity+json',
               },
             })
-            .then(res => res.json()),
+            .then(res => res.json())
+            .catch(() => null),
 
           fetch(this.groupActor.streams.find(stream => stream.endsWith('requests')), {
             headers: {
               'Accept': 'application/activity+json',
             },
           })
-          .then(res => res.json()),
+          .then(res => res.json())
+          .catch(() => null),
 
           fetch(this.groupActor.streams.find(stream => stream.endsWith('shared')), {
             headers: {
               'Accept': 'application/activity+json',
             }
           })
-          .then(res => res.json()),
+          .then(res => res.json())
+          .catch(() => null)
         ]);
 
-        const blockedIds = blocks.items.map((item: AP.Block) => `${item.object?.id ?? item.object}`);
-        this.blockIds = blocks.items.map((item: AP.Block) => `${item.id}`);
-        this.members = members.items.filter(({ id }) => !blockedIds.includes(id));
-        this.requests = requests.items.filter(({ id }) => !blockedIds.includes(id));
-        this.shared = shared.orderedItems;
+        const blockedIds = blocks ? blocks.items.map((item: AP.Block) => `${item.object?.id ?? item.object}`) : [];
+        this.blockIds = blocks ? blocks.items.map((item: AP.Block) => `${item.id}`) : [];
+        this.requests = requests ? requests.items.filter(({ id }) => !blockedIds.includes(id)) : [];
+        this.members = members ? members.items.filter(({ id }) => !blockedIds.includes(id)) : [];
+        this.shared = shared.orderedItems ?? [];
       });
   }
 
