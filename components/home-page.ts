@@ -295,6 +295,12 @@ export class HomePage extends LitElement {
       `;
     }
 
+    if (!this.groupActor) {
+      return html`
+        Loading...
+      `;
+    }
+
     return html`
       <div class="container">
         <section>
@@ -322,26 +328,30 @@ export class HomePage extends LitElement {
         </section>
 
         <section>
-          <details>
-            <summary>
-              Reposts
-            </summary>
-            <div class="regions">
-              ${this.shared.map(({ id, object }) => html`
-                <div class="region">
-                  <post-entity
-                    entity-id=${object}>
-                  </post-entity>
-                  <button
-                    @click=${() => this.undoAnnounce(id)}
-                    class="button"
-                    type="button">
-                    Delete Repost
-                  </button>
-                </div>
-              `)}
-            </div>
-          </details>
+          ${this.shared ? html`
+            <details>
+              <summary>
+                Reposts (${this.shared.length})
+              </summary>
+              <div class="regions">
+                ${this.shared.map(({ id, object }) => html`
+                  <div class="region">
+                    <post-entity
+                      entity-id=${object}>
+                    </post-entity>
+                    <button
+                      @click=${() => this.undoAnnounce(id)}
+                      class="button"
+                      type="button">
+                      Delete Repost
+                    </button>
+                  </div>
+                `)}
+              </div>
+            </details>
+          ` : html`
+            Loading...
+          `}
         </section>
       </div>
 
@@ -356,21 +366,7 @@ export class HomePage extends LitElement {
         </section>
 
         <section>
-          <details>
-            <summary>
-              Blocked (${this.blockIds.length})
-            </h2>
-            <requests-list
-              @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.unblock(detail.activityId)}
-              request-ids=${JSON.stringify(this.blockIds)}
-              account-reference="object"
-              primary-action="Unblock">
-              <p>No one is blocked.</p>
-            </requests-list>
-          </details>
-        </section>
-
-        <section>
+        ${this.requests ? html`
           <details>
             <summary>
               Follower Requests (${this.requests.length})
@@ -385,26 +381,52 @@ export class HomePage extends LitElement {
               <p>No follower requests.</p>
             </requests-list>
           </details>
+        ` : html`
+          Loading Follower Requests...
+        `}
         </section>
 
         <section>
-          <details>
-            <summary>
-              Members (${this.members.length})
-            </summary>
-            <members-list
-              @members-list:primary-button-click=${({ detail }: CustomEvent) => this.block(detail.memberId)}
-              members=${JSON.stringify(this.members)}
-              primary-action="Block">
-              <p>
-                You have no members following the group.
-                To get started, go to your personal Mastodon
-                account and search for
-                <strong>@${this.groupActor.preferredUsername}@chirp.social</strong>
-                then follow it.
-              </p>
-            </members-list>
-          </details>
+          ${this.members ? html`
+            <details>
+              <summary>
+                Members (${this.members.length})
+              </summary>
+              <members-list
+                @members-list:primary-button-click=${({ detail }: CustomEvent) => this.block(detail.memberId)}
+                members=${JSON.stringify(this.members)}
+                primary-action="Block">
+                <p>
+                  You have no members following the group.
+                  To get started, go to your personal Mastodon
+                  account and search for
+                  <strong>@${this.groupActor.preferredUsername}@chirp.social</strong>
+                  then follow it.
+                </p>
+              </members-list>
+            </details>
+          ` : html`
+            Loading Members...
+          `}
+        </section>
+
+        <section>
+          ${this.blockIds ? html`
+            <details>
+              <summary>
+                Blocked (${this.blockIds.length})
+              </h2>
+              <requests-list
+                @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.unblock(detail.activityId)}
+                request-ids=${JSON.stringify(this.blockIds)}
+                account-reference="object"
+                primary-action="Unblock">
+                <p>No one is blocked.</p>
+              </requests-list>
+            </details>
+          ` : html`
+            Loading Blocks...
+          `}
         </section>
 
         <section>
