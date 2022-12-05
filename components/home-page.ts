@@ -303,13 +303,9 @@ export class HomePage extends LitElement {
           <h2 id="group=shared">
             Reposted
           </h2>
-          <requests-list
-            @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.undoAnnounce()}
-            request-ids=${JSON.stringify(this.sharedIds)}
-            account-reference="object"
-            primary-action="Unshare">
-            <p>Nothing has been reposted yet.</p>
-          </requests-list>
+          ${this.sharedIds.map(id => html`
+            <post-entity entity-id=${id}></post-entity>
+          `)}
         </section>
       </div>
       <div class="right-rail">
