@@ -323,13 +323,24 @@ export class HomePage extends LitElement {
                 Reposts (${this.shared.length})
               </summary>
               <div class="regions">
-                ${this.shared.map(({ id, object }) => html`
+                ${this.shared.map(({ id, actor, object }) => html`
                   <div class="region">
-                    <post-entity
-                      entity-id=${object}>
-                    </post-entity>
+                    <figure>
+                      <post-entity
+                        entity-id=${object}>
+                      </post-entity>
+                    </figure>
+                    <p>
+                      Posted by ${actor}
+                    </p>
                     <button
                       @click=${() => this.undoAnnounce(id)}
+                      class="button"
+                      type="button">
+                      Delete Repost
+                    </button>
+                    <button
+                      @click=${() => this.block(`${actor}`)}
                       class="button"
                       type="button">
                       Delete Repost
