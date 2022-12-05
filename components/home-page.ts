@@ -142,7 +142,7 @@ export class HomePage extends LitElement {
           .then(res => res.json()),
         ]);
 
-        const blockedIds = blocks.items.map((item: AP.Block) => `${item.object}`);
+        const blockedIds = blocks.items.map((item: AP.Block) => `${item.object?.id ?? item.object}`);
         this.blockIds = blocks.items.map((item: AP.Block) => `${item.id}`);
         this.members = members.items.filter(({ id }) => !blockedIds.includes(id));
         this.requests = requests.items.filter(({ id }) => !blockedIds.includes(id));
