@@ -343,24 +343,24 @@ export class HomePage extends LitElement {
         </section>
 
         <section>
-        ${this.requests ? html`
-          <details>
-            <summary>
-              Follower Requests (${this.requests.length})
-            </summary>
-            <requests-list
-              @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.accept(detail.actorId, detail.activityId)}
-              @requests-list:secondary-button-click=${({ detail }: CustomEvent) => this.block(detail.actorId)}
-              request-ids=${JSON.stringify(this.requests.map(request => request.id))}
-              account-reference="actor"
-              primary-action="Accept"
-              secondary-action="Block">
-              <p>No follower requests.</p>
-            </requests-list>
-          </details>
-        ` : html`
-          Loading Follower Requests...
-        `}
+          ${this.requests ? html`
+            <details>
+              <summary>
+                Follower Requests (${this.requests.length})
+              </summary>
+              <requests-list
+                @requests-list:primary-button-click=${({ detail }: CustomEvent) => this.accept(detail.actorId, detail.activityId)}
+                @requests-list:secondary-button-click=${({ detail }: CustomEvent) => this.block(detail.actorId)}
+                request-ids=${JSON.stringify(this.requests.map(request => request.id))}
+                account-reference="actor"
+                primary-action="Accept"
+                secondary-action="Block">
+                <p>No follower requests.</p>
+              </requests-list>
+            </details>
+          ` : html`
+            Loading Follower Requests...
+          `}
         </section>
 
         <section>
