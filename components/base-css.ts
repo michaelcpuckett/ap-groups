@@ -138,4 +138,12 @@ export const baseCss = css`
     left: unset;
     right: 4px;
   }
+
+  .region {
+    padding: 32px;
+    border-radius: 18px;
+    box-shadow: var(--box-shadow);
+    background-color: var(--primary-color);
+    color: var(--text-on-primary-color);
+  }
 `;
