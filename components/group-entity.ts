@@ -81,7 +81,7 @@ export class GroupEntity extends LitElement {
   private entityIcon?: AP.Image;
 
   @state()
-  private feed: AP.ExtendedObject[] = [];
+  private feed: AP.Activity[] = [];
 
   @state()
   private followersCount = -1;
@@ -145,10 +145,10 @@ export class GroupEntity extends LitElement {
         Boosted Posts
       </h2>
       <ul>
-        ${repeat(this.feed, (item: AP.ExtendedObject) => {
+        ${repeat(this.feed, (item: AP.Activity) => {
           return html`
             <li>
-              <post-entity entity-id=${item.id}></post-entity>
+              <post-entity entity-id=${item.object ?? item}></post-entity>
             </li>
           `;
         })}
