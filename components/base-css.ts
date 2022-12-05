@@ -139,11 +139,16 @@ export const baseCss = css`
     right: 4px;
   }
 
+  .regions {
+    display: grid;
+    gap: 32px;
+  }
+
   .region {
     padding: 32px;
     border-radius: 18px;
     box-shadow: var(--box-shadow);
-    background-color: var(--primary-color);
-    color: var(--text-on-primary-color);
+    background-color: var(--light-background-color);
+    color: var(--text-on-light-background-color);
   }
 `;

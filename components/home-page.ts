@@ -304,13 +304,15 @@ export class HomePage extends LitElement {
           <h2 id="group=shared">
             Reposted
           </h2>
-          ${this.sharedIds.map(id => html`
-            <section class="region">
-              <post-entity
-                entity-id=${id}>
-              </post-entity>
-            </section>
-          `)}
+          <div class="regions">
+            ${this.sharedIds.map(id => html`
+              <div class="region">
+                <post-entity
+                  entity-id=${id}>
+                </post-entity>
+              </div>
+            `)}
+          </div>
         </section>
       </div>
       <div class="right-rail">
