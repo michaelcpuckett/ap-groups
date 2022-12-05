@@ -91,7 +91,7 @@ export class HomePage extends LitElement {
   private blockIds?: string[];
 
   @property({ type: Object })
-  private shared?: string[];
+  private shared?: AP.Announce[];
 
   @property({ type: Object })
   private requests?: AP.Follow[];
