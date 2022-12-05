@@ -122,47 +122,54 @@ export class HomePage extends LitElement {
           return `${item.id}`;
         });
 
-        const blocks = await fetch(this.groupActor.streams.find(stream => stream.endsWith('blocks')), {
-          headers: {
-            'Accept': 'application/activity+json',
-          },
-        })
-          .then(res => res.json())
-          .then(collection => collection.items);
+        const [
+          blocks,
+          members,
+          requests,
+          shared,
+        ] = await Promise.all([
+          fetch(this.groupActor.streams.find(stream => stream.endsWith('blocks')), {
+            headers: {
+              'Accept': 'application/activity+json',
+            },
+          })
+            .then(res => res.json()),
 
-        this.blockIds = blocks.map((item: AP.Block) => {
+          fetch(this.groupActor.followers, {
+              headers: {
+                'Accept': 'application/activity+json',
+              },
+            })
+            .then(res => res.json()),
+
+          fetch(this.groupActor.streams.find(stream => stream.endsWith('requests')), {
+            headers: {
+              'Accept': 'application/activity+json',
+            },
+          })
+          .then(res => res.json()),
+
+          fetch(this.groupActor.streams.find(stream => stream.endsWith('shared')), {
+            headers: {
+              'Accept': 'application/activity+json',
+            }
+          })
+          .then(res => res.json()),
+        ]);
+
+        this.blockIds = blocks.items.map((item: AP.Block) => {
           return `${item.id}`;
         });
 
-        this.members = await fetch(this.groupActor.followers, {
-          headers: {
-            'Accept': 'application/activity+json',
-          },
-        })
-        .then(res => res.json())
-        .then(collection => collection.items.filter(({
+        this.members = members.items.filter(({
           id
-        }) => {
-          return !this.blockedIds.includes(id);
-        }));
+        }) => !this.blockedIds.includes(id));
 
-        this.requests = await fetch(this.groupActor.streams.find(stream => stream.endsWith('requests')), {
-          headers: {
-            'Accept': 'application/activity+json',
-          },
-        })
-        .then(res => res.json()).then(collection => collection.items.filter(({
+        this.requests = requests.items.filter(({
           id
-        }) => {
-          return !this.blockedIds.includes(id);
-        })); 
+        }) => !this.blockedIds.includes(id));
 
-        this.shared = await fetch(this.groupActor.streams.find(stream => stream.endsWith('shared')), {
-          headers: {
-            'Accept': 'application/activity+json',
-          }
-        })
-        .then(res => res.json());
+        this.shared = shared;
       });
   }
 
