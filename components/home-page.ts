@@ -263,8 +263,23 @@ export class HomePage extends LitElement {
     });
   }
 
-  private undoAnnounce() {
-
+  private undoAnnounce(activityId: string) {
+    fetch(this.groupActor.outbox, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/activity+json',
+      },
+      body: JSON.stringify({
+        '@context': 'https://www.w3.org/ns/activitystreams',
+        type: 'Undo',
+        actor: this.groupActor.id,
+        object: activityId,
+      }),
+    }).then(res => {
+      if (res.headers.has('Location')) {
+        window.location.reload();
+      }
+    });
   }
 
   render() {
@@ -310,6 +325,12 @@ export class HomePage extends LitElement {
                 <post-entity
                   entity-id=${id}>
                 </post-entity>
+                <button
+                  @click=${() => this.undoAnnounce(id)}
+                  class="button"
+                  type="button">
+                  Delete Repost
+                </button>
               </div>
             `)}
           </div>
