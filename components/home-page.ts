@@ -174,6 +174,10 @@ export class HomePage extends LitElement {
         type: 'Delete',
         actor: this.groupActor.id,
         object: this.groupActor.id,
+        to: [
+          'https://www.w3.org/ns/activitystreams#Public',
+          `${this.groupActor.followers}`,
+        ],
       }),
     })
     .then((res) => {
