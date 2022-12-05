@@ -162,7 +162,7 @@ export class HomePage extends LitElement {
           }
         })
         .then(res => res.json())
-        .then(collection => collection.items.map(({ id }) => id));
+        .then(collection => collection.orderedItems.map(({ id }) => id));
       });
   }
 
