@@ -169,7 +169,7 @@ export class HomePage extends LitElement {
           id
         }) => !this.blockedIds.includes(id));
 
-        this.shared = shared;
+        this.shared = shared.orderedItems;
       });
   }
 
