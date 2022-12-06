@@ -146,7 +146,7 @@ export class GroupEntity extends LitElement {
       </h2>
       <ul>
         ${repeat(this.feed, (item: AP.Activity) => {
-          const objectId = item.object?.id ?? item.object;
+          const objectId = item.object?.id ?? item.object ?? id;
           const contextId = item.context?.id ?? item.context;
 
           return html`
