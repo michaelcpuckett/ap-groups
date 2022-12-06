@@ -81,7 +81,7 @@ export class GroupEntity extends LitElement {
   private entityIcon?: AP.Image;
 
   @state()
-  private feed: AP.Activity[] = [];
+  private feed: AP.Announce[] = [];
 
   @state()
   private followersCount = -1;
@@ -145,8 +145,8 @@ export class GroupEntity extends LitElement {
         Boosted Posts
       </h2>
       <ul>
-        ${repeat(this.feed, (item: AP.Activity) => {
-          const objectId = item.object?.id ?? item.object ?? id;
+        ${repeat(this.feed, (item: AP.Announce) => {
+          const objectId = item.object?.id ?? item.object ?? item.id;
           const contextId = item.context?.id ?? item.context;
 
           return html`
