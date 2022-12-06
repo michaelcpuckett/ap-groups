@@ -146,9 +146,23 @@ export class GroupEntity extends LitElement {
       </h2>
       <ul>
         ${repeat(this.feed, (item: AP.Activity) => {
+          const objectId = item.object?.id ?? item.object;
+          const contextId = item.context?.id ?? item.context;
+
           return html`
             <li>
-              <post-entity entity-id=${item.object?.id ?? item.object ?? item.id}></post-entity>
+              ${(contextId && contextId !== objectId) ? html`
+                <p>
+                  <post-entity
+                    entity-id=${contextId}>
+                  </post-entity>
+                </p>
+              ` : nothing}
+              <figure>
+                <post-entity
+                  entity-id=${objectId}>
+                </post-entity>
+              </figure>
             </li>
           `;
         })}
