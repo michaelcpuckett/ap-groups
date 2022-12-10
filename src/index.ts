@@ -120,10 +120,10 @@ const renderDirectoryPage = async ({ groups }: { groups: AP.Group[] }): Promise<
               members,
               blocks,
             ] = await Promise.all([
-              mongoDbAdapter.findEntityById(sharedUrl).then((collection: AP.OrderedCollection) => collection.orderedItems),
-              mongoDbAdapter.findEntityById(requestsUrl).then((collection: AP.Collection) => collection.items),
-              mongoDbAdapter.findEntityById(membersUrl).then((collection: AP.Collection) => collection.items),
-              mongoDbAdapter.findEntityById(blocksUrl).then((collection: AP.Collection) => collection.items),
+              mongoDbAdapter.findEntityById(sharedUrl).then((collection: AP.OrderedCollection) => collection.orderedItems).catch(() => []),
+              mongoDbAdapter.findEntityById(requestsUrl).then((collection: AP.Collection) => collection.items).catch(() => []),
+              mongoDbAdapter.findEntityById(membersUrl).then((collection: AP.Collection) => collection.items).catch(() => []),
+              mongoDbAdapter.findEntityById(blocksUrl).then((collection: AP.Collection) => collection.items).catch(() => []),
             ]);
 
             return {
