@@ -21,7 +21,7 @@ export class PostEntity extends LitElement {
   private entityId = '';
 
   @property({ type: Object })
-  private entity: AP.Entity|null = null;
+  private entity: AP.ExtendedObject|null = null;
 
   @property({ type: Object })
   private attributedTo: AP.Actor|null = null;
@@ -72,7 +72,7 @@ export class PostEntity extends LitElement {
         <img src=${attachment.url} />
       `;
     }) : nothing;
-F
+
     return html`
       Published by
       ${this.attributedTo ? html`
