@@ -132,7 +132,8 @@ header a span {
   }
 
   signup-form,
-  login-form {
+  login-form,
+  forgot-password-form {
     background-color: var(--light-background-color);
     color: var(--text-on-light-background-color);
     border-radius: 18px;
