@@ -30,13 +30,6 @@ export class PostEntity extends LitElement {
   private isDeleted = false;
 
   override firstUpdated() {
-    try {
-      new URL(this.entityId);
-    } catch (error) {
-      this.isDeleted = true;
-      return;
-    }
-
     fetch(`/proxy?resource=${this.entityId}`, {
       headers: {
         'Accept': 'application/activity+json'
