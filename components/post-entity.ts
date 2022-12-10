@@ -23,6 +23,9 @@ export class PostEntity extends LitElement {
   @property({ type: Object })
   private entity: AP.Entity|null = null;
 
+  @property({ type: Object })
+  private attributedTo: AP.Actor|null = null;
+
   @property({ type: Boolean })
   private isDeleted = false;
 
@@ -36,7 +39,15 @@ export class PostEntity extends LitElement {
     .then(entity => {
       this.entity = entity;
       this.isDeleted = this.entity.type === AP.ExtendedObjectTypes.TOMBSTONE || (Array.isArray(this.entity.type) && this.entity.type.includes(AP.ExtendedObjectTypes.TOMBSTONE));
+
+      return fetch(`/proxy?resource=${this.entity.attributedTo}`, {
+        headers: {
+          'Accept': 'application/activity+json'
+        }
+      })
     })
+    .then(res => res.json())
+    .then(actor => this.attributedTo = actor)
     .catch(() => {
       this.isDeleted = true;
     });
@@ -63,8 +74,9 @@ export class PostEntity extends LitElement {
     }) : nothing;
 
     return html`
-      Published by <a target="_blank" href=${this.entity.attributedTo}>
-        ${this.entity.attributedTo}
+      Published by
+      <a target="_blank" href=${this.entity.attributedTo}>
+        @${this.attributedTo.preferredUsername}@${new URL(this.entity.attributedTo).hostname}
       </a>
       on
       <a target="_blank" href=${this.entity.url}>
