@@ -54,8 +54,14 @@ const renderLoginPage = async (): Promise<string> => {
   return nunjucks.render('login.html');
 };
 
-const renderHomePage = async ({ actor }: { actor: AP.Actor }): Promise<string> => {
-  return nunjucks.render('home.html', { actor });
+const renderHomePage = async (homePageProps: {
+  actor: AP.Actor;
+  shared: AP.Announce[];
+  requests: AP.Follow[];
+  members: AP.Actor[];
+  blocks: AP.Block[];
+}): Promise<string> => {
+  return nunjucks.render('home.html', homePageProps);
 };
 
 const renderEntityPage = async ({ entity, actor }: { entity: AP.Entity, actor?: AP.Actor }): Promise<string> => {
@@ -101,7 +107,33 @@ const renderDirectoryPage = async ({ groups }: { groups: AP.Group[] }): Promise<
           generateActorId: () => (preferredUsername: string) => {
             return `${LOCAL_DOMAIN}/@${preferredUsername}`;
           },
-        },
+          getHomePageProps: async (actor: AP.Actor) => {
+            const streams = actor.streams as URL[];
+            const sharedUrl = streams.find((stream: URL) => `${stream}`.endsWith('shared'));
+            const requestsUrl = streams.find((stream: URL) => `${stream}`.endsWith('requests'));
+            const blocksUrl = streams.find((stream: URL) => `${stream}`.endsWith('blocks'));
+            const membersUrl = actor.followers as URL;
+
+            const [
+              shared,
+              requests,
+              members,
+              blocks,
+            ] = await Promise.all([
+              mongoDbAdapter.findEntityById(sharedUrl).then((collection: AP.OrderedCollection) => collection.orderedItems),
+              mongoDbAdapter.findEntityById(requestsUrl).then((collection: AP.Collection) => collection.items),
+              mongoDbAdapter.findEntityById(membersUrl).then((collection: AP.Collection) => collection.items),
+              mongoDbAdapter.findEntityById(blocksUrl).then((collection: AP.Collection) => collection.items),
+            ]);
+
+            return {
+              shared,
+              requests,
+              members,
+              blocks,
+            };
+          },
+        }
       ]
     }),
   );

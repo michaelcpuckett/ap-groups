@@ -5,17 +5,215 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="base.css" />
   <link rel="stylesheet" href="index.css" />
+  <link rel="stylesheet" href="home.css" />
   <body>
     <div>
       <div class="root">
         <div class="container">
-          {{ header() }}
+          {{  header()  }}
         </div>
         <div class="right-rail">
-          
+          <textarea>{{ actor | dump }}</textarea>
+          <textarea>{{ shared | dump }}</textarea>
+          <textarea>{{ requests | dump }}</textarea>
+          <textarea>{{ members | dump }}</textarea>
+          <textarea>{{ blocks | dump }}</textarea>
         </div>
       </div>
-      <home-page group-id="{{actor.id}}"></home-page>
+      <div class="root">
+        <div class="container">
+          <section>
+            <h1>
+              Managing 
+              @{{ actor.preferredUsername }}@chirp.social
+            </h1>
+          </section>
+
+          <section>
+            <details open>
+              <summary>
+                Edit Profile
+              </summary>
+              <group-details
+                outbox-url="{{ actor.outbox }}"
+                upload-media-url="{{ actor.endpoints.uploadMedia }}"
+                group-actor-id="{{ actor.id }}"
+                {% if actor.manuallyApprovesFollowers %}
+                  manually-approves-followers
+                {% endif %}
+                icon="{{ actor.icon | dump }}"
+                name="{{ actor.name }}"
+                summary="{{ actor.summary }}">
+              </group-details>
+            </details>
+          </section>
+
+          <section>
+            <details open>
+              <summary>
+                Reposts ({{ shared.length }})
+              </summary>
+              <div class="regions">
+                {% if shared.length %}
+                  {% for postId in shared %}
+                    <div class="region">
+                      <post-entity entity-id="{{ postId }}"></post-entity>
+                      <button
+                        class="delete-repost-button"
+                        data-id="{{ postId }}"
+                        type="button">
+                        Delete Repost
+                      </button>
+                    </div>
+                  {% endfor %}
+                {% else %}
+                  <p>
+                    No posts yet.
+                  </p>
+                {% endif %}
+              </div>
+            </details>
+          </section>
+        </div>
+
+        <div class="right-rail">
+          <section>
+            <button
+              type="button"
+              class="button"
+              id="logout-button">
+              Log Out
+            </button>
+          </section>
+
+          <section>
+            <details>
+              <summary>
+                Follower Requests ({{ requests.length }})
+              </summary>
+              {% if requests.length %}
+                <ul>
+                  {% for request in requests %}
+                    <li>
+                      <a href="{{ request.actor.id }}">
+                        {{ request.actor.id }}
+                      </a>
+                      <button
+                        data-action="accept"
+                        data-id="{{ request.id }}"
+                        type="button"
+                        class="button button--tag">
+                        Accept
+                      </button>
+                      <button
+                        data-action="ignore"
+                        data-id="{{ request.id }}"
+                        type="button"
+                        class="button button--tag">
+                        Ignore
+                      </button>
+                      <button
+                        type="button"
+                        data-action="block"
+                        data-id="{{ request.actor.id }}"
+                        class="button button--tag">
+                        Block
+                      </button>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p>
+                  No follower requests.
+                </p>
+              {% endif %}
+            </details>
+          </section>
+
+          <section>
+            {% if members.length %}
+              <details>
+            {% else %}
+              <details open>
+            {% endif %}
+              <summary>
+                Members ({{ members.length }})
+              </summary>
+              {% if members.length %}
+                <ul>
+                  {% for member in members %}
+                    <li>
+                      <a href="{{ member.id }}">
+                        {{ member.id }}
+                      </a>
+                      <button
+                        type="button"
+                        class="button button--tag">
+                        Block
+                      </button>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p>
+                  You have no members following the group.
+                  To get started, go to your personal Mastodon
+                  account and search for
+                  <strong>@{{ actor.preferredUsername }}@chirp.social</strong>
+                  then follow it.
+                </p>
+              {% endif %}
+            </details>
+          </section>
+
+          <section>
+            <details>
+              <summary>
+                Blocked ({{ blocks.length }})
+              </summary>
+              {% if blocks.length %}
+                <ul>
+                  {% for block in blocks %}
+                    <li>
+                      <a href="{{ member.id }}">
+                        {{ member.id }}
+                      </a>
+                      <button
+                        data-action="unblock"
+                        data-id="{{ block.id }}"
+                        type="button"
+                        class="button button--tag">
+                        Unblock
+                      </button>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% else %}
+                <p>
+                  No one is blocked.
+                </p>
+              {% endif %}
+            </details>
+          </section>
+
+          <section>
+            <details>
+              <summary>
+                Delete Group
+              </summary>
+              <div>
+                <button
+                  data-action="delete"
+                  data-id="{{ actor.id }}"
+                  type="button"
+                  class="button button--tag">
+                  Delete Group
+                </button>
+              </div>
+            </details>
+          </section>
+        </div>
+      </div>
     </div>
     <script type="module" src="home.js"></script>
   </body>
