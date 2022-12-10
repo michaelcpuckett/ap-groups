@@ -155,7 +155,7 @@ export class SignupForm extends LitElement {
             name="email"
           />
           <span class="hint-text">
-            You won't have to verify, so this can be anything.
+            You won't have to verify.
           </span>
           ${this.emailError ? html`
             <span class="error-message">
