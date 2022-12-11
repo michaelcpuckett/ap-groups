@@ -84,7 +84,7 @@ export class ActorEntity extends LitElement {
       ${this.blockAction ? html`
         <button
           type="button"
-          class="button"
+          class="button button--tag"
           @click=${this.block}>
           Block
         </button>

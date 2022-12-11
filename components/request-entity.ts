@@ -136,7 +136,7 @@ export class RequestEntity extends LitElement {
       ${this.acceptAction ? html`
         <button
           type="button"
-          class="button"
+          class="button button--tag"
           @click=${this.accept}>
           Accept
         </button>
@@ -144,7 +144,7 @@ export class RequestEntity extends LitElement {
       ${this.blockAction ? html`
         <button
           type="button"
-          class="button"
+          class="button button--tag"
           @click=${this.block}>
           Block
         </button>

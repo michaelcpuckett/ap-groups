@@ -75,15 +75,25 @@ export class AnnounceEntity extends LitElement {
     }
     
     return html`
-      <post-entity entity-id=${this.object.id}></post-entity>
-      ${this.undoAction ? html`
-        <button
-          type="button"
-          class="button"
-          @click=${this.undo}>
-          Block
-        </button>
+      ${this.entity.context ? html`
+        <post-entity entity-id=${this.entity.context}</post-entity>
       ` : nothing}
+      <figure>
+        <post-entity entity-id=${this.object.id}></post-entity>
+      </figure>
+      <details>
+        Options
+      </details>
+      <div>
+        ${this.undoAction ? html`
+          <button
+            type="button"
+            class="button button--tag"
+            @click=${this.undo}>
+            Delete
+          </button>
+        ` : nothing}
+      </div>
     `;
   }
 }

@@ -30,12 +30,6 @@ export class BlockEntity extends LitElement {
   @property({ type: Boolean })
   private isDeleted = false;
 
-  @property({ type: Boolean, reflect: true, attribute: 'accept-action' })
-  private acceptAction: boolean = false;
-
-  @property({ type: Boolean, reflect: true, attribute: 'block-action' })
-  private blockAction: boolean = false;
-
   @property({ type: Boolean, reflect: true, attribute: 'unblock-action' })
   private unblockAction: boolean = false;
 
@@ -116,7 +110,7 @@ export class BlockEntity extends LitElement {
       ${this.unblockAction ? html`
         <button
           type="button"
-          class="button"
+          class="button button--tag"
           @click=${this.unblock}>
           Unblock
         </button>
