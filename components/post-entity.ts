@@ -103,7 +103,7 @@ export class PostEntity extends LitElement {
             class="permalink"
             target="_blank"
             href=${this.entity.url}>
-            [Permalink]
+            Permalink
           </a>
         ` : nothing}
       </div>

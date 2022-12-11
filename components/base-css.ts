@@ -213,6 +213,8 @@ export const baseCss = css`
 
   .permalink {
     display: block;
+    font-size: .75em;
+    text-align: center;
   }
 
   .actor-lockup {
