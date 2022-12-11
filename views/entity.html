@@ -50,8 +50,8 @@
                   <h2>
                     Posts
                   </h2>
-                  {% if stream.orderedItems.length %}
-                    {% for postId in stream.orderedItems %}
+                  {% if shared.orderedItems.length %}
+                    {% for postId in shared.orderedItems %}
                       <div class="region">
                         <announce-entity entity-id="{{ postId }}">
                           <!-- Fallback for legacy accounts -->
