@@ -21,8 +21,11 @@ export class RequestEntity extends LitElement {
   @property({ type: Object })
   private entity: AP.Block|null = null;
 
+  @property({ type: String, reflect: true, attribute: 'actor-id' })
+  private actorId = '';
+
   @property({ type: Object })
-  private actor: AP.Actor|null = null;
+  private object: AP.Actor|null = null;
 
   @property({ type: Boolean })
   private isDeleted = false;
@@ -59,9 +62,9 @@ export class RequestEntity extends LitElement {
       });
     })
     .then(res => res.json())
-    .then(actor => {
+    .then(object => {
       this.entity = entity;
-      this.actor = actor;
+      this.object = object;
     })
     .catch(() => {
       this.isDeleted = true;
@@ -77,7 +80,7 @@ export class RequestEntity extends LitElement {
   }
 
   private unblock() {
-    fetch(`${this.actor.outbox}`, {
+    fetch(`${this.actorId}/outbox`, {
       method: 'POST',
       headers: {
         'Accept': 'application/activity+json',
@@ -85,7 +88,7 @@ export class RequestEntity extends LitElement {
       body: JSON.stringify({
         '@context': 'https://www.w3.org/ns/activitystreams',
         type: 'Undo',
-        actor: `${this.actor.id}`,
+        actor: `${this.actorId}`,
         object: this.entity.id,
       }),
     }).then(res => {
@@ -109,15 +112,15 @@ export class RequestEntity extends LitElement {
       `;
     }
 
-    if (!this.actor) {
+    if (!this.object) {
       return html`
         Deleted.
       `;
     }
     
     return html`
-      <a target="_blank" href=${this.actor.id}>
-        @${this.actor.preferredUsername}@${new URL(this.actor.id).hostname}
+      <a target="_blank" href=${this.object.id}>
+        @${this.object.preferredUsername}@${new URL(this.object.id).hostname}
       </a>
       ${this.acceptAction ? html`
         <button
@@ -140,7 +143,7 @@ export class RequestEntity extends LitElement {
           type="button"
           class="button"
           @click=${this.unblock}>
-          Block
+          Unblock
         </button>
       ` : nothing}
     `;
