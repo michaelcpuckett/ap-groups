@@ -78,11 +78,14 @@ export class PostEntity extends LitElement {
         <a target="_blank" href=${this.attributedTo.url}>
           ${this.attributedTo.image ? html`
             <img
+              class="avatar avatar--small"
               src=${this.attributedTo.image?.url ?? this.attributedTo.image}
-              height="80"
-              width="80"
+              height="70"
+              width="70"
             />
-          ` : nothing}
+          ` : html`
+            <span class="avatar avatar--small"></span>
+          `}
           @${this.attributedTo.preferredUsername}@${new URL(this.attributedTo.url).hostname}
         </a>
       ` : nothing}

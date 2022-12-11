@@ -192,4 +192,15 @@ export const baseCss = css`
     display: inline-flex;
     z-index: 1;
   }
+
+  .avatar {
+    overflow: hidden;
+  }
+
+  .avatar--small {
+    border-radius: 8px;
+    height: 70px;
+    width: 70px;
+    background: var(--accent-color);
+  }
 `;
