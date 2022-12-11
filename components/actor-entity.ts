@@ -42,8 +42,24 @@ export class ActorEntity extends LitElement {
     });
   }
 
-  private block() {
-    
+  
+  private block(memberId: string) {
+    fetch(`${this.entity.outbox}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/activity+json',
+      },
+      body: JSON.stringify({
+        '@context': 'https://www.w3.org/ns/activitystreams',
+        type: 'Block',
+        actor: this.entity.id,
+        object: memberId,
+      }),
+    }).then(res => {
+      if (res.headers.has('Location')) {
+        window.location.reload();
+      }
+    });
   }
 
   render() {

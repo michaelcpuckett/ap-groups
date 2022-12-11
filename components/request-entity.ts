@@ -33,6 +33,9 @@ export class RequestEntity extends LitElement {
   @property({ type: Boolean, reflect: true, attribute: 'block-action' })
   private blockAction: boolean = false;
 
+  @property({ type: Boolean, reflect: true, attribute: 'unblock-action' })
+  private unblockAction: boolean = false;
+
   override firstUpdated() {
     let entity: AP.Activity|null = null;
 
@@ -71,6 +74,26 @@ export class RequestEntity extends LitElement {
 
   }
 
+  private unblock() {
+    fetch(`${this.actor.outbox}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/activity+json',
+      },
+      body: JSON.stringify({
+        '@context': 'https://www.w3.org/ns/activitystreams',
+        type: 'Undo',
+        actor: `${this.actor.id}`,
+        object: this.entity.id,
+      }),
+    }).then(res => {
+      if (res.headers.has('Location')) {
+        window.location.reload();
+      }
+    });
+  }
+
+
   render() {
     if (this.isDeleted) {
       return html`
@@ -107,6 +130,14 @@ export class RequestEntity extends LitElement {
           type="button"
           class="button"
           @click=${this.block}>
+          Block
+        </button>
+      ` : nothing}
+      ${this.blockAction ? html`
+        <button
+          type="button"
+          class="button"
+          @click=${this.unblock}>
           Block
         </button>
       ` : nothing}
