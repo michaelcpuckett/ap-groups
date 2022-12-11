@@ -15,6 +15,11 @@ export class PostEntity extends LitElement {
     a {
       color: var(--text-on-light-background-color);
     }
+
+    :host(:not([is-deleted])) {
+      display: grid;
+      grid-template-columns: 200px minmax(0, 1fr);
+    }
   `];
 
   @property({ type: String, reflect: true, attribute: 'entity-id' })
@@ -26,7 +31,7 @@ export class PostEntity extends LitElement {
   @property({ type: Object })
   private attributedTo: AP.Actor|null = null;
 
-  @property({ type: Boolean })
+  @property({ type: Boolean, reflect: true, attribute: 'is-deleted' })
   private isDeleted = false;
 
   override firstUpdated() {
@@ -74,34 +79,38 @@ export class PostEntity extends LitElement {
     }) : nothing;
 
     return html`
-      ${this.attributedTo ? html`
-        <a target="_blank" href=${this.entity.url}>
-          Permalink
-        </a>
-        <a class="actor-lockup" target="_blank" href=${this.attributedTo.url}>
-          ${this.attributedTo.icon ? html`
-            <img
-              class="avatar avatar--small"
-              src=${this.attributedTo.icon?.url ?? this.attributedTo.icon}
-              height="70"
-              width="70"
-            />
-          ` : html`
-            <span class="avatar avatar--small"></span>
-          `}
-          <span class="actor-username">
-            @${this.attributedTo.preferredUsername}
-          </span>
-          <span class="actor-hostname">
-            ${new URL(this.attributedTo.url).hostname}
-          </span>
-
-        </a>
-      ` : nothing}
-      <figure>
+      <div class="left-rail">
+        ${this.attributedTo ? html`
+          <a class="actor-lockup" target="_blank" href=${this.attributedTo.url}>
+            ${this.attributedTo.icon ? html`
+              <img
+                class="avatar avatar--small"
+                src=${this.attributedTo.icon?.url ?? this.attributedTo.icon}
+                height="70"
+                width="70"
+              />
+            ` : html`
+              <span class="avatar avatar--small"></span>
+            `}
+            <span class="actor-username">
+              @${this.attributedTo.preferredUsername}
+            </span>
+            <span class="actor-hostname">
+              ${new URL(this.attributedTo.url).hostname}
+            </span>
+          </a>
+          <a
+            class="permalink"
+            target="_blank"
+            href=${this.entity.url}>
+            [Permalink]
+          </a>
+        ` : nothing}
+      </div>
+      <div class="main">
         ${attachmentHtml}
         ${unsafeHTML(this.entity.content)}
-      </figure>
+      </div>
     `;
   }
 }

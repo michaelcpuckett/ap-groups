@@ -211,13 +211,17 @@ export const baseCss = css`
     background: var(--accent-color);
   }
 
+  .permalink {
+    display: block;
+  }
+
   .actor-lockup {
     display: inline-flex;
     flex-direction: column;
     text-align: center;
     place-items: center;
     place-content: center;
-    border: 1px solid;
+    border: 1px solid lightgray;
     border-radius: 8px;
     padding: 4px;
   }
