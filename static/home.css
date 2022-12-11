@@ -147,4 +147,5 @@ input {
   box-shadow: var(--box-shadow);
   background-color: var(--light-background-color);
   color: var(--text-on-light-background-color);
+  font-size: 1.333em;
 }
