@@ -56,7 +56,7 @@ export class PostEntity extends LitElement {
   render() {
     if (this.isDeleted) {
       return html`
-        Deleted.
+        <slot>Deleted.</slot>
       `;
     }
     
