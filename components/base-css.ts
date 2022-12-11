@@ -214,10 +214,12 @@ export const baseCss = css`
   .actor-lockup {
     display: inline-flex;
     flex-direction: column;
-    gap: 8px;
     text-align: center;
     place-items: center;
     place-content: center;
+    border: 1px solid;
+    border-radius: 8px;
+    padding: 4px;
   }
 
   .actor-username {

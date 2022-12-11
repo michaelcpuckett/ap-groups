@@ -78,7 +78,6 @@ export class PostEntity extends LitElement {
         <a target="_blank" href=${this.entity.url}>
           Permalink
         </a>
-        |
         <a class="actor-lockup" target="_blank" href=${this.attributedTo.url}>
           ${this.attributedTo.icon ? html`
             <img
