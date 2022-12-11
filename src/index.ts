@@ -130,9 +130,11 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                 mongoDbAdapter.findEntityById(followersUrl).then((collection: AP.Collection) => collection.items).catch(() => []),
               ]);
 
+              const followersCount = followers.length;
+
               return {
                 shared,
-                followers,
+                followersCount,
               };
             } catch (error) {
               return null;
