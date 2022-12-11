@@ -1,7 +1,7 @@
 import './post-entity';
 
-import {LitElement, html, css, nothing} from 'lit';
-import {customElement, property, query} from 'lit/decorators';
+import { LitElement, html, css, nothing } from 'lit';
+import { customElement, property, query } from 'lit/decorators';
 import { baseCss } from './base-css';
 import { AP } from 'activitypub-core-types';
 
@@ -21,13 +21,10 @@ export class AnnounceEntity extends LitElement {
   private entityId = '';
 
   @property({ type: Object })
-  private entity: AP.Announce|null = null;
+  private entity: AP.Announce | null = null;
 
   @property({ type: String, reflect: true, attribute: 'actor-id' })
   private actorId = '';
-
-  @property({ type: Object })
-  private object: AP.ExtendedObject|null = null;
 
   @property({ type: Boolean })
   private isDeleted = false;
@@ -41,23 +38,13 @@ export class AnnounceEntity extends LitElement {
         'Accept': 'application/activity+json'
       }
     })
-    .then(res => res.json())
-    .then(entity => {
-      this.entity = entity;
-
-      return fetch(`/proxy?resource=${this.entity.object}`, {
-        headers: {
-          'Accept': 'application/activity+json'
-        }
+      .then(res => res.json())
+      .then(entity => {
+        this.entity = entity;
+      })
+      .catch(() => {
+        this.isDeleted = true;
       });
-    })
-    .then(res => res.json())
-    .then(actor => {
-      this.object = actor;
-    })
-    .catch(() => {
-      this.isDeleted = true;
-    });
   }
 
   undo() {
@@ -70,7 +57,7 @@ export class AnnounceEntity extends LitElement {
         '@context': 'https://www.w3.org/ns/activitystreams',
         type: 'Undo',
         actor: `${this.actorId}`,
-        object: this.entity.id,
+        object: this.entityId,
       }),
     }).then(res => {
       if (res.headers.has('Location')) {
@@ -85,19 +72,19 @@ export class AnnounceEntity extends LitElement {
         Deleted.
       `;
     }
-    
+
     if (!this.entity) {
       return html`
         Loading...
       `;
     }
-    
+
     return html`
       ${this.entity.context ? html`
         <post-entity entity-id=${this.entity.context}></post-entity>
       ` : nothing}
       <figure>
-        <post-entity entity-id=${this.object?.id ?? this.object}></post-entity>
+        <post-entity entity-id=${this.entity.object}></post-entity>
       </figure>
       <details>
         <summary>
