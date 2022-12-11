@@ -7,7 +7,10 @@ import { AP } from 'activitypub-core-types';
 export class RequestEntity extends LitElement {
   static styles = [baseCss, css`
     :host {
-      display: block;
+      display: inline-flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
     }
 
     a {

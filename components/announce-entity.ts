@@ -80,12 +80,6 @@ export class AnnounceEntity extends LitElement {
     }
 
     return html`
-      ${this.entity.context ? html`
-        <post-entity entity-id=${this.entity.context}></post-entity>
-      ` : nothing}
-      <figure>
-        <post-entity entity-id=${this.entity.object}></post-entity>
-      </figure>
       <details class="flyout">
         <summary aria-label="Options">
           ...
@@ -101,6 +95,12 @@ export class AnnounceEntity extends LitElement {
           ` : nothing}
         </div>
       </details>
+      ${this.entity.context ? html`
+        <post-entity entity-id=${this.entity.context}></post-entity>
+      ` : nothing}
+      <figure>
+        <post-entity entity-id=${this.entity.object}></post-entity>
+      </figure>
     `;
   }
 }

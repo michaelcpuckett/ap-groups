@@ -180,5 +180,7 @@ export const baseCss = css`
     border-radius: 8px;
     right: calc(100% + 4px);
     top: 0;
+    gap: 8px;
+    display: inline-flex;
   }
 `;
