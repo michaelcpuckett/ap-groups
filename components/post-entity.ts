@@ -76,10 +76,10 @@ export class PostEntity extends LitElement {
     return html`
       ${this.attributedTo ? html`
         <a target="_blank" href=${this.attributedTo.url}>
-          ${this.attributedTo.image ? html`
+          ${this.attributedTo.icon ? html`
             <img
               class="avatar avatar--small"
-              src=${this.attributedTo.image?.url ?? this.attributedTo.image}
+              src=${this.attributedTo.icon?.url ?? this.attributedTo.icon}
               height="70"
               width="70"
             />
