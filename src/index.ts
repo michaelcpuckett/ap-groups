@@ -65,8 +65,8 @@ const renderHomePage = async (homePageProps: {
   return nunjucks.render('home.html', homePageProps);
 };
 
-const renderEntityPage = async ({ entity, actor }: { entity: AP.Entity, actor?: AP.Actor }): Promise<string> => {
-  return nunjucks.render('entity.html', { entity, actor });
+const renderEntityPage = async (entityPageProps: { entity: AP.Entity; actor?: AP.Actor; shared: AP.Announce[]; followersCount: number; }): Promise<string> => {
+  return nunjucks.render('entity.html', entityPageProps);
 };
 
 const renderDirectoryPage = async ({ groups }: { groups: AP.Group[] }): Promise<string> => {
@@ -124,13 +124,11 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
 
               const [
                 shared,
-                followers,
+                followersCount,
               ] = await Promise.all([
-                mongoDbAdapter.findEntityById(sharedUrl).then((collection: AP.OrderedCollection) => collection.orderedItems).catch(() => []),
-                mongoDbAdapter.findEntityById(followersUrl).then((collection: AP.Collection) => collection.items).catch(() => []),
+                mongoDbAdapter.findEntityById(sharedUrl).then((collection: AP.OrderedCollection) => collection.orderedItems as URL[]).catch(() => []),
+                mongoDbAdapter.findEntityById(followersUrl).then((collection: AP.Collection) => (collection.items as AP.Entity[]).length).catch(() => 0),
               ]);
-
-              const followersCount = followers.length;
 
               return {
                 shared,
