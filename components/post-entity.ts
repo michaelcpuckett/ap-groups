@@ -74,15 +74,20 @@ export class PostEntity extends LitElement {
     }) : nothing;
 
     return html`
-      Published by
       ${this.attributedTo ? html`
         <a target="_blank" href=${this.attributedTo.url}>
+          ${this.attributedTo.image ? html`
+            <img
+              src=${this.attributedTo.image?.url ?? this.attributedTo.image}
+              height="80"
+              width="80"
+            />
+          ` : nothing}
           @${this.attributedTo.preferredUsername}@${new URL(this.attributedTo.url).hostname}
         </a>
       ` : nothing}
-      on
       <a target="_blank" href=${this.entity.url}>
-        ${this.entity.published}
+        (Permalink)
       </a>
       <figure>
         ${attachmentHtml}
