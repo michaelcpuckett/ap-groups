@@ -18,13 +18,24 @@ export class PostEntity extends LitElement {
 
     :host(:not([is-deleted])) {
       display: grid;
-      grid-template-columns: 200px minmax(0, 1fr);
+      gap: 8px;
+    }
+
+    @media (min-width: 600px) {
+      :host(:not([is-deleted])) {
+        grid-template-columns: 200px minmax(0, 1fr);
+      }
     }
 
     .left-rail {
       display: flex;
       flex-direction: column;
       align-items: center;
+    }
+
+    .attachment {
+      border-radius: 8px;
+      overflow: hidden;
     }
   `];
 
@@ -80,7 +91,7 @@ export class PostEntity extends LitElement {
     const attachments = this.entity.attachment ? Array.isArray(this.entity.attachment) ? this.entity.attachment : [this.entity.attachment] : [];
     const attachmentHtml = attachments.length ? repeat(attachments, (attachment: AP.ExtendedObject) => {
       return html`
-        <img src=${attachment.url} />
+        <img class="attachment" src=${attachment.url} />
       `;
     }) : nothing;
 
