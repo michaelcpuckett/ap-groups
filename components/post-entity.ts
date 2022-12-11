@@ -89,8 +89,9 @@ export class PostEntity extends LitElement {
           @${this.attributedTo.preferredUsername}@${new URL(this.attributedTo.url).hostname}
         </a>
       ` : nothing}
+      | 
       <a target="_blank" href=${this.entity.url}>
-        (Permalink)
+        Permalink
       </a>
       <figure>
         ${attachmentHtml}

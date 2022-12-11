@@ -193,8 +193,15 @@ export const baseCss = css`
     z-index: 1;
   }
 
+  .eyebrow {
+    text-transform: uppercase;
+    font-size: .875em;
+    letter-spacing: .1ch;
+  }
+
   .avatar {
     overflow: hidden;
+    display: inline-flex;
   }
 
   .avatar--small {

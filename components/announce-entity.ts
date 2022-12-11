@@ -98,9 +98,15 @@ export class AnnounceEntity extends LitElement {
         </details>
       ` : nothing}
       ${this.entity.context ? html`
+        <p class="eyebrow">
+          Member Reply
+        </p>
         <post-entity entity-id=${this.entity.context}></post-entity>
+        <hr />
+        <p class="eyebrow">
+          In Reference To
+        </p>
       ` : nothing}
-      <hr />
       <post-entity entity-id=${this.entity.object}>
         <slot>Not found.</slot>
       </post-entity>
