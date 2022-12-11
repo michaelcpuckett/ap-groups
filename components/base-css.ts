@@ -171,16 +171,25 @@ export const baseCss = css`
     border-radius: 4px;
   }
 
+  .flyout summary:after {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    content: '';
+    z-index: 0;
+  }
+
   .flyout > div {
-    position: absolute;
+    position: fixed;
     background-color: var(--light-background-color);
     color: var(--text-on-light-background-color);
     border: 1px solid;
     padding: 12px;
     border-radius: 8px;
-    right: calc(100% + 4px);
-    top: 0;
     gap: 8px;
     display: inline-flex;
+    z-index: 1;
   }
 `;

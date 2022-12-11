@@ -100,11 +100,10 @@ export class AnnounceEntity extends LitElement {
       ${this.entity.context ? html`
         <post-entity entity-id=${this.entity.context}></post-entity>
       ` : nothing}
-      <figure>
-        <post-entity entity-id=${this.entity.object}>
-          <slot>Not found.</slot>
-        </post-entity>
-      </figure>
+      <hr />
+      <post-entity entity-id=${this.entity.object}>
+        <slot>Not found.</slot>
+      </post-entity>
     `;
   }
 }
