@@ -197,7 +197,7 @@ export const baseCss = css`
     display: block;
     color: var(--medium-background-color);
     font-weight: bold;
-  
+  }
 
   .actor-hostname {
     display: block;
