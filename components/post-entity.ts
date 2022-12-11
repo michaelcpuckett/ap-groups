@@ -60,7 +60,7 @@ export class PostEntity extends LitElement {
       `;
     }
     
-    if (!this.entity) {
+    if (!this.entity || !this.attributedTo) {
       return html`
         Loading...
       `;
