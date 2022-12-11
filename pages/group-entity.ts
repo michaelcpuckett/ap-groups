@@ -1,1 +1,2 @@
-export { GroupEntity } from '../components/group-entity';
+import '../components/announce-entity';
+import '../components/post-entity';
