@@ -52,13 +52,11 @@
                 {% if shared.length %}
                   {% for postId in shared %}
                     <div class="region">
-                      <post-entity entity-id="{{ postId }}"></post-entity>
-                      <button
-                        class="delete-repost-button"
-                        data-id="{{ postId }}"
-                        type="button">
-                        Delete Repost
-                      </button>
+                      <announce-entity
+                        entity-id="{{ postId }}"
+                        actor-id="{{ actor.id }}"
+                        undo-action>
+                      </announce-entity>
                     </div>
                   {% endfor %}
                 {% else %}
