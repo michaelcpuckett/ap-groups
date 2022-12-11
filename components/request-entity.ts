@@ -72,11 +72,45 @@ export class RequestEntity extends LitElement {
   }
 
   private accept() {
-
+    fetch(`${this.actorId}/outbox`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/activity+json',
+      },
+      body: JSON.stringify({
+        '@context': 'https://www.w3.org/ns/activitystreams',
+        type: 'Accept',
+        actor: this.actorId,
+        object: this.entity.id,
+        to: [
+          'https://www.w3.org/ns/activitystreams#Public',
+          this.object.id,
+        ],
+      }),
+    }).then(res => {
+      if (res.headers.has('Location')) {
+        window.location.reload();
+      }
+    });
   }
 
   private block() {
-
+    fetch(`${this.actorId}/outbox`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/activity+json',
+      },
+      body: JSON.stringify({
+        '@context': 'https://www.w3.org/ns/activitystreams',
+        type: 'Block',
+        actor: this.actorId,
+        object: this.object.id,
+      }),
+    }).then(res => {
+      if (res.headers.has('Location')) {
+        window.location.reload();
+      }
+    });
   }
 
   private unblock() {
@@ -97,7 +131,6 @@ export class RequestEntity extends LitElement {
       }
     });
   }
-
 
   render() {
     if (this.isDeleted) {
