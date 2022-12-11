@@ -74,6 +74,18 @@ a {
   color: var(--link-color);
 }
 
+h1 {
+  text-align: center;
+  color: white;
+  text-shadow: 0 3px 0 black;
+  font-size: 2.25em;
+  line-height: 1.25;
+  margin: 0;
+  font-family: 'passion', sans-serif;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
 ol {
   list-style-position: inside;
   display: grid;
