@@ -185,26 +185,22 @@ export const baseCss = css`
     place-content: center;
     border: 1px solid lightgray;
     border-radius: 8px;
-    padding: 4px;
+    padding: 8px;
     aspect-ratio: 1;
+  }
+
+  .actor-lockup:not(:hover) {
+    text-decoration: none;
   }
 
   .actor-username {
     display: block;
     color: var(--medium-background-color);
     font-weight: bold;
-  }
   
-  .actor-username:not(:hover) {
-    text-decoration: none;
-  }
 
   .actor-hostname {
     display: block;
     font-size: .75em;
-  }
-  
-  .actor-hostname:not(:hover) {
-    text-decoration: none;
   }
 `;
