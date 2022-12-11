@@ -20,6 +20,12 @@ export class PostEntity extends LitElement {
       display: grid;
       grid-template-columns: 200px minmax(0, 1fr);
     }
+
+    .left-rail {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   `];
 
   @property({ type: String, reflect: true, attribute: 'entity-id' })
