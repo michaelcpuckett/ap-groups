@@ -11,7 +11,7 @@ export class ActorEntity extends LitElement {
     }
 
     a {
-      color: var(--text-on-light-background-color);
+      color: var(--text-on-dark-background-color);
     }
   `];
 

@@ -11,7 +11,7 @@ export class RequestEntity extends LitElement {
     }
 
     a {
-      color: var(--text-on-light-background-color);
+      color: var(--text-on-dark-background-color);
     }
   `];
 
@@ -68,7 +68,7 @@ export class RequestEntity extends LitElement {
   }
 
   private block() {
-    
+
   }
 
   render() {
