@@ -91,30 +91,12 @@
                 <ul>
                   {% for request in requests %}
                     <li>
-                      <a href="{{ request.actor.id }}">
-                        {{ request.actor.id }}
-                      </a>
-                      <button
-                        data-action="accept"
-                        data-id="{{ request.id }}"
-                        type="button"
-                        class="button button--tag">
-                        Accept
-                      </button>
-                      <button
-                        data-action="ignore"
-                        data-id="{{ request.id }}"
-                        type="button"
-                        class="button button--tag">
-                        Ignore
-                      </button>
-                      <button
-                        type="button"
-                        data-action="block"
-                        data-id="{{ request.actor.id }}"
-                        class="button button--tag">
-                        Block
-                      </button>
+                      <request-entity
+                        entity-id="{{ request }}"
+                        accept-action
+                        ignore-action
+                        block-action>
+                      </request-entity>
                     </li>
                   {% endfor %}
                 </ul>
@@ -139,14 +121,10 @@
                 <ul>
                   {% for member in members %}
                     <li>
-                      <a href="{{ member.id }}">
-                        {{ member.id }}
-                      </a>
-                      <button
-                        type="button"
-                        class="button button--tag">
-                        Block
-                      </button>
+                      <actor-entity
+                        entity-id="{{ member }}"
+                        block-action>
+                      </actor-entity>
                     </li>
                   {% endfor %}
                 </ul>
@@ -171,16 +149,10 @@
                 <ul>
                   {% for block in blocks %}
                     <li>
-                      <a href="{{ member.id }}">
-                        {{ member.id }}
-                      </a>
-                      <button
-                        data-action="unblock"
-                        data-id="{{ block.id }}"
-                        type="button"
-                        class="button button--tag">
-                        Unblock
-                      </button>
+                      <request-entity
+                        entity-id="{{ block }}"
+                        unblock-action>
+                      </request-entity>
                     </li>
                   {% endfor %}
                 </ul>
