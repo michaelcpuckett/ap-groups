@@ -21,6 +21,9 @@ export class ActorEntity extends LitElement {
   @property({ type: Object })
   private entity: AP.Actor|null = null;
 
+  @property({ type: String, reflect: true, attribute: 'actor-id' })
+  private actorId = '';
+
   @property({ type: Boolean })
   private isDeleted = false;
 
@@ -41,10 +44,9 @@ export class ActorEntity extends LitElement {
       this.isDeleted = true;
     });
   }
-
   
   private block(memberId: string) {
-    fetch(`${this.entity.outbox}`, {
+    fetch(`${this.actorId}/outbox`, {
       method: 'POST',
       headers: {
         'Accept': 'application/activity+json',
@@ -52,7 +54,7 @@ export class ActorEntity extends LitElement {
       body: JSON.stringify({
         '@context': 'https://www.w3.org/ns/activitystreams',
         type: 'Block',
-        actor: this.entity.id,
+        actor: this.actorId,
         object: memberId,
       }),
     }).then(res => {

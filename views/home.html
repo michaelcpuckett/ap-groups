@@ -93,6 +93,7 @@
                     <li>
                       <request-entity
                         entity-id="{{ request }}"
+                        actor-id="{{ actor.id }}"
                         accept-action
                         ignore-action
                         block-action>
@@ -123,6 +124,7 @@
                     <li>
                       <actor-entity
                         entity-id="{{ member }}"
+                        actor-id="{{ actor.id }}"
                         block-action>
                       </actor-entity>
                     </li>
@@ -151,6 +153,7 @@
                     <li>
                       <request-entity
                         entity-id="{{ block }}"
+                        actor-id="{{ actor.id }}"
                         unblock-action>
                       </request-entity>
                     </li>
