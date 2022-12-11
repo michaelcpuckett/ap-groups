@@ -152,46 +152,6 @@ export const baseCss = css`
     background-color: var(--light-background-color);
     color: var(--text-on-light-background-color);
   }
-  
-  .flyout {
-    position: relative;
-    display: inline-flex;
-  }
-
-  .flyout summary {
-    display: inline-flex;
-    background-color: var(--light-background-color);
-    color: var(--text-on-light-background-color);
-    border: 1px solid;
-    padding: 4px;
-    cursor: pointer;
-    aspect-ratio: 1;
-    height: 2em;
-    place-content: center;
-    border-radius: 4px;
-  }
-
-  .flyout summary:after {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    content: '';
-    z-index: 0;
-  }
-
-  .flyout > div {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: var(--light-background-color);
-    color: var(--text-on-light-background-color);
-    border: 1px solid;
-    padding: 12px;
-    border-radius: 8px;
-    z-index: 1;
-  }
 
   .eyebrow {
     text-transform: uppercase;
