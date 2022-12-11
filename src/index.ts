@@ -13,6 +13,7 @@ import { LOCAL_DOMAIN } from 'activitypub-core-utilities';
 import * as nunjucks from 'nunjucks';
 import { AP } from 'activitypub-core-types';
 import * as path from 'path';
+import { AssertionError } from 'assert';
 
 const app = express.default();
 app.use(express.static(path.resolve(__dirname, '../static')));
@@ -72,6 +73,12 @@ const renderDirectoryPage = async ({ groups }: { groups: AP.Group[] }): Promise<
   return nunjucks.render('directory.html', { groups });
 };
 
+function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
+  if (entity.type !== 'Group') {
+    throw new AssertionError({ message: 'Entity is not a Group.' });
+  }
+}
+
 (async () => {
   const mongoClient = new MongoClient(process.env.AP_MONGO_CLIENT_URL ?? 'mongodb://127.0.0.1:27017');
   await mongoClient.connect();
@@ -106,6 +113,26 @@ const renderDirectoryPage = async ({ groups }: { groups: AP.Group[] }): Promise<
         {
           generateActorId: () => (preferredUsername: string) => {
             return `${LOCAL_DOMAIN}/@${preferredUsername}`;
+          },
+          getEntityPageProps: async (entity: AP.Entity) => {
+            try {
+              assertIsGroup(entity);
+
+              const streams = entity.streams as URL[];
+              const sharedUrl = streams.find((stream: URL) => `${stream}`.endsWith('shared'));
+
+              const [
+                shared,
+              ] = await Promise.all([
+                mongoDbAdapter.findEntityById(sharedUrl).then((collection: AP.OrderedCollection) => collection.orderedItems).catch(() => []),
+              ]);
+
+              return {
+                shared,
+              };
+            } catch (error) {
+              return null;
+            }
           },
           getHomePageProps: async (actor: AP.Actor) => {
             const streams = actor.streams as URL[];

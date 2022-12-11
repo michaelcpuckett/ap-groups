@@ -17,16 +17,49 @@
               <div class="container">
                 {{ header() }}
                 <section role="region">
-                  <group-entity
-                    entity-type="Group"
-                    entity-id="{{ entity.id }}"
-                    entity-preferred-username="{{ entity.preferredUsername }}"
-                    entity-name="{{ entity.name }}"
-                    entity-summary="{{ entity.summary }}"
-                    entity-icon="{{ entity.icon | dump }}"
-                    entity-feed-id="{{ stream }}"
-                    entity-followers-id="{{ entity.followers }}">
-                  </group-entity>
+                  <h1>
+                    {{ entity.name }}
+                  </h1>
+                  <div class="avatar-summary">
+                    {% if entity.icon %}
+                      <img
+                        class="avatar"
+                        height="100"
+                        width="100"
+                        src="{{ entity.icon.url }}"
+                      />
+                    {% endif %}
+                    <div>
+                      <p>
+                        <strong>
+                          @{{ entity.preferredUsername }}@chirp.social
+                        </strong>
+                      </p>
+                      {% if entity.summary %}
+                        <p>
+                          {{ entity.summary }}
+                        </p>
+                      {% endif %}
+                      {% if entity.followers.length %}
+                        <p>
+                          {{ entity.followers.length }} followers
+                        </p>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <h2>
+                    Posts
+                  </h2>
+                  {% if stream.orderedItems.length %}
+                    {% for postId in stream.orderedItems %}
+                      <div class="region">
+                        <announce-entity entity-id="{{ postId }}">
+                          <!-- Fallback for legacy accounts -->
+                          <post-entity entity-id="{{ postId }}"></post-entity>
+                        </announce-entity>
+                      </div>
+                    {% endfor %}
+                  {% endif %}
                 </section>
                 <script type="module" src="group-entity.js"></script>
               </div>
