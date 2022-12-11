@@ -53,14 +53,16 @@
                     Posts
                   </h2>
                   {% if shared.length %}
-                    {% for postId in shared %}
-                      <div class="region">
-                        <announce-entity entity-id="{{ postId }}">
-                          <!-- Fallback for legacy accounts -->
-                          <post-entity entity-id="{{ postId }}"></post-entity>
-                        </announce-entity>
-                      </div>
-                    {% endfor %}
+                    <div class="regions">
+                      {% for postId in shared %}
+                        <div class="region">
+                          <announce-entity entity-id="{{ postId }}">
+                            <!-- Fallback for legacy accounts -->
+                            <post-entity entity-id="{{ postId }}"></post-entity>
+                          </announce-entity>
+                        </div>
+                      {% endfor %}
+                    </div>
                   {% else %}
                     <div class="region">
                       <p>No posts yet.</p>
