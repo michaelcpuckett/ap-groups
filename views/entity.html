@@ -48,8 +48,8 @@
                   <h2>
                     Posts
                   </h2>
-                  {% if shared.orderedItems.length %}
-                    {% for postId in shared.orderedItems %}
+                  {% if shared.length %}
+                    {% for postId in shared %}
                       <div class="region">
                         <announce-entity entity-id="{{ postId }}">
                           <!-- Fallback for legacy accounts -->
