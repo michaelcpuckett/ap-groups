@@ -151,4 +151,19 @@ export const baseCss = css`
     background-color: var(--light-background-color);
     color: var(--text-on-light-background-color);
   }
+  
+  .flyout {
+    position: relative;
+  }
+
+  .flyout > div {
+    position: absolute;
+    background-color: var(--light-background-color);
+    color: var(--text-on-light-background-color);
+    border: 1px solid;
+    padding: 12px;
+    border-radius: 8px;
+    right: 0;
+    top: 0;
+  }
 `;

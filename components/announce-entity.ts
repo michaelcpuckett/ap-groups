@@ -86,9 +86,9 @@ export class AnnounceEntity extends LitElement {
       <figure>
         <post-entity entity-id=${this.entity.object}></post-entity>
       </figure>
-      <details>
-        <summary>
-          Options
+      <details class="flyout">
+        <summary aria-label="Options">
+          ...
         </summary>
         <div>
           ${this.undoAction ? html`

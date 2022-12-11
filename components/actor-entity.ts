@@ -1,5 +1,5 @@
-import {LitElement, html, css, nothing} from 'lit';
-import {customElement, property, query} from 'lit/decorators';
+import { LitElement, html, css, nothing } from 'lit';
+import { customElement, property, query } from 'lit/decorators';
 import { baseCss } from './base-css';
 import { AP } from 'activitypub-core-types';
 
@@ -19,7 +19,7 @@ export class ActorEntity extends LitElement {
   private entityId = '';
 
   @property({ type: Object })
-  private entity: AP.Actor|null = null;
+  private entity: AP.Actor | null = null;
 
   @property({ type: String, reflect: true, attribute: 'actor-id' })
   private actorId = '';
@@ -36,15 +36,15 @@ export class ActorEntity extends LitElement {
         'Accept': 'application/activity+json'
       }
     })
-    .then(res => res.json())
-    .then(entity => {
-      this.entity = entity;
-    })
-    .catch(() => {
-      this.isDeleted = true;
-    });
+      .then(res => res.json())
+      .then(entity => {
+        this.entity = entity;
+      })
+      .catch(() => {
+        this.isDeleted = true;
+      });
   }
-  
+
   private block() {
     fetch(`${this.actorId}/outbox`, {
       method: 'POST',
@@ -70,25 +70,32 @@ export class ActorEntity extends LitElement {
         Deleted.
       `;
     }
-    
+
     if (!this.entity) {
       return html`
         Loading...
       `;
     }
-    
+
     return html`
       <a target="_blank" href=${this.entity.id}>
         @${this.entity.preferredUsername}@${new URL(this.entity.id).hostname}
       </a>
-      ${this.blockAction ? html`
-        <button
-          type="button"
-          class="button button--tag"
-          @click=${this.block}>
-          Block
-        </button>
-      ` : nothing}
+      <details class="flyout">
+        <summary aria-label="Options">
+          ...
+        </summary>
+        <div>
+          ${this.blockAction ? html`
+            <button
+              type="button"
+              class="button button--tag"
+              @click=${this.block}>
+              Block
+            </button>
+          ` : nothing}
+        </div>
+      </details>
     `;
   }
 }

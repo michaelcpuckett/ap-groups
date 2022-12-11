@@ -1,5 +1,5 @@
-import {LitElement, html, css, nothing} from 'lit';
-import {customElement, property, query} from 'lit/decorators';
+import { LitElement, html, css, nothing } from 'lit';
+import { customElement, property, query } from 'lit/decorators';
 import { baseCss } from './base-css';
 import { AP } from 'activitypub-core-types';
 
@@ -19,13 +19,13 @@ export class BlockEntity extends LitElement {
   private entityId = '';
 
   @property({ type: Object })
-  private entity: AP.Block|null = null;
+  private entity: AP.Block | null = null;
 
   @property({ type: String, reflect: true, attribute: 'actor-id' })
   private actorId = '';
 
   @property({ type: Object })
-  private object: AP.Actor|null = null;
+  private object: AP.Actor | null = null;
 
   @property({ type: Boolean })
   private isDeleted = false;
@@ -34,35 +34,35 @@ export class BlockEntity extends LitElement {
   private unblockAction: boolean = false;
 
   override firstUpdated() {
-    let entity: AP.Block|null = null;
+    let entity: AP.Block | null = null;
 
     fetch(`/proxy?resource=${this.entityId}`, {
       headers: {
         'Accept': 'application/activity+json'
       }
     })
-    .then(res => res.json())
-    .then(result => {
-      if (!result) {
-        throw new Error('Not found.');
-      }
-
-      entity = result;
-
-      return fetch(`/proxy?resource=${entity.object}`, {
-        headers: {
-          'Accept': 'application/activity+json'
+      .then(res => res.json())
+      .then(result => {
+        if (!result) {
+          throw new Error('Not found.');
         }
+
+        entity = result;
+
+        return fetch(`/proxy?resource=${entity.object}`, {
+          headers: {
+            'Accept': 'application/activity+json'
+          }
+        });
+      })
+      .then(res => res.json())
+      .then(object => {
+        this.entity = entity;
+        this.object = object;
+      })
+      .catch(() => {
+        this.isDeleted = true;
       });
-    })
-    .then(res => res.json())
-    .then(object => {
-      this.entity = entity;
-      this.object = object;
-    })
-    .catch(() => {
-      this.isDeleted = true;
-    });
   }
 
   private unblock() {
@@ -90,7 +90,7 @@ export class BlockEntity extends LitElement {
         Deleted.
       `;
     }
-    
+
     if (!this.entity) {
       return html`
         Loading...
@@ -102,19 +102,26 @@ export class BlockEntity extends LitElement {
         Deleted.
       `;
     }
-    
+
     return html`
       <a target="_blank" href=${this.object.id}>
         @${this.object.preferredUsername}@${new URL(this.object.id).hostname}
       </a>
-      ${this.unblockAction ? html`
-        <button
-          type="button"
-          class="button button--tag"
-          @click=${this.unblock}>
-          Unblock
-        </button>
-      ` : nothing}
+      <details class="flyout">
+        <summary aria-label="Options">
+          ...
+        </summary>
+        <div>
+          ${this.unblockAction ? html`
+            <button
+              type="button"
+              class="button button--tag"
+              @click=${this.unblock}>
+              Unblock
+            </button>
+          ` : nothing}
+        </div>
+      </details>
     `;
   }
 }
