@@ -23,6 +23,9 @@ export class AnnounceEntity extends LitElement {
   @property({ type: Object })
   private entity: AP.Announce|null = null;
 
+  @property({ type: String, reflect: true, attribute: 'actor-id' })
+  private actorId = '';
+
   @property({ type: Object })
   private object: AP.ExtendedObject|null = null;
 
@@ -58,7 +61,22 @@ export class AnnounceEntity extends LitElement {
   }
 
   undo() {
-
+    fetch(`${this.actorId}/outbox`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/activity+json',
+      },
+      body: JSON.stringify({
+        '@context': 'https://www.w3.org/ns/activitystreams',
+        type: 'Undo',
+        actor: `${this.actorId}`,
+        object: this.entity.id,
+      }),
+    }).then(res => {
+      if (res.headers.has('Location')) {
+        window.location.reload();
+      }
+    });
   }
 
   render() {
