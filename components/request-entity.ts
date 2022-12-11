@@ -133,7 +133,7 @@ export class RequestEntity extends LitElement {
       <a target="_blank" href=${this.object.id}>
         @${this.object.preferredUsername}@${new URL(this.object.id).hostname}
       </a>
-      <details>
+      <details class="flyout">
         <summary aria-label="Options">
           ...
         </summary>

@@ -154,6 +154,16 @@ export const baseCss = css`
   
   .flyout {
     position: relative;
+    display: inline-flex;
+  }
+
+  .flyout summary {
+    display: inline-flex;
+    background-color: var(--light-background-color);
+    color: var(--text-on-light-background-color);
+    border: 1px solid;
+    padding: 4px;
+    cursor: pointer;
   }
 
   .flyout > div {
@@ -163,7 +173,7 @@ export const baseCss = css`
     border: 1px solid;
     padding: 12px;
     border-radius: 8px;
-    right: 0;
+    left: calc(100% + 4px);
     top: 0;
   }
 `;
