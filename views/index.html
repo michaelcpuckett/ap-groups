@@ -54,6 +54,26 @@
         </ul>
       </section>
 
+      <section role="region" aria-labelledby="need-help-heading">
+        <h2 id="need-help-heading">
+          Support
+        </h2>
+        <p>
+          Please open a ticket on
+          <a target="_blank" href="https://github.com/michaelcpuckett/ap-groups">
+            Github
+          </a>
+        </p>
+        
+        <h3>
+          Known Issues
+        </h3>
+        <ul>
+          <li>Older accounts may not be able to block users or remove old posts.</li>
+          <li>There is no way to change ownership yet.</li>
+        </ul>
+      </section>
+
       <section role="region" aria-labelledby="who-heading">
         <h2 id="who-heading">
           Who made this?
@@ -67,14 +87,6 @@
         <p>
           I'm using Firebase Authentication for sign-ups, so I can't see the passwords.
         </p>
-        <p>
-          Currently the features are limited only because I have limited time.
-          For example, there is no way to change ownership.
-          You can contribute ideas or code on
-          <a target="_blank" href="https://github.com/michaelcpuckett/ap-groups">
-            Github
-          </a>
-        </p>
       </section>
     </div>
 
@@ -87,16 +99,16 @@
       </header>
       <div class="forms">
         <div class="form">
-          <h2 id="signup-heading">
-            Sign Up for a Group
-          </h2>
-          <signup-form></signup-form>
-        </div>
-        <div class="form">
           <h2 id="login-heading">
             Log In to Manage Your Group
           </h2>
           <login-form></login-form>
+        </div>
+        <div class="form">
+          <h2 id="signup-heading">
+            Sign Up for a Group
+          </h2>
+          <signup-form></signup-form>
         </div>
         <div class="form">
           <h2 id="forgot-password-heading">
