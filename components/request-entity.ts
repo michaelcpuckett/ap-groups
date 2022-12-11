@@ -50,7 +50,7 @@ export class RequestEntity extends LitElement {
         throw new Error('Not found.');
       }
 
-      return fetch(`/proxy?resource=${this.entity.object}`, {
+      return fetch(`/proxy?resource=${entity.object}`, {
         headers: {
           'Accept': 'application/activity+json'
         }
