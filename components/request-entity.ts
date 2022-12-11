@@ -45,10 +45,12 @@ export class RequestEntity extends LitElement {
       }
     })
     .then(res => res.json())
-    .then(entity => {
-      if (!entity) {
+    .then(result => {
+      if (!result) {
         throw new Error('Not found.');
       }
+
+      entity = result;
 
       return fetch(`/proxy?resource=${entity.object}`, {
         headers: {
