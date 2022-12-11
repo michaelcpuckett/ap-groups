@@ -230,10 +230,20 @@ export const baseCss = css`
 
   .actor-username {
     display: block;
+    color: var(--medium-background-color);
+    font-weight: bold;
+  }
+  
+  .actor-username:not(:hover) {
+    text-decoration: none;
   }
 
   .actor-hostname {
     display: block;
     font-size: .75em;
+  }
+  
+  .actor-hostname:not(:hover) {
+    text-decoration: none;
   }
 `;
