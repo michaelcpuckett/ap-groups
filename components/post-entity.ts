@@ -75,7 +75,11 @@ export class PostEntity extends LitElement {
 
     return html`
       ${this.attributedTo ? html`
-        <a target="_blank" href=${this.attributedTo.url}>
+        <a target="_blank" href=${this.entity.url}>
+          Permalink
+        </a>
+        |
+        <a class="actor-lockup" target="_blank" href=${this.attributedTo.url}>
           ${this.attributedTo.icon ? html`
             <img
               class="avatar avatar--small"
@@ -86,13 +90,15 @@ export class PostEntity extends LitElement {
           ` : html`
             <span class="avatar avatar--small"></span>
           `}
-          @${this.attributedTo.preferredUsername}@${new URL(this.attributedTo.url).hostname}
+          <span class="actor-username">
+            @${this.attributedTo.preferredUsername}
+          </span>
+          <span class="actor-hostname">
+            ${new URL(this.attributedTo.url).hostname}
+          </span>
+
         </a>
       ` : nothing}
-      | 
-      <a target="_blank" href=${this.entity.url}>
-        Permalink
-      </a>
       <figure>
         ${attachmentHtml}
         ${unsafeHTML(this.entity.content)}

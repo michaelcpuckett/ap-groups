@@ -195,7 +195,7 @@ export const baseCss = css`
 
   .eyebrow {
     text-transform: uppercase;
-    font-size: .875em;
+    font-size: .75em;
     letter-spacing: .1ch;
   }
 
@@ -209,5 +209,23 @@ export const baseCss = css`
     height: 70px;
     width: 70px;
     background: var(--accent-color);
+  }
+
+  .actor-lockup {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+    place-items: center;
+    place-content: center;
+  }
+
+  .actor-username {
+    display: block;
+  }
+
+  .actor-hostname {
+    display: block;
+    font-size: .75em;
   }
 `;
