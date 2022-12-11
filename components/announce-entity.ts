@@ -58,6 +58,10 @@ export class AnnounceEntity extends LitElement {
         type: 'Undo',
         actor: `${this.actorId}`,
         object: this.entityId,
+        to: [
+          'https://www.w3.org/ns/activitystreams#Public',
+          `${this.actorId}/followers`,
+        ],
       }),
     }).then(res => {
       if (res.headers.has('Location')) {
