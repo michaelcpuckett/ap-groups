@@ -158,5 +158,6 @@ button {
   border-radius: 18px;
   box-shadow: var(--box-shadow);
   background-color: var(--light-background-color);
+  font-size: 1.333em;
   color: var(--text-on-light-background-color);
 }
