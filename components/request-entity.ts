@@ -19,7 +19,7 @@ export class RequestEntity extends LitElement {
   private entityId = '';
 
   @property({ type: Object })
-  private entity: AP.Activity|null = null;
+  private entity: AP.Block|null = null;
 
   @property({ type: Object })
   private actor: AP.Actor|null = null;
@@ -37,7 +37,7 @@ export class RequestEntity extends LitElement {
   private unblockAction: boolean = false;
 
   override firstUpdated() {
-    let entity: AP.Activity|null = null;
+    let entity: AP.Block|null = null;
 
     fetch(`/proxy?resource=${this.entityId}`, {
       headers: {
@@ -50,7 +50,7 @@ export class RequestEntity extends LitElement {
         throw new Error('Not found.');
       }
 
-      return fetch(`/proxy?resource=${this.entity.actor}`, {
+      return fetch(`/proxy?resource=${this.entity.object}`, {
         headers: {
           'Accept': 'application/activity+json'
         }
