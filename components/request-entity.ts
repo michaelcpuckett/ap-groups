@@ -135,7 +135,7 @@ export class RequestEntity extends LitElement {
           Block
         </button>
       ` : nothing}
-      ${this.blockAction ? html`
+      ${this.unblockAction ? html`
         <button
           type="button"
           class="button"
