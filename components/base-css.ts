@@ -37,6 +37,7 @@ export const baseCss = css`
     min-width: 48px;
     place-items: center;
     place-content: center;
+    cursor: pointer;
   }
 
   textarea,
@@ -164,6 +165,10 @@ export const baseCss = css`
     border: 1px solid;
     padding: 4px;
     cursor: pointer;
+    aspect-ratio: 1;
+    height: 2em;
+    place-content: center;
+    border-radius: 4px;
   }
 
   .flyout > div {
@@ -173,7 +178,7 @@ export const baseCss = css`
     border: 1px solid;
     padding: 12px;
     border-radius: 8px;
-    left: calc(100% + 4px);
+    right: calc(100% + 4px);
     top: 0;
   }
 `;
