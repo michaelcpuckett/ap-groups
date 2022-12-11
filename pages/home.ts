@@ -1,8 +1,7 @@
+import '../components/group-details';
 import '../components/actor-entity';
 import '../components/request-entity';
-import '../components/group-details';
-import '../components/members-list';
-import '../components/requests-list';
+import '../components/block-entity';
 import '../components/post-entity';
 
 const buttonElements = Array.from(window.document.querySelectorAll('button[type="button"]'));

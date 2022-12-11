@@ -3,8 +3,8 @@ import {customElement, property, query} from 'lit/decorators';
 import { baseCss } from './base-css';
 import { AP } from 'activitypub-core-types';
 
-@customElement('request-entity')
-export class RequestEntity extends LitElement {
+@customElement('block-entity')
+export class BlockEntity extends LitElement {
   static styles = [baseCss, css`
     :host {
       display: block;
@@ -19,7 +19,7 @@ export class RequestEntity extends LitElement {
   private entityId = '';
 
   @property({ type: Object })
-  private entity: AP.Follow|null = null;
+  private entity: AP.Block|null = null;
 
   @property({ type: String, reflect: true, attribute: 'actor-id' })
   private actorId = '';
@@ -36,8 +36,11 @@ export class RequestEntity extends LitElement {
   @property({ type: Boolean, reflect: true, attribute: 'block-action' })
   private blockAction: boolean = false;
 
+  @property({ type: Boolean, reflect: true, attribute: 'unblock-action' })
+  private unblockAction: boolean = false;
+
   override firstUpdated() {
-    let entity: AP.Follow|null = null;
+    let entity: AP.Block|null = null;
 
     fetch(`/proxy?resource=${this.entityId}`, {
       headers: {
@@ -52,7 +55,7 @@ export class RequestEntity extends LitElement {
 
       entity = result;
 
-      return fetch(`/proxy?resource=${entity.actor}`, {
+      return fetch(`/proxy?resource=${entity.object}`, {
         headers: {
           'Accept': 'application/activity+json'
         }
@@ -68,7 +71,7 @@ export class RequestEntity extends LitElement {
     });
   }
 
-  private accept() {
+  private unblock() {
     fetch(`${this.actorId}/outbox`, {
       method: 'POST',
       headers: {
@@ -76,32 +79,9 @@ export class RequestEntity extends LitElement {
       },
       body: JSON.stringify({
         '@context': 'https://www.w3.org/ns/activitystreams',
-        type: 'Accept',
-        actor: this.actorId,
+        type: 'Undo',
+        actor: `${this.actorId}`,
         object: this.entity.id,
-        to: [
-          'https://www.w3.org/ns/activitystreams#Public',
-          this.object.id,
-        ],
-      }),
-    }).then(res => {
-      if (res.headers.has('Location')) {
-        window.location.reload();
-      }
-    });
-  }
-
-  private block() {
-    fetch(`${this.actorId}/outbox`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/activity+json',
-      },
-      body: JSON.stringify({
-        '@context': 'https://www.w3.org/ns/activitystreams',
-        type: 'Block',
-        actor: this.actorId,
-        object: this.object.id,
       }),
     }).then(res => {
       if (res.headers.has('Location')) {
@@ -133,20 +113,12 @@ export class RequestEntity extends LitElement {
       <a target="_blank" href=${this.object.id}>
         @${this.object.preferredUsername}@${new URL(this.object.id).hostname}
       </a>
-      ${this.acceptAction ? html`
+      ${this.unblockAction ? html`
         <button
           type="button"
           class="button"
-          @click=${this.accept}>
-          Accept
-        </button>
-      ` : nothing}
-      ${this.blockAction ? html`
-        <button
-          type="button"
-          class="button"
-          @click=${this.block}>
-          Block
+          @click=${this.unblock}>
+          Unblock
         </button>
       ` : nothing}
     `;
@@ -155,6 +127,6 @@ export class RequestEntity extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    "request-entity": RequestEntity;
+    "block-entity": BlockEntity;
   }
 }
