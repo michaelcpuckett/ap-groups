@@ -30,7 +30,7 @@
                 Edit Profile
               </summary>
               <group-details
-                outbox-url="{{ actor.outbox }}"
+                outbox-url="{{ actor.outbox.url }}"
                 upload-media-url="{{ actor.endpoints.uploadMedia }}"
                 group-actor-id="{{ actor.id }}"
                 {% if actor.manuallyApprovesFollowers %}
