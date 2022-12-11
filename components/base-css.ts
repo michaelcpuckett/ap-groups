@@ -186,6 +186,7 @@ export const baseCss = css`
     border: 1px solid lightgray;
     border-radius: 8px;
     padding: 4px;
+    aspect-ratio: 1;
   }
 
   .actor-username {
