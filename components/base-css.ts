@@ -182,14 +182,14 @@ export const baseCss = css`
   }
 
   .flyout > div {
-    position: fixed;
+    position: absolute;
+    top: 0;
+    left: 0;
     background-color: var(--light-background-color);
     color: var(--text-on-light-background-color);
     border: 1px solid;
     padding: 12px;
     border-radius: 8px;
-    gap: 8px;
-    display: inline-flex;
     z-index: 1;
   }
 
