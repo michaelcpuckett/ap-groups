@@ -45,7 +45,7 @@ export class ActorEntity extends LitElement {
     });
   }
   
-  private block(memberId: string) {
+  private block() {
     fetch(`${this.actorId}/outbox`, {
       method: 'POST',
       headers: {
@@ -55,7 +55,7 @@ export class ActorEntity extends LitElement {
         '@context': 'https://www.w3.org/ns/activitystreams',
         type: 'Block',
         actor: this.actorId,
-        object: memberId,
+        object: this.entityId,
       }),
     }).then(res => {
       if (res.headers.has('Location')) {
