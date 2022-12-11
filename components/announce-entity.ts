@@ -80,21 +80,23 @@ export class AnnounceEntity extends LitElement {
     }
 
     return html`
-      <details class="flyout">
-        <summary aria-label="Options">
-          ...
-        </summary>
-        <div>
-          ${this.undoAction ? html`
-            <button
-              type="button"
-              class="button button--tag"
-              @click=${this.undo}>
-              Delete
-            </button>
-          ` : nothing}
-        </div>
-      </details>
+      ${this.undoAction ? html`
+        <details class="flyout">
+          <summary aria-label="Options">
+            ...
+          </summary>
+          <div>
+            ${this.undoAction ? html`
+              <button
+                type="button"
+                class="button button--tag"
+                @click=${this.undo}>
+                Delete
+              </button>
+            ` : nothing}
+          </div>
+        </details>
+      ` : nothing}
       ${this.entity.context ? html`
         <post-entity entity-id=${this.entity.context}></post-entity>
       ` : nothing}
