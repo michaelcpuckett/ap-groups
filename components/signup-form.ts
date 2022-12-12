@@ -114,6 +114,10 @@ export class SignupForm extends LitElement {
           throw errorMessage;
         }
       } catch (error: unknown) {
+        if (error === 'Error: The email address is already in use by another account.') {
+          this.emailError = 'The email address is already in use by another account.';
+        }
+
         throw error;
       }
 
