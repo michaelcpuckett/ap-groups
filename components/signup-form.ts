@@ -74,14 +74,47 @@ export class SignupForm extends LitElement {
         preferredUsername: username,
       })
     })
-    .then(response => response.json())
-    .then(({ error }) => {
-      if (error) {
-        console.log(error);
-        if (error === 'Username taken.') {
-          this.usernameError = error;
+    .then(response => response.text())
+    .then((result) => {
+      try {
+        const {
+          success,
+          error: errorMessage,
+          field,
+        } = JSON.parse(result);
+        
+        if (!success) {  
+          switch (field) {
+            case 'username': {
+              this.usernameError = errorMessage;
+            }
+            break;
+            case 'email': {
+              this.emailError = errorMessage;
+            }
+            break;
+            case 'password': {
+              this.passwordError = errorMessage;
+            }
+            break;
+            default: {
+              if (errorMessage.includes('FirebaseError')) {
+                const [fullMatch, errorCode] = errorMessage.match(/\(([\w\W]+)\)\./);
+
+                switch (errorCode) {
+                  default: {
+                    console.log(errorCode);
+                  }
+                }
+              }
+            }
+            break;
+          }
+
+          throw errorMessage;
         }
-        return;
+      } catch (error: unknown) {
+        throw error;
       }
 
       initializeApp({

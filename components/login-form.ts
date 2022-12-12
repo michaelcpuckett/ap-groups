@@ -61,7 +61,28 @@ export class LoginForm extends LitElement {
         window.location.href = '/home';
       });
     }).catch((error: unknown) => {
-      console.log(error);
+      const errorMessage = error.toString();
+
+      if (errorMessage.includes('FirebaseError')) {
+        const [fullMatch, errorCode] = errorMessage.match(/\(([\w\W]+)\)\./);
+
+        switch (errorCode) {
+          case 'auth/user-not-found': {
+            this.emailError = 'User not found.';
+          }
+          break;
+          case 'auth/wrong-password': {
+            this.passwordError = 'Wrong password. You can reset it below.'
+          }
+          break;
+          default: {
+            console.log(errorCode);
+          }
+          break;
+        }
+      } else {
+        console.log(errorMessage);
+      }
     });
   }
 
