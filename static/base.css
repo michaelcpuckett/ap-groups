@@ -6,15 +6,15 @@
   color-scheme: dark only;
   --dark-background-color: #001616;
   --text-on-dark-background-color: white;
-  --medium-background-color: #037d7e;
+  --medium-background-color: #088F72;
   --text-on-medium-background-color: white;
   --light-background-color: #eff3f6;
   --text-on-light-background-color: #002424;
   --primary-color: #1a1a1a;
   --text-on-primary-color: white;
-  --link-color: #80f9ff;
+  --accent-color: #1BF98C;
+  --link-color: var(--accent-color);
   --error-color: red;
-  --accent-color: #80f9ff;
   --text-on-accent-color: #300303;
   --box-shadow: 0 4px 2px var(--dark-background-color);
 }
