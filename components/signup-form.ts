@@ -82,7 +82,7 @@ export class SignupForm extends LitElement {
           error: errorMessage,
           field,
         } = JSON.parse(result);
-        
+
         if (!success) {  
           switch (field) {
             case 'username': {
