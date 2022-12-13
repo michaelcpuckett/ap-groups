@@ -113,7 +113,16 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
         {
           generateActorId: () => (preferredUsername: string) => {
             return `${LOCAL_DOMAIN}/@${preferredUsername}`;
-          },
+          },/*
+          modifyNewActor: (actor: AP.Actor) => {
+            return {
+              ...actor,
+              banner: {
+                type: 'Image',
+                url: 'https://media.michaelpuckett.engineer/uploads/banner.png',
+              },
+            };
+          },*/
           getEntityPageProps: async (entity: AP.Entity) => {
             try {
               assertIsGroup(entity);
