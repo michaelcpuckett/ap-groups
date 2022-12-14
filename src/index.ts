@@ -185,6 +185,9 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
         redirect_uri: callbackUrl,
         scope: 'read',
         response_type: 'code',
+      } as unknown as {
+        redirect_uri: string;
+        scope: string;
       });
 
       res.redirect(authorizationUri);
