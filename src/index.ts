@@ -69,8 +69,8 @@ const renderEntityPage = async (entityPageProps: { entity: AP.Entity; actor?: AP
   return nunjucks.render('entity.html', entityPageProps);
 };
 
-const renderDirectoryPage = async ({ groups }: { groups: AP.Group[] }): Promise<string> => {
-  return nunjucks.render('directory.html', { groups });
+const renderDirectoryPage = async (directoryPageProps: { currentUrl: string; groups: AP.Group[] }): Promise<string> => {
+  return nunjucks.render('directory.html', directoryPageProps);
 };
 
 function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {

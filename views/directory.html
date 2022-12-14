@@ -33,12 +33,25 @@
     <div class="root">
       <div class="container">
         {{ header() }}
+        
+        {% set sortedGroups = groups|sort(true, true, 'followers.totalItems') %}
+        {% set alternateLinkUrl = '/directory?sort=recent' %}
+        {% set alternateLinkLabel = 'Sort by recent' %}
+        {% if currentUrl === '/directory?sort=recent' %}
+          {% set sortedGroups = groups|reverse %}
+          {% set alternateLinkUrl = '/directory' %}
+          {% set alternateLinkLabel = 'Sort by number of members' %}
+        {% endif %}
+
         <section role="region" aria-labelledby="directory-heading">
           <h2 id="directory-heading">
             Group Directory
           </h2>
+          <a href="{{ alternateLinkUrl }}">
+            {{ alternateLinkLabel }}
+          </a>
         </section>
-        {% for group in groups|sort(true, true, 'followers.totalItems') %}
+        {% for group in sortedGroups %}
           <section class="directory-entry">
             {% if group.icon.url %}
               <a href="{{ group.url }}" style="display: block">
