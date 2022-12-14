@@ -114,11 +114,13 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
           generateActorId: () => (preferredUsername: string) => {
             return `${LOCAL_DOMAIN}/@${preferredUsername}`;
           },
-          handleCreateUserActor(this: { activity: AP.Create }) {
+          handleCreateUserActor(this: { activity: unknown & { object: AP.Actor } }) {
             return {
               ...this.activity,
               object: {
                 ...this.activity.object,
+                name: this.activity.object.preferredUsername,
+                summary: `I'm a #chirp.social group! Follow me and mention me to join the conversation.`,
                 image: {
                   type: 'Image',
                   url: 'https://media.michaelpuckett.engineer/uploads/banner.png',

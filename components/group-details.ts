@@ -3,6 +3,8 @@ import {customElement, property, query} from 'lit/decorators';
 import { baseCss } from './base-css';
 import { AP } from 'activitypub-core-types';
 
+const DEFAULT_BANNER_IMAGE_URL = 'https://media.michaelpuckett.engineer/uploads/banner.png';
+
 @customElement('group-details')
 export class GroupDetails extends LitElement {
   static styles = [baseCss, css`
@@ -22,6 +24,11 @@ export class GroupDetails extends LitElement {
       max-width: 200px;
     }
   `];
+
+  private defaultBannerImage: AP.Image = {
+    type: 'Image',
+    url: new URL(DEFAULT_BANNER_IMAGE_URL)
+  } as AP.Image;
 
   @query('input[name="name"]')
   nameInputElement: HTMLInputElement|null;
@@ -91,6 +98,7 @@ export class GroupDetails extends LitElement {
           name,
           summary,
           manuallyApprovesFollowers,
+          image: this.defaultBannerImage,
         },
       }),
     })
@@ -224,6 +232,17 @@ export class GroupDetails extends LitElement {
                 name="manuallyApprovesFollowers"
                 ?checked=${this.manuallyApprovesFollowers}
               />
+            </span>
+          </label>
+          <label role="row" class="label">
+            <span role="columnheader" class="label-text">
+              Banner Image
+            </span>
+            <span role="cell">
+              <img src=${DEFAULT_BANNER_IMAGE_URL} height="100" />
+            </span>
+            <span class="hint-text">
+              This standardized header banner cannot be changed.
             </span>
           </label>
         </div>
