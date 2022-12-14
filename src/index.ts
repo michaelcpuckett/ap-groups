@@ -129,25 +129,15 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
           method: 'POST',
           body,
         })
-        .then((res: IncomingMessage): Promise<{
-          client_id: string;
-          client_secret: string;
-        }> => {
-          const form = Formidable.default();
-    
-          return new Promise((resolve, reject) => {
-            form.parse(res, (err, fields) => {
-              if (err) {
-                reject(err);
-                return;
-              }
-    
-              resolve(fields as {
-                client_id: string;
-                client_secret: string;
-              });
-            });
-          });
+        .then(res => res.formData())
+        .then(formData => {
+          const client_id = formData.get('client_id');
+          const client_secret = formData.get('client_secret'); 
+          
+          return {
+            client_id,
+            client_secret,
+          };
         })
         .then(async({
           client_id,
