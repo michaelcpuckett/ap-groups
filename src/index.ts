@@ -167,7 +167,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
           secret: clientSecret,
         },
         auth: {
-          tokenHost: 'https://api.oauth.com'
+          tokenHost: `https://${domain}`
         }
       };
       
