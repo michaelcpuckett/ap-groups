@@ -129,8 +129,10 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
           method: 'POST',
           body,
         })
-        .then(res => res.formData())
-        .then(formData => {
+        .then(res => res.text())
+        .then(text => {
+          console.log(text);
+          const formData = new FormData(text);
           const client_id = formData.get('client_id');
           const client_secret = formData.get('client_secret'); 
           
