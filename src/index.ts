@@ -176,6 +176,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
       const authorizationUri = client.authorizeURL({
         redirect_uri: callbackUrl,
         scope: 'read',
+        response_type: 'code',
       });
 
       res.redirect(authorizationUri);
