@@ -42,20 +42,36 @@ export class SignupForm extends LitElement {
       return;
     }
 
-    const username = this.usernameInputElement.value;
-    const email = this.emailInputElement.value;
+    const username = this.usernameInputElement.value.toLowerCase().trim();
+    const email = this.emailInputElement.value.toLowerCase().trim();
     const password = this.passwordInputElement.value;
 
     if (!username) {
-      this.usernameError = 'Required';
+      this.usernameError = 'Required.';
+    }
+
+    if (username.includes(' ')) {
+      this.usernameError = 'Remove any spaces.';
+    }
+
+    if (username.includes('@')) {
+      this.usernameError = 'Remove the @ sign.';
+    }
+
+    if (username.includes('.')) {
+      this.usernameError = 'Remove the dot.';
     }
 
     if (!email) {
-      this.emailError = 'Required';
+      this.emailError = 'Required.';
     }
 
     if (!password) {
-      this.passwordError = 'Required';
+      this.passwordError = 'Required.';
+    }
+
+    if (password.length < 6) {
+      this.passwordError = 'Make the password longer.';
     }
 
     if (this.usernameError || this.emailError || this.passwordError) {
@@ -115,7 +131,15 @@ export class SignupForm extends LitElement {
         }
       } catch (error: unknown) {
         if (error === 'Error: The email address is already in use by another account.') {
-          this.emailError = 'The email address is already in use by another account.';
+          this.emailError = 'This email address is already in use by another account.';
+        }
+
+        if (error === 'Error: The email address is improperly formatted.') {
+          this.emailError = 'Enter a valid email address.';
+        }
+
+        if (error === 'Error: The password must be a string with at least 6 characters.') {
+          this.passwordError = 'The password must be at least 6 characters.';
         }
 
         throw error;
@@ -170,7 +194,7 @@ export class SignupForm extends LitElement {
             autocapitalize="off"
           />
           <span class="hint-text">
-            No @ sign, please.
+            All usernames become lowercase.
           </span>
           ${this.usernameError ? html`
             <span class="error-message">
@@ -192,7 +216,7 @@ export class SignupForm extends LitElement {
             name="email"
           />
           <span class="hint-text">
-            You won't have to verify.
+            You will be the primary account manager.
           </span>
           ${this.emailError ? html`
             <span class="error-message">
@@ -214,7 +238,7 @@ export class SignupForm extends LitElement {
             name="password"
           />
           <span class="hint-text">
-            At least 6 characters.
+            Must be at least 6 characters.
           </span>
           ${this.passwordError ? html`
             <span class="error-message">
