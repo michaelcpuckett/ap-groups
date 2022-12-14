@@ -125,7 +125,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
         body.append('redirect_uris', callbackUrl);
         body.append('website', 'https://chirp.social');
     
-        mongoDbAdapter.fetch(`https://${domain}/api/v1/apps`, {
+        await mongoDbAdapter.fetch(`https://${domain}/api/v1/apps`, {
           method: 'POST',
           body,
         })
