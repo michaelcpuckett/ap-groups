@@ -38,7 +38,7 @@
             Group Directory
           </h2>
         </section>
-        {% for group in groups | reverse %}
+        {% for group in groups|sort(true, true, 'followers.totalItems') %}
           <section class="directory-entry">
             {% if group.icon.url %}
               <a href="{{ group.url }}" style="display: block">
@@ -75,6 +75,12 @@
               </dt>
               <dd>
                 {{ group.published }}
+              </dd>
+              <dt>
+                Members
+              </dt>
+              <dd>
+                {{ group.followers.totalItems }}
               </dd>
             </dl>
           </section>
