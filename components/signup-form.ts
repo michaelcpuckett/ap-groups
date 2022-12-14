@@ -42,7 +42,7 @@ export class SignupForm extends LitElement {
       return;
     }
 
-    const username = this.usernameInputElement.value.toLowerCase().trim();
+    const username = this.usernameInputElement.value.trim();
     const email = this.emailInputElement.value.toLowerCase().trim();
     const password = this.passwordInputElement.value;
 
@@ -194,7 +194,7 @@ export class SignupForm extends LitElement {
             autocapitalize="off"
           />
           <span class="hint-text">
-            All usernames become lowercase.
+            No @ sign, please.
           </span>
           ${this.usernameError ? html`
             <span class="error-message">
