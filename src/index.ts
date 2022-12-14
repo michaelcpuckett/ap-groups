@@ -132,6 +132,8 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
         .then(res => res.text())
         .then(text => {
           console.log(text);
+          throw new Error('Testing here');
+          /*
           const formData = new FormData(text);
           const client_id = formData.get('client_id');
           const client_secret = formData.get('client_secret'); 
@@ -139,7 +141,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
           return {
             client_id,
             client_secret,
-          };
+          };*/
         })
         .then(async({
           client_id,
