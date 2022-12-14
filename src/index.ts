@@ -161,6 +161,14 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
         });
       }
 
+      if (!clientId || !clientSecret) {
+        console.log({
+          clientId,
+          clientSecret,
+        });
+        throw new Error('No client_id/secret');
+      }
+
       const config = {
         client: {
           id: clientId,
