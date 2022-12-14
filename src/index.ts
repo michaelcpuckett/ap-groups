@@ -9,7 +9,7 @@ import { FtpStorageAdapter } from 'activitypub-core-storage-ftp';
 import { DeliveryAdapter } from 'activitypub-core-delivery';
 import { ServiceAccount } from 'firebase-admin';
 import { ServerResponse, IncomingMessage } from 'http';
-import { LOCAL_DOMAIN } from 'activitypub-core-utilities';
+import { getGuid, LOCAL_DOMAIN } from 'activitypub-core-utilities';
 import * as nunjucks from 'nunjucks';
 import { AP } from 'activitypub-core-types';
 import * as path from 'path';
@@ -113,16 +113,19 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
         {
           generateActorId: () => (preferredUsername: string) => {
             return `${LOCAL_DOMAIN}/@${preferredUsername}`;
-          },/*
-          modifyNewActor: (actor: AP.Actor) => {
+          },
+          handleCreateUserActor(this: { activity: AP.Create }) {
             return {
-              ...actor,
-              banner: {
-                type: 'Image',
-                url: 'https://media.michaelpuckett.engineer/uploads/banner.png',
-              },
+              ...this.activity,
+              object: {
+                ...this.activity.object,
+                image: {
+                  type: 'Image',
+                  url: 'https://media.michaelpuckett.engineer/uploads/banner.png',
+                },
+              }
             };
-          },*/
+          },
           getEntityPageProps: async (entity: AP.Entity) => {
             try {
               assertIsGroup(entity);
