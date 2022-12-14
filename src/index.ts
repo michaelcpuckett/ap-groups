@@ -147,6 +147,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
           clientId,
           clientSecret,
         });
+
         throw new Error('No client_id/secret');
       }
 
@@ -238,11 +239,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
           _id: userId,
         },
         {
-          $push: {
-            managers: {
-              $each: [accountUrl],
-            },
-          },
+          managers: [accountUrl],
         },
         {
           upsert: true,
