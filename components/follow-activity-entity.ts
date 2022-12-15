@@ -7,10 +7,8 @@ import { AP } from 'activitypub-core-types';
 export class FollowActivityEntity extends LitElement {
   static styles = [baseCss, css`
     :host {
-      display: inline-flex;
+      display: block;
       width: 100%;
-      justify-content: space-between;
-      align-items: center;
     }
 
     a {
@@ -80,7 +78,7 @@ export class FollowActivityEntity extends LitElement {
     return html`
       <p>${this.entity.actor}</p>
       ${this.actorId === `${this.entity.object}` ? html`
-        <button type="button" @click=${this.accept}>Accept</button>
+        <button class="button" type="button" @click=${this.accept}>Accept</button>
       ` : nothing}
     `;
   }
