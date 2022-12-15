@@ -3,11 +3,13 @@
 
 {% if entity.type === 'OrderedCollection' %}
   {% if entity.name === 'Inbox' %}
-    {% for activityId in entity.orderedItems %}
-      <follow-activity-entity entity-id="{{ activityId }}" actor-id="{{ actor.id }}"></follow-activity-entity>
-    {% endfor %}
+    <filter-follow-activities actor-id="{{ actor.id }}">
+      {% for activityId in entity.orderedItems %}
+        <follow-activity-entity entity-id="{{ activityId }}" actor-id="{{ actor.id }}"></follow-activity-entity>
+      {% endfor %}
+    </filter-follow-activities>
+    <script type="module" src="/group-entity.js"></script>
   {% endif %}
-  <script type="module" src="/group-entity.js"></script>
 {% endif %}
 
 {% if entity.type === 'Group' %}

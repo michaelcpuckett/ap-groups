@@ -22,10 +22,13 @@ export class FollowActivityEntity extends LitElement {
   private entityId = '';
 
   @property({ type: Object })
-  private entity: AP.Activity | null = null;
+  private entity: AP.Follow | null = null;
 
   @property({ type: String, reflect: true, attribute: 'actor-id' })
   private actorId = '';
+
+  @property({ type: Array, reflect: true, attribute: 'follower-ids' })
+  private followerIds: string[] = [];
 
   override firstUpdated() {
     fetch(`/proxy?resource=${this.entityId}`, {
@@ -35,12 +38,12 @@ export class FollowActivityEntity extends LitElement {
     })
     .then(res => res.json())
     .then(entity => {
-      this.entity = entity;
+      this.entity = entity as AP.Follow;
     })
     .catch(() => {
       this.entity = {
         "error": "Not found."
-      } as unknown as AP.Activity;
+      } as unknown as AP.Follow;
     });
   }
 
@@ -70,13 +73,13 @@ export class FollowActivityEntity extends LitElement {
       `;
     }
 
-    if (this.entity.type !== 'Follow') {
+    if (this.followerIds.includes(`${this.entity?.actor}`) || this.entity.type !== 'Follow') {
       return nothing;
     }
 
     return html`
       <p>${this.entity.actor}</p>
-      ${this.actorId === this.entity.object ? html`
+      ${this.actorId === `${this.entity.object}` ? html`
         <button type="button" @click=${this.accept}>Accept</button>
       ` : nothing}
     `;
