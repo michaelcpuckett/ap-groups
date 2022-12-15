@@ -39,7 +39,7 @@ export class FilterFollowActivities extends LitElement {
     })
     .then(res => res.json())
     .then(entity => {
-      this.followers = entity.items;
+      this.followers = entity.items.map(item => item.id);
 
       for (const slottedElement of this.slotElement.assignedElements()) {
         slottedElement.setAttribute('follower-ids', JSON.stringify(this.followers));
