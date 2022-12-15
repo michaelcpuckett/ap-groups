@@ -33,6 +33,9 @@ export class GroupDetails extends LitElement {
   @query('input[name="name"]')
   nameInputElement: HTMLInputElement|null;
 
+  @query('input[name="manager"]')
+  managerInputElement: HTMLInputElement|null;
+
   @query('textarea[name="summary"]')
   summaryTextareaElement: HTMLTextAreaElement|null;
 
@@ -61,6 +64,9 @@ export class GroupDetails extends LitElement {
   private name?: string;
 
   @property({type: String})
+  private manager?: string;
+
+  @property({type: String})
   private summary?: string;
 
   @property({type: Object})
@@ -72,11 +78,12 @@ export class GroupDetails extends LitElement {
   private async handleSubmit(event: SubmitEvent) {
     event.preventDefault();
     
-    if (!this.nameInputElement || !this.summaryTextareaElement || !this.uploadFormElement || !this.manuallyApprovesFollowersElement) {
+    if (!this.nameInputElement || !this.managerInputElement || !this.summaryTextareaElement || !this.uploadFormElement || !this.manuallyApprovesFollowersElement) {
       return;
     }
 
     const name = this.nameInputElement.value;
+    const manager = this.managerInputElement.value;
     const summary = this.summaryTextareaElement.value;
     const manuallyApprovesFollowers = this.manuallyApprovesFollowersElement.checked;
 
@@ -90,7 +97,13 @@ export class GroupDetails extends LitElement {
         'Accept': 'application/activity+json',
       },
       body: JSON.stringify({
-        '@context': 'https://www.w3.org/ns/activitystreams',
+        '@context': [
+          'https://www.w3.org/ns/activitystreams',
+          {
+            "PropertyValue": "https://schema.org/PropertyValue",
+            "value": "https://schema.org/value"
+          }
+        ],
         type: 'Update',
         actor: this.groupActorId,
         object: {
@@ -99,6 +112,11 @@ export class GroupDetails extends LitElement {
           summary,
           manuallyApprovesFollowers,
           image: this.defaultBannerImage,
+          attachment: [{
+            type: 'PropertyValue',
+            name: 'Group Manager',
+            value: manager,
+          }],
         },
       }),
     })
@@ -211,6 +229,17 @@ export class GroupDetails extends LitElement {
             </span>
             <span role="cell">
               <input type="text" value=${this.name ?? ''} name="name" />
+            </span>
+          </label>
+          <label role="row" class="label">
+            <span class="label-text" role="columnheader">
+              Group Manager
+            </span>
+            <span role="cell">
+              <input type="text" name="manager" value=${this.manager ?? ''} />
+            </span>
+            <span class="hint-text">
+              The @handle where people can contact you, otherwise "Anonymous"
             </span>
           </label>
           <label role="row" class="label">

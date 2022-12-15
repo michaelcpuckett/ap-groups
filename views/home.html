@@ -33,6 +33,9 @@
                 outbox-url="{{ actor.outbox.url }}"
                 upload-media-url="{{ actor.endpoints.uploadMedia }}"
                 group-actor-id="{{ actor.id }}"
+                {% if actor.attachment %}
+                  manager="{{ actor.attachment['https://schema.org/value'] }}"
+                {% endif %}
                 {% if actor.manuallyApprovesFollowers %}
                   manually-approves-followers
                 {% endif %}
