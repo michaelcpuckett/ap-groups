@@ -32,7 +32,7 @@ export class FilterFollowActivities extends LitElement {
       return;
     }
 
-    fetch(`/${this.actorId}/followers`, {
+    fetch(`${this.actorId}/followers`, {
       headers: {
         'Accept': 'application/activity+json'
       }
