@@ -42,7 +42,10 @@ export class RequestEntity extends LitElement {
   override firstUpdated() {
     let entity: AP.Follow | null = null;
 
-    fetch(`/proxy?resource=${this.entityId}`, {
+    const url = new URL(this.entityId);
+    const isLocal = url.host === window.location.host;
+
+    fetch(isLocal ? this.entityId : `/proxy?resource=${this.entityId}`, {
       headers: {
         'Accept': 'application/activity+json'
       }
@@ -55,7 +58,7 @@ export class RequestEntity extends LitElement {
 
         entity = result;
 
-        return fetch(`/proxy?resource=${entity.actor}`, {
+        return fetch(new URL(`${entity.actor}`).host === window.location.host ? `${entity.actor}` : `/proxy?resource=${entity.actor}`, {
           headers: {
             'Accept': 'application/activity+json'
           }

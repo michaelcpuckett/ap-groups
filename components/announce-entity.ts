@@ -33,7 +33,10 @@ export class AnnounceEntity extends LitElement {
   private undoAction: boolean = false;
 
   override firstUpdated() {
-    fetch(`/proxy?resource=${this.entityId}`, {
+    const url = new URL(this.entityId);
+    const isLocal = url.host === window.location.host;
+
+    fetch(isLocal ? this.entityId : `/proxy?resource=${this.entityId}`, {
       headers: {
         'Accept': 'application/activity+json'
       }

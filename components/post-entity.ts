@@ -52,7 +52,10 @@ export class PostEntity extends LitElement {
   private isDeleted = false;
 
   override firstUpdated() {
-    fetch(`/proxy?resource=${this.entityId}`, {
+    const url = new URL(this.entityId);
+    const isLocal = url.host === window.location.host;
+
+    fetch(isLocal ? this.entityId : `/proxy?resource=${this.entityId}`, {
       headers: {
         'Accept': 'application/activity+json'
       }
@@ -113,7 +116,7 @@ export class PostEntity extends LitElement {
               @${this.attributedTo.preferredUsername}
             </span>
             <span class="actor-hostname">
-              ${new URL(this.attributedTo.url).hostname}
+              ${new URL(`${this.attributedTo.url}`).hostname}
             </span>
           </a>
           <a
