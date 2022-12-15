@@ -5,9 +5,9 @@
   {% if entity.name === 'Inbox' %}
     {% for activityId in entity.orderedItems %}
       <follow-activity-entity entity-id="{{ activityId }}" actor-id="{{ actor.id }}"></follow-activity-entity>
-      <script type="module" src="group-entity.js"></script>
     {% endfor %}
   {% endif %}
+  <script type="module" src="/group-entity.js"></script>
 {% endif %}
 
 {% if entity.type === 'Group' %}
