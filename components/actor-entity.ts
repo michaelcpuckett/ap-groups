@@ -34,7 +34,10 @@ export class ActorEntity extends LitElement {
   private blockAction: boolean = false;
 
   override firstUpdated() {
-    fetch(`/proxy?resource=${this.entityId}`, {
+    const url = new URL(this.entityId);
+    const isLocal = url.hostname === window.location.hostname;
+
+    fetch(isLocal ? this.entityId : `/proxy?resource=${this.entityId}`, {
       headers: {
         'Accept': 'application/activity+json'
       }
