@@ -33,18 +33,18 @@ export class FollowActivityEntity extends LitElement {
         'Accept': 'application/activity+json'
       }
     })
-      .then(res => res.json())
-      .then(entity => {
-        this.entity = entity;
-      })
-      .catch(() => {
-        this.entity = {
-          "error": "Not found."
-        } as unknown as AP.Activity;
-      });
+    .then(res => res.json())
+    .then(entity => {
+      this.entity = entity;
+    })
+    .catch(() => {
+      this.entity = {
+        "error": "Not found."
+      } as unknown as AP.Activity;
+    });
   }
 
-  private block() {
+  private accept() {
     fetch(`${this.actorId}/outbox`, {
       method: 'POST',
       headers: {
@@ -52,7 +52,7 @@ export class FollowActivityEntity extends LitElement {
       },
       body: JSON.stringify({
         '@context': 'https://www.w3.org/ns/activitystreams',
-        type: 'Block',
+        type: 'Acept',
         actor: this.actorId,
         object: this.entityId,
       }),
@@ -64,8 +64,21 @@ export class FollowActivityEntity extends LitElement {
   }
 
   render() {
+    if (!this.entity) {
+      return html`
+        Loading...
+      `;
+    }
+
+    if (this.entity.type !== 'Follow') {
+      return nothing;
+    }
+
     return html`
-      <textarea>${JSON.stringify(this.entity)}</textarea>
+      <p>${this.entity.actor}</p>
+      ${this.actorId === this.entity.object ? html`
+        <button type="button" @click=${this.accept}>Accept</button>
+      ` : nothing}
     `;
   }
 }
