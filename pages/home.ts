@@ -32,7 +32,7 @@ function deleteGroup(actorId: string) {
       object: actorId,
       to: [
         'https://www.w3.org/ns/activitystreams#Public',
-        `${this.groupActor.followers}`,
+        `${actorId}/followers`,
       ],
     }),
   })
