@@ -55,13 +55,25 @@
                           {{ entity.summary }}
                         </p>
                       {% endif %}
+                      {% if entity.attachment %}
+                        <dl>
+                          {% for attachment in entity.attachment %}
+                            <dt>
+                              {{ attachment.name }}
+                            </dt>
+                            <dd>
+                              {{ attachment.value }}
+                            </dd>
+                          {% endfor %}
+                        </dl>
+                      {% endif %}
                       <p>
                         {{ followersCount }} followers
                       </p>
                     </div>
                   </div>
                   <h2>
-                    Posts
+                    Posts ({{ shared.length }})
                   </h2>
                   {% if shared.length %}
                     <div class="regions">

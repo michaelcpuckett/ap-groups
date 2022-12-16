@@ -104,6 +104,14 @@
               <dd>
                 {{ group.summary }}
               </dd>
+              {% for attachment in group.attachment %}
+                <dt>
+                  {{ attachment.name }}
+                </dt>
+                <dd>
+                  {{ attachment.value }}
+                </dd>
+              {% endfor %}
               <dt>
                 Added
               </dt>
