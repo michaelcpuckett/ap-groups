@@ -34,7 +34,7 @@
                 upload-media-url="{{ actor.endpoints.uploadMedia }}"
                 group-actor-id="{{ actor.id }}"
                 {% if actor.attachment %}
-                  manager="{{ actor.attachment['https://schema.org/value'] }}"
+                  manager="{{ actor.attachment.value }}"
                 {% endif %}
                 {% if actor.manuallyApprovesFollowers %}
                   manually-approves-followers
