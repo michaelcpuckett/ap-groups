@@ -34,7 +34,13 @@
                 upload-media-url="{{ actor.endpoints.uploadMedia }}"
                 group-actor-id="{{ actor.id }}"
                 {% if actor.attachment %}
-                  manager="{{ actor.attachment.value }}"
+                  {% for attachment in actor.attachment %}
+                    {% if attachment.name == 'Group Manager' %}
+                      manager="{{ attachment.value }}"
+                    {% elif attachment.name == 'Group Rules' %}
+                      rules="{{ attachment.value }}"
+                    {% endif %}
+                  {% endfor %}
                 {% endif %}
                 {% if actor.manuallyApprovesFollowers %}
                   manually-approves-followers

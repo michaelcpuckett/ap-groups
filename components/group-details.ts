@@ -36,6 +36,9 @@ export class GroupDetails extends LitElement {
   @query('input[name="manager"]')
   managerInputElement: HTMLInputElement|null;
 
+  @query('textarea[name="rules"]')
+  rulesTextareaElement: HTMLTextAreaElement|null;
+
   @query('textarea[name="summary"]')
   summaryTextareaElement: HTMLTextAreaElement|null;
 
@@ -67,6 +70,9 @@ export class GroupDetails extends LitElement {
   private manager?: string;
 
   @property({type: String})
+  private rules?: string;
+
+  @property({type: String})
   private summary?: string;
 
   @property({type: Object})
@@ -78,12 +84,13 @@ export class GroupDetails extends LitElement {
   private async handleSubmit(event: SubmitEvent) {
     event.preventDefault();
     
-    if (!this.nameInputElement || !this.managerInputElement || !this.summaryTextareaElement || !this.uploadFormElement || !this.manuallyApprovesFollowersElement) {
+    if (!this.nameInputElement || !this.managerInputElement || !this.rulesTextareaElement || !this.summaryTextareaElement || !this.uploadFormElement || !this.manuallyApprovesFollowersElement) {
       return;
     }
 
     const name = this.nameInputElement.value;
-    const manager = this.managerInputElement.value;
+    const manager = this.managerInputElement.value || 'Anonymous';
+    const rules = this.rulesTextareaElement.value || 'Be nice.';
     const summary = this.summaryTextareaElement.value;
     const manuallyApprovesFollowers = this.manuallyApprovesFollowersElement.checked;
 
@@ -116,6 +123,10 @@ export class GroupDetails extends LitElement {
             type: 'PropertyValue',
             name: 'Group Manager',
             value: manager,
+          }, {
+            type: 'PropertyValue',
+            name: 'Group Rules',
+            value: rules,
           }],
         },
       }),
@@ -236,7 +247,7 @@ export class GroupDetails extends LitElement {
               Group Manager
             </span>
             <span role="cell">
-              <input type="text" name="manager" value=${this.manager ?? ''} />
+              <input type="text" name="manager" value=${this.manager ?? 'Anonymous'} />
             </span>
             <span class="hint-text">
               The @handle where people can contact you, otherwise "Anonymous"
@@ -244,10 +255,18 @@ export class GroupDetails extends LitElement {
           </label>
           <label role="row" class="label">
             <span class="label-text" role="columnheader">
-              Bio
+              Group Description
             </span>
             <span role="cell">
               <textarea name="summary">${this.summary ?? ''}</textarea>
+            </span>
+          </label>
+          <label role="row" class="label">
+            <span class="label-text" role="columnheader">
+              Group Rules
+            </span>
+            <span role="cell">
+              <textarea name="rules">${this.rules ?? 'Be nice.'}</textarea>
             </span>
           </label>
           <label role="row" class="label">
