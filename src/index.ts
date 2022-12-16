@@ -140,16 +140,18 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
               const sharedUrl = streams.find((stream: URL) => `${stream}`.endsWith('shared'));
               const followersUrl = entity.followers as URL;
 
+              console.log(sharedUrl);
+
               const [
-                shared,
+                sharedCount,
                 followersCount,
               ] = await Promise.all([
-                mongoDbAdapter.findEntityById(sharedUrl).then((collection: AP.OrderedCollection) => collection.orderedItems as URL[]).catch(() => []),
-                mongoDbAdapter.findEntityById(followersUrl).then((collection: AP.Collection) => (collection.items as AP.Entity[]).length).catch(() => 0),
+                mongoDbAdapter.findEntityById(sharedUrl).then((collection: AP.OrderedCollection) => collection.totalItems).catch(() => 0),
+                mongoDbAdapter.findEntityById(followersUrl).then((collection: AP.Collection) => collection.totalItems).catch(() => 0),
               ]);
 
               return {
-                shared,
+                sharedCount,
                 followersCount,
               };
             } catch (error) {

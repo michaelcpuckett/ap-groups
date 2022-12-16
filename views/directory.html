@@ -35,21 +35,42 @@
         {{ header() }}
         
         {% set sortedGroups = groups|sort(true, true, 'followers.totalItems') %}
-        {% set alternateLinkUrl = '/directory?sort=recent' %}
-        {% set alternateLinkLabel = 'Sort by recent' %}
-        {% if currentUrl === '/directory?sort=recent' %}
-          {% set sortedGroups = groups|reverse %}
-          {% set alternateLinkUrl = '/directory' %}
-          {% set alternateLinkLabel = 'Sort by number of members' %}
-        {% endif %}
 
         <section role="region" aria-labelledby="directory-heading">
           <h2 id="directory-heading">
             Group Directory
           </h2>
-          <a href="{{ alternateLinkUrl }}">
-            {{ alternateLinkLabel }}
-          </a>
+          {% if currentUrl === '/directory' %}
+            <span>
+              Sort by number of members
+            </span>
+          {% else %}
+            <a href="/directory">
+              Sort by number of members
+            </a>
+          {% endif %}
+          <br />
+          {% if currentUrl === '/directory?sort=recent' %}
+            {% set sortedGroups = groups|reverse %}
+            <span>
+              Sort by recent
+            </span>
+          {% else %}
+            <a href="/directory?sort=recent">
+              Sort by recent
+            </a>
+          {% endif %}
+          <br />
+          {% if currentUrl === '/directory?sort=posts' %}
+            {% set sortedGroups = groups|sort(true, true, 'shared.totalItems') %}
+            <span>
+              Sort by number of posts
+            </span>
+          {% else %}
+            <a href="/directory?sort=posts">
+              Sort by number of posts
+            </a>
+          {% endif %}
         </section>
         {% for group in sortedGroups %}
           <section class="directory-entry">
@@ -94,6 +115,12 @@
               </dt>
               <dd>
                 {{ group.followers.totalItems }}
+              </dd>
+              <dt>
+                Posts
+              </dt>
+              <dd>
+                {{ group.shared.totalItems }}
               </dd>
             </dl>
           </section>
