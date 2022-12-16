@@ -9,15 +9,11 @@ import { FtpStorageAdapter } from 'activitypub-core-storage-ftp';
 import { DeliveryAdapter } from 'activitypub-core-delivery';
 import { ServiceAccount } from 'firebase-admin';
 import { ServerResponse, IncomingMessage } from 'http';
-import { getGuid, LOCAL_DOMAIN } from 'activitypub-core-utilities';
+import { LOCAL_DOMAIN } from 'activitypub-core-utilities';
 import * as nunjucks from 'nunjucks';
 import { AP } from 'activitypub-core-types';
 import * as path from 'path';
 import { AssertionError } from 'assert';
-import * as Formidable from 'formidable';
-import FormData from 'form-data';
-import * as cookie from 'cookie';
-import { ClientCredentials, ResourceOwnerPassword, AuthorizationCode } from 'simple-oauth2';
 
 const app = express.default();
 app.use(express.static(path.resolve(__dirname, '../static')));
