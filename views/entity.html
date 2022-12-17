@@ -96,92 +96,94 @@
                     <actor-entity entity-id="{{ entity.attributedTo }}"></actor-entity>
                   {% endif %}
                 {% endif %}
-                {% for item in items %}
-                  {% if item.type == 'Announce' %}
-                    <announce-entity entity-id="{{ item.id }}">
-                      <!-- Fallback for legacy accounts -->
-                      <post-entity entity-id="{{ item.id }}"></post-entity>
-                    </announce-entity>
-                  {% endif %}
-                  {% if item.type == 'Create' and item.object.id and item.object.type === 'Group' %}
-                    {% set group = item.object %}
-                    <section class="directory-entry">
-                      {% if group.icon.url %}
-                        <a href="{{ group.url }}/shared?page=1&current" style="display: block">
-                          <img
-                            class="avatar"
-                            height="100"
-                            width="100"
-                            src="{{ group.icon.url }}"
-                          />
-                        </a>
-                      {% endif %}
-                      <a href="{{ group.url }}/shared?page=1&current">
-                        <strong>
-                          {{ group.name }}
-                        </strong>
-                      </a>
-                      <dl>
-                        <dt>
-                          Handle
-                        </dt>
-                        <dd>
-                          <a href="{{ group.url }}/shared?page=1&current">
-                            @{{ group.preferredUsername }}@chirp.social
+                <div class="regions">
+                  {% for item in items %}
+                    {% if item.type == 'Announce' %}
+                      <announce-entity entity-id="{{ item.id }}">
+                        <!-- Fallback for legacy accounts -->
+                        <post-entity entity-id="{{ item.id }}"></post-entity>
+                      </announce-entity>
+                    {% endif %}
+                    {% if item.type == 'Create' and item.object.id and item.object.type === 'Group' %}
+                      {% set group = item.object %}
+                      <section class="region">
+                        {% if group.icon.url %}
+                          <a href="{{ group.url }}/shared?page=1&current" style="display: block">
+                            <img
+                              class="avatar"
+                              height="100"
+                              width="100"
+                              src="{{ group.icon.url }}"
+                            />
                           </a>
-                        </dd>
-                        <dt>
-                          Bio
-                        </dt>
-                        <dd>
-                          {{ group.summary }}
-                        </dd>
-                        {% for attachment in group.attachment %}
+                        {% endif %}
+                        <a href="{{ group.url }}/shared?page=1&current">
+                          <strong>
+                            {{ group.name }}
+                          </strong>
+                        </a>
+                        <dl>
                           <dt>
-                            {{ attachment.name }}
+                            Handle
                           </dt>
                           <dd>
-                            {{ attachment.value }}
+                            <a href="{{ group.url }}/shared?page=1&current">
+                              @{{ group.preferredUsername }}@chirp.social
+                            </a>
                           </dd>
-                        {% endfor %}
-                        <dt>
-                          Added
-                        </dt>
-                        <dd>
-                          {{ group.published }}
-                        </dd>
-                      </dl>
-                    </section>
-                  {% endif %}
-                {% endfor %}
-                <div class="region">
-                  <ul>
-                    <li>
-                      <a href="{{ entity.first }}">First Page</a>
-                    </li>
-                    {% if entity.previous %}
-                      <li>
-                        <a href="{{ entity.previous }}">Previous Page</a>
-                      </li>
+                          <dt>
+                            Bio
+                          </dt>
+                          <dd>
+                            {{ group.summary }}
+                          </dd>
+                          {% for attachment in group.attachment %}
+                            <dt>
+                              {{ attachment.name }}
+                            </dt>
+                            <dd>
+                              {{ attachment.value }}
+                            </dd>
+                          {% endfor %}
+                          <dt>
+                            Added
+                          </dt>
+                          <dd>
+                            {{ group.published }}
+                          </dd>
+                        </dl>
+                      </section>
                     {% endif %}
-                    {% if entity.next %}
+                  {% endfor %}
+                  <div class="region">
+                    <ul>
                       <li>
-                        <a href="{{ entity.next }}">Next Page</a>
+                        <a href="{{ entity.first }}">First Page</a>
                       </li>
-                    {% endif %}
-                    <li>
-                      <a href="{{ entity.last }}">Last Page</a>
-                    </li>
-                    <li>
-                      <a href="{{ entity.current }}">Current</a>
-                    </li>
-                  </ul>
-                </div>
-              {% else %}
-                <div class="region">
-                  No posts here.
-                </div>
-              {% endif %}
+                      {% if entity.previous %}
+                        <li>
+                          <a href="{{ entity.previous }}">Previous Page</a>
+                        </li>
+                      {% endif %}
+                      {% if entity.next %}
+                        <li>
+                          <a href="{{ entity.next }}">Next Page</a>
+                        </li>
+                      {% endif %}
+                      <li>
+                        <a href="{{ entity.last }}">Last Page</a>
+                      </li>
+                      <li>
+                        <a href="{{ entity.current }}">Current</a>
+                      </li>
+                    </ul>
+                  </div>
+                {% else %}
+                  <div class="region">
+                    No posts here.
+                  </div>
+                {% endif %}
+              </div>
             </div>
           </div>
           <script type="module" src="/group-entity.js"></script>
