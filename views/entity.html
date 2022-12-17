@@ -99,10 +99,12 @@
                 <div class="regions">
                   {% for item in items %}
                     {% if item.type == 'Announce' %}
-                      <announce-entity entity-id="{{ item.id }}">
-                        <!-- Fallback for legacy accounts -->
-                        <post-entity entity-id="{{ item.id }}"></post-entity>
-                      </announce-entity>
+                      <div class="region">
+                        <announce-entity entity-id="{{ item.id }}">
+                          <!-- Fallback for legacy accounts -->
+                          <post-entity entity-id="{{ item.id }}"></post-entity>
+                        </announce-entity>
+                      </div>
                     {% endif %}
                     {% if item.type == 'Create' and item.object.id and item.object.type === 'Group' %}
                       <directory-entry entity-id="{{ item.object.id }}"></directory-entry>
