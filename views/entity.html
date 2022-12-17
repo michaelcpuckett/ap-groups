@@ -1,15 +1,8 @@
 {% from "header.html" import header with context %}
 {% from "about.html" import about with context %}
 
-{% if entity.type === 'OrderedCollection' %}
-  {% if entity.name === 'Inbox' %}
-    <filter-follow-activities actor-id="{{ actor.id }}">
-      {% for activityId in entity.orderedItems %}
-        <follow-activity-entity entity-id="{{ activityId }}" actor-id="{{ actor.id }}"></follow-activity-entity>
-      {% endfor %}
-    </filter-follow-activities>
-    <script type="module" src="/group-entity.js"></script>
-  {% endif %}
+{% if entity.type === 'Collection' or entity.type === 'OrderedCollection' %}
+  <textarea>{{ entity | dump }}</textarea>
 {% endif %}
 
 {% if entity.type === 'Group' %}
@@ -52,12 +45,14 @@
                         </strong>
                       </p>
                       {% if entity.summary %}
-                        <p>
-                          {{ entity.summary }}
-                        </p>
                       {% endif %}
-                      {% if entity.attachment %}
                         <dl>
+                          <dt>
+                            Group Summary
+                          </dt>
+                          <dt>
+                            {{ entity.summary }}
+                          </dt>
                           {% for attachment in entity.attachment %}
                             <dt>
                               {{ attachment.name }}
@@ -66,32 +61,25 @@
                               {{ attachment.value }}
                             </dd>
                           {% endfor %}
+                          <dt>
+                            Followers
+                          </dt>
+                          <dd>
+                            {{ followersCount }}
+                          </dd>
+                          <dt>
+                            <a href={{ stream }}>
+                              Posts
+                            </a>
+                          </dt>
+                          <dd>
+                            <a href={{ stream }}>
+                              {{ shared.length }}
+                            </a>
+                          </dd>
                         </dl>
-                      {% endif %}
-                      <p>
-                        {{ followersCount }} followers
-                      </p>
                     </div>
                   </div>
-                  <h2>
-                    Posts ({{ shared.length }})
-                  </h2>
-                  {% if shared.length %}
-                    <div class="regions">
-                      {% for postId in shared %}
-                        <div class="region">
-                          <announce-entity entity-id="{{ postId }}">
-                            <!-- Fallback for legacy accounts -->
-                            <post-entity entity-id="{{ postId }}"></post-entity>
-                          </announce-entity>
-                        </div>
-                      {% endfor %}
-                    </div>
-                  {% else %}
-                    <div class="region">
-                      <p>No posts yet.</p>
-                    </div>
-                  {% endif %}
                 </section>
                 <script type="module" src="group-entity.js"></script>
               </div>
