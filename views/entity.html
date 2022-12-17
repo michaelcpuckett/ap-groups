@@ -20,7 +20,6 @@
               <div class="region">
                 <a style="color: black; font-weight: bold" href="{{ entity.first }}">First Page</a>
                 <a style="color: black; font-weight: bold" href="{{ entity.last }}">Last Page</a>
-                <a style="color: black; font-weight: bold" href="{{ entity.current }}">Current</a>
               </div>
             </div>
           </div>
@@ -62,14 +61,13 @@
               {% if items.length %}
                 <div class="region">
                   <a style="color: black; font-weight: bold" href="{{ entity.first }}">First Page</a>
-                  {% if entity.previous %}
-                    <a style="color: black; font-weight: bold" href="{{ entity.previous }}">Previous Page</a>
+                  {% if entity.prev %}
+                    <a style="color: black; font-weight: bold" href="{{ entity.prev }}">Previous Page</a>
                   {% endif %}
                   {% if entity.next %}
                     <a style="color: black; font-weight: bold" href="{{ entity.next }}">Next Page</a>
                   {% endif %}
                   <a style="color: black; font-weight: bold" href="{{ entity.last }}">Last Page</a>
-                  <a style="color: black; font-weight: bold" href="{{ entity.current }}">Current</a>
                 </div>
                 {% if entity.name == 'Shared' %}
                   {% if entity.attributedTo %}
@@ -92,14 +90,13 @@
                   {% endfor %}
                   <div class="region">
                     <a style="color: black; font-weight: bold" href="{{ entity.first }}">First Page</a>
-                    {% if entity.previous %}
-                      <a style="color: black; font-weight: bold" href="{{ entity.previous }}">Previous Page</a>
+                    {% if entity.prev %}
+                      <a style="color: black; font-weight: bold" href="{{ entity.prev }}">Previous Page</a>
                     {% endif %}
                     {% if entity.next %}
                       <a style="color: black; font-weight: bold" href="{{ entity.next }}">Next Page</a>
                     {% endif %}
                     <a style="color: black; font-weight: bold" href="{{ entity.last }}">Last Page</a>
-                    <a style="color: black; font-weight: bold" href="{{ entity.current }}">Current</a>
                   </div>
                 {% else %}
                   <div class="region">
