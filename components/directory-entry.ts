@@ -18,6 +18,10 @@ export class DirectoryEntry extends LitElement {
     a {
       color: var(--text-on-light-background-color);
     }
+
+    dt {
+      font-weight: bold;
+    }
   `];
 
   @property({ type: String, reflect: true, attribute: 'entity-id' })
@@ -40,6 +44,10 @@ export class DirectoryEntry extends LitElement {
     })
       .then(res => res.json())
       .then(entity => {
+        if (entity.type === 'Tombstone') {
+          throw new Error('Deleted');
+        }
+
         this.entity = entity;
       })
       .catch(() => {
