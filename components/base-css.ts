@@ -23,6 +23,11 @@ export const baseCss = css`
     color: var(--link-color);
   }
 
+  .region a {
+    color: var(--primary-color);
+    font-weight: bold;
+  }
+
   button {
     appearance: none;
     padding: 0;
@@ -151,6 +156,7 @@ export const baseCss = css`
     box-shadow: var(--box-shadow);
     background-color: var(--light-background-color);
     color: var(--text-on-light-background-color);
+    width: 100%;
   }
 
   .eyebrow {

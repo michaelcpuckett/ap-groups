@@ -18,17 +18,9 @@
             <actor-entity entity-id="{{ entity.attributedTo }}"></actor-entity>
             <div class="regions">
               <div class="region">
-                <ul>
-                  <li>
-                    <a href="{{ entity.first }}">First Page</a>
-                  </li>
-                  <li>
-                    <a href="{{ entity.last }}">Last Page</a>
-                  </li>
-                  <li>
-                    <a href="{{ entity.current }}">Current</a>
-                  </li>
-                </ul>
+                <a style="color: black; font-weight: bold" href="{{ entity.first }}">First Page</a>
+                <a style="color: black; font-weight: bold" href="{{ entity.last }}">Last Page</a>
+                <a style="color: black; font-weight: bold" href="{{ entity.current }}">Current</a>
               </div>
             </div>
           </div>
@@ -69,27 +61,15 @@
             <div class="regions">
               {% if items.length %}
                 <div class="region">
-                  <ul>
-                    <li>
-                      <a href="{{ entity.first }}">First Page</a>
-                    </li>
-                    {% if entity.previous %}
-                      <li>
-                        <a href="{{ entity.previous }}">Previous Page</a>
-                      </li>
-                    {% endif %}
-                    {% if entity.next %}
-                      <li>
-                        <a href="{{ entity.next }}">Next Page</a>
-                      </li>
-                    {% endif %}
-                    <li>
-                      <a href="{{ entity.last }}">Last Page</a>
-                    </li>
-                    <li>
-                      <a href="{{ entity.current }}">Current</a>
-                    </li>
-                  </ul>
+                  <a style="color: black; font-weight: bold" href="{{ entity.first }}">First Page</a>
+                  {% if entity.previous %}
+                    <a style="color: black; font-weight: bold" href="{{ entity.previous }}">Previous Page</a>
+                  {% endif %}
+                  {% if entity.next %}
+                    <a style="color: black; font-weight: bold" href="{{ entity.next }}">Next Page</a>
+                  {% endif %}
+                  <a style="color: black; font-weight: bold" href="{{ entity.last }}">Last Page</a>
+                  <a style="color: black; font-weight: bold" href="{{ entity.current }}">Current</a>
                 </div>
                 {% if entity.name == 'Shared' %}
                   {% if entity.attributedTo %}
@@ -110,32 +90,20 @@
                       <directory-entry entity-id="{{ item.object.id }}"></directory-entry>
                     {% endif %}
                   {% endfor %}
-                  <div class="region">
-                    <ul>
-                      <li>
-                        <a href="{{ entity.first }}">First Page</a>
-                      </li>
-                      {% if entity.previous %}
-                        <li>
-                          <a href="{{ entity.previous }}">Previous Page</a>
-                        </li>
-                      {% endif %}
-                      {% if entity.next %}
-                        <li>
-                          <a href="{{ entity.next }}">Next Page</a>
-                        </li>
-                      {% endif %}
-                      <li>
-                        <a href="{{ entity.last }}">Last Page</a>
-                      </li>
-                      <li>
-                        <a href="{{ entity.current }}">Current</a>
-                      </li>
-                    </ul>
-                  </div>
                 {% else %}
                   <div class="region">
                     No posts here.
+                  </div>
+                  <div class="region">
+                    <a style="color: black; font-weight: bold" href="{{ entity.first }}">First Page</a>
+                    {% if entity.previous %}
+                      <a style="color: black; font-weight: bold" href="{{ entity.previous }}">Previous Page</a>
+                    {% endif %}
+                    {% if entity.next %}
+                      <a style="color: black; font-weight: bold" href="{{ entity.next }}">Next Page</a>
+                    {% endif %}
+                    <a style="color: black; font-weight: bold" href="{{ entity.last }}">Last Page</a>
+                    <a style="color: black; font-weight: bold" href="{{ entity.current }}">Current</a>
                   </div>
                 {% endif %}
               </div>
