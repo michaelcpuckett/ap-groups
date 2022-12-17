@@ -27,6 +27,9 @@ export class DirectoryEntry extends LitElement {
   @property({ type: String, reflect: true, attribute: 'entity-id' })
   private entityId = '';
 
+  @property({ type: Boolean, reflect: true, attribute: 'allow-sensitive' })
+  private allowSensitive = false;
+
   @property({ type: Object })
   private entity: AP.Actor | null = null;
 
@@ -65,6 +68,21 @@ export class DirectoryEntry extends LitElement {
     if (!this.entity) {
       return html`
         Loading...
+      `;
+    }
+
+    if (this.entity.sensitive && !this.allowSensitive) {
+      return html`
+        <details>
+          <summary>
+            18+ / Sensitive / NSFW
+          </summary>
+          <p>
+            <a href=${this.entity.url}>
+              @${this.entity.preferredUsername}@chirp.social
+            </a>
+          </p>
+        </details>
       `;
     }
 

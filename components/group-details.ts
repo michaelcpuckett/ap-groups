@@ -42,6 +42,9 @@ export class GroupDetails extends LitElement {
   @query('textarea[name="summary"]')
   summaryTextareaElement: HTMLTextAreaElement|null;
 
+  @query('input[name="sensitive"]')
+  sensitiveElement: HTMLInputElement|null;
+
   @query('input[name="manuallyApprovesFollowers"]')
   manuallyApprovesFollowersElement: HTMLInputElement|null;
 
@@ -59,6 +62,9 @@ export class GroupDetails extends LitElement {
 
   @property({type: Boolean, attribute: 'manually-approves-followers'})
   private manuallyApprovesFollowers?: boolean;
+
+  @property({type: Boolean })
+  private sensitive?: boolean;
 
   @property({type: String, attribute: 'group-actor-id'})
   private groupActorId?: string;
@@ -84,7 +90,7 @@ export class GroupDetails extends LitElement {
   private async handleSubmit(event: SubmitEvent) {
     event.preventDefault();
     
-    if (!this.nameInputElement || !this.managerInputElement || !this.rulesTextareaElement || !this.summaryTextareaElement || !this.uploadFormElement || !this.manuallyApprovesFollowersElement) {
+    if (!this.nameInputElement || !this.managerInputElement || !this.rulesTextareaElement || !this.summaryTextareaElement || !this.uploadFormElement || !this.manuallyApprovesFollowersElement || !this.sensitiveElement) {
       return;
     }
 
@@ -93,6 +99,7 @@ export class GroupDetails extends LitElement {
     const rules = this.rulesTextareaElement.value || 'Be nice.';
     const summary = this.summaryTextareaElement.value;
     const manuallyApprovesFollowers = this.manuallyApprovesFollowersElement.checked;
+    const sensitive = this.sensitiveElement.checked;
 
     if (this.isFileReadyToUpload) {
       await this.handleAvatarUpload();
@@ -118,6 +125,7 @@ export class GroupDetails extends LitElement {
           name,
           summary,
           manuallyApprovesFollowers,
+          sensitive,
           image: this.defaultBannerImage,
           attachment: [{
             type: 'PropertyValue',
@@ -240,6 +248,22 @@ export class GroupDetails extends LitElement {
             </span>
             <span role="cell">
               <input type="text" value=${this.name ?? ''} name="name" />
+            </span>
+          </label>
+          <label role="row" class="label">
+            <span role="columnheader" class="label-text">
+              18+ / Sensitive / NSFW?
+            </span>
+            <span role="cell">
+              <input
+                type="checkbox"
+                class="toggle-button"
+                name="sensitive"
+                ?checked=${this.sensitive}
+              />
+              <p class="hint-text">
+                The group will be hidden in the main directory.
+              </p>
             </span>
           </label>
           <label role="row" class="label">

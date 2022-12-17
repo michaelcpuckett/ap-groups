@@ -46,6 +46,9 @@
                 {% if actor.manuallyApprovesFollowers %}
                   manually-approves-followers
                 {% endif %}
+                {% if actor.sensitive %}
+                  sensitive
+                {% endif %}
                 icon="{{ actor.icon | dump }}"
                 name="{{ actor.name }}"
                 summary="{{ actor.summary }}">
