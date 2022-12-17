@@ -87,21 +87,23 @@ export class ActorEntity extends LitElement {
       <a target="_blank" href=${this.entity.id}>
         @${this.entity.preferredUsername}@${new URL(this.entity.id).hostname}
       </a>
-      <details class="flyout">
-        <summary aria-label="Options">
-          ...
-        </summary>
-        <div>
-          ${this.blockAction ? html`
-            <button
-              type="button"
-              class="button button--tag"
-              @click=${this.block}>
-              Block
-            </button>
-          ` : nothing}
-        </div>
-      </details>
+      ${this.actorId ? html`
+        <details class="flyout">
+          <summary aria-label="Options">
+            ...
+          </summary>
+          <div>
+            ${this.blockAction ? html`
+              <button
+                type="button"
+                class="button button--tag"
+                @click=${this.block}>
+                Block
+              </button>
+            ` : nothing}
+          </div>
+        </details>
+      ` : nothing}
     `;
   }
 }

@@ -2,7 +2,148 @@
 {% from "about.html" import about with context %}
 
 {% if entity.type === 'Collection' or entity.type === 'OrderedCollection' %}
-  <textarea>{{ entity | dump }}</textarea>
+  <!doctype html>
+  <html>
+    <title>chirp.social - {{ entity.name }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <meta name="description" content="{{ group.summary }}" />
+    <link rel="stylesheet" href="/base.css" />
+    <link rel="stylesheet" href="/index.css" />
+    <body>
+      <div class="root">
+        <div class="container">
+          {{ header() }}
+          <div role="region">
+            <actor-entity entity-id="{{ entity.attributedTo }}"></actor-entity>
+            <div class="regions">
+              <div class="region">
+                <ul>
+                  <li>
+                    <a href="{{ entity.first }}">First Page</a>
+                  </li>
+                  <li>
+                    <a href="{{ entity.last }}">Last Page</a>
+                  </li>
+                  <li>
+                    <a href="{{ entity.current }}">Current</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <script type="module" src="/group-entity.js"></script>
+        </div>
+        <div class="right-rail">
+          <header>
+            <a href="/directory" class="button button--cta">
+              Group Directory
+              <span>See All Groups</span>
+            </a>
+          </header>
+          {{ about() }}
+        </div>
+      </div>
+    </body>
+  </html>
+{% endif %}
+
+{% if entity.type == 'CollectionPage' or entity.type == 'OrderedCollectionPage' %}
+  <!doctype html>
+  <html>
+    <title>chirp.social - {{ entity.name }} - Page {{ entity.page }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <meta name="description" content="{{ group.summary }}" />
+    <link rel="stylesheet" href="/base.css" />
+    <link rel="stylesheet" href="/index.css" />
+    <body>
+      <div class="root">
+        <div class="container">
+          {{ header() }}
+          <div role="region">
+            <actor-entity entity-id="{{ entity.attributedTo }}"></actor-entity>
+            {% set items = entity.items %}
+            {% if entity.type == 'OrderedCollectionPage' %}
+              {% set items = entity.orderedItems %}
+            {% endif %}
+            <div class="regions">
+              {% if items.length %}
+                <div class="region">
+                  <ul>
+                    <li>
+                      <a href="{{ entity.first }}">First Page</a>
+                    </li>
+                    {% if entity.previous %}
+                      <li>
+                        <a href="{{ entity.previous }}">Previous Page</a>
+                      </li>
+                    {% endif %}
+                    {% if entity.next %}
+                      <li>
+                        <a href="{{ entity.next }}">Next Page</a>
+                      </li>
+                    {% endif %}
+                    <li>
+                      <a href="{{ entity.last }}">Last Page</a>
+                    </li>
+                    <li>
+                      <a href="{{ entity.current }}">Current</a>
+                    </li>
+                  </ul>
+                </div>
+                {% for item in items %}
+                  <div class="region">
+                    <announce-entity entity-id="{{ item }}">
+                      <!-- Fallback for legacy accounts -->
+                      <post-entity entity-id="{{ item }}"></post-entity>
+                    </announce-entity>
+                  </div>
+                {% endfor %}
+                <div class="region">
+                  <ul>
+                    <li>
+                      <a href="{{ entity.first }}">First Page</a>
+                    </li>
+                    {% if entity.previous %}
+                      <li>
+                        <a href="{{ entity.previous }}">Previous Page</a>
+                      </li>
+                    {% endif %}
+                    {% if entity.next %}
+                      <li>
+                        <a href="{{ entity.next }}">Next Page</a>
+                      </li>
+                    {% endif %}
+                    <li>
+                      <a href="{{ entity.last }}">Last Page</a>
+                    </li>
+                    <li>
+                      <a href="{{ entity.current }}">Current</a>
+                    </li>
+                  </ul>
+                </div>
+              {% else %}
+                <div class="region">
+                  No posts here.
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          <script type="module" src="/group-entity.js"></script>
+        </div>
+        <div class="right-rail">
+          <header>
+            <a href="/directory" class="button button--cta">
+              Group Directory
+              <span>See All Groups</span>
+            </a>
+          </header>
+          {{ about() }}
+        </div>
+      </div>
+    </body>
+  </html>
 {% endif %}
 
 {% if entity.type === 'Group' %}
@@ -68,12 +209,12 @@
                             {{ followersCount }}
                           </dd>
                           <dt>
-                            <a href={{ stream }}>
+                            <a href="{{ stream }}?current&page=1">
                               Posts
                             </a>
                           </dt>
                           <dd>
-                            <a href={{ stream }}>
+                            <a href="{{ stream }}?current&page=1">
                               {{ shared.length }}
                             </a>
                           </dd>
