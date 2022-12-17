@@ -12,6 +12,7 @@ export class DirectoryEntry extends LitElement {
       width: 100%;
       justify-content: space-between;
       align-items: center;
+      width: 100%;
     }
 
     a {
