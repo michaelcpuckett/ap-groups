@@ -62,9 +62,6 @@
         <div class="container">
           {{ header() }}
           <div role="region">
-            {% if entity.attributedTo %}
-              <actor-entity entity-id="{{ entity.attributedTo }}"></actor-entity>
-            {% endif %}
             {% set items = entity.items %}
             {% if entity.type == 'OrderedCollectionPage' %}
               {% set items = entity.orderedItems %}
@@ -94,6 +91,11 @@
                     </li>
                   </ul>
                 </div>
+                {% if entity.name == 'Shared' %}
+                  {% if entity.attributedTo %}
+                    <actor-entity entity-id="{{ entity.attributedTo }}"></actor-entity>
+                  {% endif %}
+                {% endif %}
                 {% for item in items %}
                   {% if item.type == 'Announce' %}
                     <announce-entity entity-id="{{ item.id }}">
@@ -105,7 +107,7 @@
                     {% set group = item.object %}
                     <section class="directory-entry">
                       {% if group.icon.url %}
-                        <a href="{{ group.url }}" style="display: block">
+                        <a href="{{ group.url }}/shared?page=1&current" style="display: block">
                           <img
                             class="avatar"
                             height="100"
@@ -114,7 +116,7 @@
                           />
                         </a>
                       {% endif %}
-                      <a href="{{ group.url }}">
+                      <a href="{{ group.url }}/shared?page=1&current">
                         <strong>
                           {{ group.name }}
                         </strong>
@@ -124,7 +126,7 @@
                           Handle
                         </dt>
                         <dd>
-                          <a href="{{ group.url }}">
+                          <a href="{{ group.url }}/shared?page=1&current">
                             @{{ group.preferredUsername }}@chirp.social
                           </a>
                         </dd>
@@ -147,18 +149,6 @@
                         </dt>
                         <dd>
                           {{ group.published }}
-                        </dd>
-                        <dt>
-                          Members
-                        </dt>
-                        <dd>
-                          {{ group.followers.totalItems }}
-                        </dd>
-                        <dt>
-                          Posts
-                        </dt>
-                        <dd>
-                          {{ group.shared.totalItems }}
                         </dd>
                       </dl>
                     </section>
