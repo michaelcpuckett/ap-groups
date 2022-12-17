@@ -69,11 +69,6 @@
                   {% endif %}
                   <a style="color: black; font-weight: bold" href="{{ entity.last }}">Last Page</a>
                 </div>
-                {% if entity.name == 'Shared' %}
-                  {% if entity.attributedTo %}
-                    <actor-entity entity-id="{{ entity.attributedTo }}"></actor-entity>
-                  {% endif %}
-                {% endif %}
                 <div class="regions">
                   {% for item in items %}
                     {% if item.type == 'Announce' %}
@@ -82,6 +77,11 @@
                           <!-- Fallback for legacy accounts -->
                           <post-entity entity-id="{{ item.id }}"></post-entity>
                         </announce-entity>
+                      </div>
+                    {% endif %}
+                    {% if item.type == 'Create' and item.object.id and item.object.type === 'Note' %}
+                      <div class="region">
+                        <post-entity entity-id="{{ item.object.id }}"></post-entity>
                       </div>
                     {% endif %}
                     {% if item.type == 'Create' and item.object.id and item.object.type === 'Group' %}
@@ -115,6 +115,11 @@
               <span>See All Groups</span>
             </a>
           </header>
+          {% if entity.name == 'Shared' or entity.name === 'Outbox' %}
+            {% if entity.attributedTo %}
+              <group-entity-details entity-id="{{ entity.attributedTo }}"></group-entity-details>
+            {% endif %}
+          {% endif %}
           {{ about() }}
         </div>
       </div>
@@ -161,6 +166,12 @@
                           @{{ entity.preferredUsername }}@chirp.social
                         </strong>
                       </p>
+                      <p>
+                        <a href="{{ entity.outbox }}?page=1&current">
+                          All Posts from
+                          @{{ entity.preferredUsername }}@chirp.social
+                        </a>
+                      </p>
                       {% if entity.summary %}
                       {% endif %}
                         <dl>
@@ -183,16 +194,6 @@
                           </dt>
                           <dd>
                             {{ followersCount }}
-                          </dd>
-                          <dt>
-                            <a href="{{ stream }}?current&page=1">
-                              Posts
-                            </a>
-                          </dt>
-                          <dd>
-                            <a href="{{ stream }}?current&page=1">
-                              {{ shared.length }}
-                            </a>
                           </dd>
                         </dl>
                     </div>

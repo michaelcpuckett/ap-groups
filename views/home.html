@@ -31,9 +31,10 @@
                 Edit Profile
               </summary>
               <group-details
+                group-actor-id="{{ actor.id }}"
+                followers-url="{{ actor.followers.url }}"
                 outbox-url="{{ actor.outbox.url }}"
                 upload-media-url="{{ actor.endpoints.uploadMedia }}"
-                group-actor-id="{{ actor.id }}"
                 {% if actor.attachment %}
                   {% for attachment in actor.attachment %}
                     {% if attachment.name == 'Group Manager' %}
@@ -59,9 +60,27 @@
           <section>
             <details open>
               <summary>
+                Post as the Group
+              </summary>
+              <post-form
+                group-actor-id="{{ actor.id }}"
+                followers-url="{{ actor.followers.url }}"
+                outbox-url="{{ actor.outbox.url }}">
+              </post-form>
+            </details>
+          </section>
+
+          <section>
+            <details open>
+              <summary>
                 Reposts ({{ shared.length }})
               </summary>
               <div class="regions">
+                <div class="region">
+                  <p>
+                    <a href="{{ actor.outbox.id }}?page=1&current">See Outbox with Posts included</a>
+                  </p>
+                </div>
                 {% if shared.length %}
                   {% for postId in shared %}
                     <div class="region">

@@ -57,6 +57,9 @@ export class GroupDetails extends LitElement {
   @property({type: String, attribute: 'outbox-url'})
   private outboxUrl?: string;
 
+  @property({type: String, attribute: 'followers-url'})
+  private followersUrl?: string;
+
   @property({type: String, attribute: 'upload-media-url'})
   private uploadMediaUrl?: string;
 
@@ -119,6 +122,10 @@ export class GroupDetails extends LitElement {
           }
         ],
         type: 'Update',
+        to: [
+          'https://www.w3.org/ns/activitystreams#Public',
+          this.followersUrl,
+        ],
         actor: this.groupActorId,
         object: {
           id: this.groupActorId,
