@@ -7,14 +7,14 @@ import { AP } from 'activitypub-core-types';
 export class ActorEntity extends LitElement {
   static styles = [baseCss, css`
     :host {
-      display: flex;
+      display: inline-flex;
       width: 100%;
       justify-content: space-between;
       align-items: center;
     }
 
     a {
-      color: var(--text-on-light-background-color);
+      color: var(--text-on-dark-background-color);
     }
   `];
 

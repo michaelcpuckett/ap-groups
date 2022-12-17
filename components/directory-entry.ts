@@ -8,14 +8,14 @@ import { AP } from 'activitypub-core-types';
 export class DirectoryEntry extends LitElement {
   static styles = [baseCss, css`
     :host {
-      display: inline-flex;
+      display: flex;
       width: 100%;
       justify-content: space-between;
       align-items: center;
     }
 
     a {
-      color: var(--text-on-dark-background-color);
+      color: var(--text-on-light-background-color);
     }
   `];
 
