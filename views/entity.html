@@ -90,10 +90,6 @@
                       <directory-entry entity-id="{{ item.object.id }}"></directory-entry>
                     {% endif %}
                   {% endfor %}
-                {% else %}
-                  <div class="region">
-                    No posts here.
-                  </div>
                   <div class="region">
                     <a style="color: black; font-weight: bold" href="{{ entity.first }}">First Page</a>
                     {% if entity.previous %}
@@ -104,6 +100,10 @@
                     {% endif %}
                     <a style="color: black; font-weight: bold" href="{{ entity.last }}">Last Page</a>
                     <a style="color: black; font-weight: bold" href="{{ entity.current }}">Current</a>
+                  </div>
+                {% else %}
+                  <div class="region">
+                    No posts here.
                   </div>
                 {% endif %}
               </div>
