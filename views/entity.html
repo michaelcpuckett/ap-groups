@@ -105,54 +105,7 @@
                       </announce-entity>
                     {% endif %}
                     {% if item.type == 'Create' and item.object.id and item.object.type === 'Group' %}
-                      {% set group = item.object %}
-                      <section class="region">
-                        {% if group.icon.url %}
-                          <a href="{{ group.url }}/shared?page=1&current" style="display: block">
-                            <img
-                              class="avatar"
-                              height="100"
-                              width="100"
-                              src="{{ group.icon.url }}"
-                            />
-                          </a>
-                        {% endif %}
-                        <a href="{{ group.url }}/shared?page=1&current">
-                          <strong>
-                            {{ group.name }}
-                          </strong>
-                        </a>
-                        <dl>
-                          <dt>
-                            Handle
-                          </dt>
-                          <dd>
-                            <a href="{{ group.url }}/shared?page=1&current">
-                              @{{ group.preferredUsername }}@chirp.social
-                            </a>
-                          </dd>
-                          <dt>
-                            Bio
-                          </dt>
-                          <dd>
-                            {{ group.summary }}
-                          </dd>
-                          {% for attachment in group.attachment %}
-                            <dt>
-                              {{ attachment.name }}
-                            </dt>
-                            <dd>
-                              {{ attachment.value }}
-                            </dd>
-                          {% endfor %}
-                          <dt>
-                            Added
-                          </dt>
-                          <dd>
-                            {{ group.published }}
-                          </dd>
-                        </dl>
-                      </section>
+                      <directory-entry entity-id="{{ item.object.id }}"></directory-entry>
                     {% endif %}
                   {% endfor %}
                   <div class="region">
