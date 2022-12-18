@@ -73,18 +73,17 @@
                   {% for item in items %}
                     {% if item.type == 'Announce' %}
                       <div class="region">
-                        <announce-entity entity-id="{{ item.id }}">
-                          <!-- Fallback for legacy accounts -->
-                          <post-entity entity-id="{{ item.id }}"></post-entity>
-                        </announce-entity>
+                        <announce-entity entity-id="{{ item.id }}"></announce-entity>
                       </div>
                     {% endif %}
-                    {% if item.type == 'Create' and item.object.id and item.object.type === 'Note' %}
+                    {% if item.type == 'Create' and item.object.id and item.object.type == 'Note' %}
                       <div class="region">
-                        <post-entity entity-id="{{ item.object.id }}"></post-entity>
+                        The group posted a Note:
+
+                        <p>{{ item.object.content }}</p>
                       </div>
                     {% endif %}
-                    {% if item.type == 'Create' and item.object.id and item.object.type === 'Group' %}
+                    {% if item.type == 'Create' and item.object.id and item.object.type == 'Group' %}
                       <directory-entry entity-id="{{ item.object.id }}"></directory-entry>
                     {% endif %}
                   {% endfor %}

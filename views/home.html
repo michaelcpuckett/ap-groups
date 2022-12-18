@@ -73,23 +73,16 @@
           <section>
             <details open>
               <summary>
-                Reposts ({{ shared.length }})
+                Outbox ({{ actor.outbox.totalItems }})
               </summary>
               <div class="regions">
-                <div class="region">
-                  <p>
-                    <a href="{{ actor.outbox.id }}?page=1&current">See Outbox with Posts included</a>
-                  </p>
-                </div>
-                {% if shared.length %}
-                  {% for postId in shared %}
+                {% if actor.outbox.orderedItems.length %}
+                  {% for post in actor.outbox.orderedItems %}
                     <div class="region">
                       <announce-entity
-                        entity-id="{{ postId }}"
+                        entity-id="{{ post }}"
                         actor-id="{{ actor.id }}"
                         undo-action>
-                        <!-- Fallback for legacy accounts -->
-                        <post-entity entity-id="{{ postId }}"></post-entity>
                       </announce-entity>
                     </div>
                   {% endfor %}
