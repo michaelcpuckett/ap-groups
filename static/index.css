@@ -7,7 +7,7 @@
   padding: .5em 0;
   margin: 0;
   border-radius: 18px;
-  background-color: var(--primary-color);
+  background-color: var(--dark-background-color);
   text-decoration: none;
   font-family: 'passion', sans-serif;
   font-weight: normal;
@@ -123,8 +123,8 @@ header a span {
   .right-rail {
     padding: 32px;
     grid-column: 2 / 3;
-    background-color: var(--primary-color);
-    color: var(--text-on-primary-color);
+    background-color: var(--dark-background-color);
+    color: var(--text-on-dark-background-color);
     border-radius: 18px;
     overflow: hidden;
     align-content: flex-start;
@@ -144,8 +144,8 @@ header a span {
     padding: 32px;
     border-radius: 18px;
     box-shadow: var(--box-shadow);
-    background-color: var(--primary-color);
-    color: var(--text-on-primary-color);
+    background-color: var(--dark-background-color);
+    color: var(--text-on-dark-background-color);
   }
 }
 

@@ -11,10 +11,6 @@ export class AnnounceEntity extends LitElement {
     :host {
       display: block;
     }
-
-    a {
-      color: var(--text-on-light-background-color);
-    }
   `];
 
   @property({ type: String, reflect: true, attribute: 'entity-id' })

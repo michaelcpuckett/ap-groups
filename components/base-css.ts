@@ -24,7 +24,6 @@ export const baseCss = css`
   }
 
   .region a {
-    color: var(--primary-color);
     font-weight: bold;
   }
 
@@ -154,8 +153,8 @@ export const baseCss = css`
     padding: 32px;
     border-radius: 18px;
     box-shadow: var(--box-shadow);
-    background-color: var(--light-background-color);
-    color: var(--text-on-light-background-color);
+    background-color: var(--dark-background-color);
+    color: var(--text-on-dark-background-color);
     width: 100%;
   }
 

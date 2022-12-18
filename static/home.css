@@ -145,7 +145,7 @@ input {
   padding: 32px;
   border-radius: 18px;
   box-shadow: var(--box-shadow);
-  background-color: var(--light-background-color);
-  color: var(--text-on-light-background-color);
+  background-color: var(--dark-background-color);
+  color: var(--text-on-dark-background-color);
   font-size: 1.333em;
 }

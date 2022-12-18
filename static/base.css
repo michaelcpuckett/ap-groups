@@ -14,7 +14,7 @@
   --text-on-light-background-color: #002424;
   --primary-color: #1a1a1a;
   --text-on-primary-color: white;
-  --accent-color: #1BF98C;
+  --accent-color: #14dac3;
   --link-color: var(--accent-color);
   --error-color: red;
   --text-on-accent-color: #300303;
@@ -54,7 +54,7 @@ body {
   display: grid;
   grid-template-columns: 100%;
   gap: 24px;
-  background-color: var(--primary-color);
+  background: var(--primary-color);
   color: var(--text-on-primary-color);
   font-size: 20x;
   line-height: 1.5;
@@ -63,7 +63,7 @@ body {
 
 @media (min-width: 1200px) {
   body {
-    background-color: var(--medium-background-color);
+    background: var(--medium-background-color);
     color: var(--text-on-medium-background-color);
   }
 }
@@ -159,7 +159,7 @@ button {
   padding: 32px;
   border-radius: 18px;
   box-shadow: var(--box-shadow);
-  background-color: var(--light-background-color);
+  background-color: var(--dark-background-color);
   font-size: 1.333em;
-  color: var(--text-on-light-background-color);
+  color: var(--text-on-dark-background-color);
 }

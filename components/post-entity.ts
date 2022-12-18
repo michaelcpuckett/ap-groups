@@ -12,10 +12,6 @@ export class PostEntity extends LitElement {
       display: block;
     }
 
-    a {
-      color: var(--text-on-light-background-color);
-    }
-
     :host(:not([is-deleted])) {
       display: grid;
       gap: 8px;

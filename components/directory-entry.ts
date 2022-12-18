@@ -13,11 +13,6 @@ export class DirectoryEntry extends LitElement {
       justify-content: space-between;
       align-items: center;
       width: 100%;
-    }
-
-    a {
-      color: var(--text-on-light-background-color);
-    }
 
     dt {
       font-weight: bold;

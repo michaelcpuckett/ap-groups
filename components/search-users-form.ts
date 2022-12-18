@@ -10,11 +10,6 @@ export class SearchUsersForm extends LitElement {
     :host {
       display: block;
     }
-
-    a {
-      color: var(--text-on-light-background-color);
-      display: block;
-    }
   `];
 
   @property({ type: String, reflect: true, attribute: 'entity-id' })
@@ -110,6 +105,7 @@ export class SearchUsersForm extends LitElement {
             </span>
             <span role="cell">
               <input
+                class="input"
                 placeholder="grouphandle"
                 @input=${this.handleSearchInput}
                 type="search"
@@ -127,9 +123,6 @@ export class SearchUsersForm extends LitElement {
             </span>
           </label>
         </div>
-        <button type="submit" class="button">
-          Send Post
-        </button>
       </form>
     `;
   }

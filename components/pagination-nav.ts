@@ -19,10 +19,6 @@ export class PaginationNav extends LitElement {
       padding: 0;
       gap: 8px;
     }
-
-    a {
-      color: var(--text-on-light-background-color);
-    }
   `];
 
   @property({type: String, attribute: 'first-page'})
