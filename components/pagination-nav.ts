@@ -14,6 +14,7 @@ export class PaginationNav extends LitElement {
     ol {
       list-style: none;
       display: flex;
+      flex-wrap: wrap;
       margin: 0;
       padding: 0;
       gap: 8px;
