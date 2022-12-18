@@ -95,10 +95,12 @@ export class PaginationNav extends LitElement {
     }
 
     if (this.totalPages === 1) {
+      const url = `${this.baseUrlPath}?page=1${this.isCurrent ? '&current' : ''}${this.type ? `&type=${this.type}` : ''}${this.limit ? `&limit=${this.limit}` : ''}`;
+
       return html`
         <ol>
           <li>
-            Page 1 / 1
+            <a href=${url}>Page 1 / 1</a>
           </li>
         </ol>
       `;
