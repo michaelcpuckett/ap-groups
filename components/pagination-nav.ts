@@ -109,12 +109,12 @@ export class PaginationNav extends LitElement {
             return url ? html`
               <li>
                 <a href=${url}>
-                  ⇤ (${pageIndex})
+                  ⇤ ${pageIndex}
                 </a>
               </li>
             ` : html`
               <li>
-                ${pageIndex}
+                ⇤ ${pageIndex}
               </li>
             `;
           }
@@ -123,15 +123,12 @@ export class PaginationNav extends LitElement {
             return url ? html`
               <li>
                 <a href=${url}>
-                  ⇥ (${pageIndex})
+                ${pageIndex} ⇥
                 </a>
               </li>
             ` : html`
               <li>
-                ${pageIndex}
-              </li>
-              <li>
-                ⇥
+                ${pageIndex} ⇥
               </li>
             `;
           }
@@ -150,21 +147,13 @@ export class PaginationNav extends LitElement {
             `;
           }
           
-          if (pageIndex === this.nextPageIndex) {
-            return url ? html`
-              <li>
-                <a href=${url}>
-                  → (${pageIndex})
-                </a>
-              </li>
-            ` : html`
-              <li>
+          return url ? html`
+            <li>
+              <a href=${url}>
                 ${pageIndex}
-              </li>
-            `;
-          }
-          
-          return html`
+              </a>
+            </li>
+          ` : html`
             <li>
               ${pageIndex}
             </li>
