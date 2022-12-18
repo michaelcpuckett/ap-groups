@@ -65,7 +65,7 @@ export class PaginationNav extends LitElement {
     this.isCurrent = new URL(this.firstPage).searchParams.has('current');
     this.firstPageIndex = Number(new URL(this.firstPage).searchParams.get('page')) || 1;
     this.lastPageIndex = Number(new URL(this.lastPage).searchParams.get('page')) || 1;
-    this.totalPages = Math.max(1, this.lastPageIndex - this.firstPageIndex);
+    this.totalPages = this.lastPageIndex - this.firstPageIndex + 1;
 
     let currentPageIndex = 1;
 
@@ -91,9 +91,11 @@ export class PaginationNav extends LitElement {
 
     if (this.totalPages === 1) {
       return html`
-        <li>
-          Page 1 / 1
-        </li>
+        <ol>
+          <li>
+            Page 1 / 1
+          </li>
+        </ol>
       `;
     }
 
@@ -101,23 +103,18 @@ export class PaginationNav extends LitElement {
       <ol>
         ${repeat(new Array(this.totalPages), (value, index) => {
           const pageIndex = index + 1;
-
-          if (pageIndex === this.currentPageIndex) {
-            return html`
-              <li>
-                ${pageIndex}
-              </li>   
-            `;
-          }
-
-          const url = `${this.baseUrlPath}?page=${pageIndex}${this.isCurrent ? '&current' : ''}`;
+          const url = pageIndex === this.currentPageIndex ? '' : `${this.baseUrlPath}?page=${pageIndex}${this.isCurrent ? '&current' : ''}`;
 
           if (pageIndex === this.firstPageIndex) {
             return html`
               <li>
-                <a href=${url}>
-                  ⇤
-                </a>
+                ${url ? html`
+                  <a href=${url}>
+                    ⇤
+                  </a>
+                ` : html`
+                ⇤
+                `}
               </li>
             `;
           }
@@ -125,9 +122,13 @@ export class PaginationNav extends LitElement {
           if (pageIndex === this.lastPageIndex) {
             return html`
               <li>
-                <a href=${url}>
-                  ⇥
-                </a>
+                ${url ? html`
+                  <a href=${url}>
+                   ⇥
+                  </a>
+                ` : html`
+                ⇥
+                `}
               </li>
             `;
           }
@@ -135,9 +136,13 @@ export class PaginationNav extends LitElement {
           if (pageIndex === this.prevPageIndex) {
             return html`
               <li>
-                <a href=${url}>
+                ${url ? html`
+                  <a href=${url}>
+                    ←
+                  </a>
+                ` : html`
                   ←
-                </a>
+                `}
               </li>
             `;
           }
@@ -145,9 +150,13 @@ export class PaginationNav extends LitElement {
           if (pageIndex === this.nextPageIndex) {
             return html`
               <li>
+                ${url ? html`
                 <a href=${url}>
                   →
                 </a>
+              ` : html`
+                →
+              `}
               </li>
             `;
           }
