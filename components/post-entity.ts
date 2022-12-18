@@ -98,7 +98,9 @@ export class PostEntity extends LitElement {
       <div class="left-rail">
         ${this.entity.published ? html`
           <p>
-            <small>Published ${this.entity.published}</small>
+            <small>
+              ${new Date(this.entity.published).toLocaleDateString()} ${new Date(this.entity.published).toLocaleTimeString()}
+            </small>
           </p>
         ` : nothing}
         ${this.attributedTo ? html`
