@@ -3,6 +3,9 @@ import { css } from 'lit';
 export const baseCss = css`
   * {
     box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
   }
 
   h1 {
