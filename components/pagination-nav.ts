@@ -106,66 +106,67 @@ export class PaginationNav extends LitElement {
           const url = pageIndex === this.currentPageIndex ? '' : `${this.baseUrlPath}?page=${pageIndex}${this.isCurrent ? '&current' : ''}`;
 
           if (pageIndex === this.firstPageIndex) {
-            return html`
+            return url ? html`
               <li>
-                ${url ? html`
-                  <a href=${url}>
-                    ⇤
-                  </a>
-                ` : html`
-                ⇤
-                `}
+                <a href=${url}>
+                  ⇤ (${pageIndex})
+                </a>
+              </li>
+            ` : html`
+              <li>
+                ${pageIndex}
               </li>
             `;
           }
 
           if (pageIndex === this.lastPageIndex) {
-            return html`
+            return url ? html`
               <li>
-                ${url ? html`
-                  <a href=${url}>
-                   ⇥
-                  </a>
-                ` : html`
+                <a href=${url}>
+                  ⇥ (${pageIndex})
+                </a>
+              </li>
+            ` : html`
+              <li>
+                ${pageIndex}
+              </li>
+              <li>
                 ⇥
-                `}
               </li>
             `;
           }
 
           if (pageIndex === this.prevPageIndex) {
-            return html`
+            return url ? html`
               <li>
-                ${url ? html`
-                  <a href=${url}>
-                    ←
-                  </a>
-                ` : html`
-                  ←
-                `}
-              </li>
-            `;
-          }
-
-          if (pageIndex === this.nextPageIndex) {
-            return html`
-              <li>
-                ${url ? html`
                 <a href=${url}>
-                  →
+                  ← (${pageIndex})
                 </a>
-              ` : html`
-                →
-              `}
+              </li>
+            ` : html`
+              <li>
+                ${pageIndex}
               </li>
             `;
           }
-
+          
+          if (pageIndex === this.nextPageIndex) {
+            return url ? html`
+              <li>
+                <a href=${url}>
+                  → (${pageIndex})
+                </a>
+              </li>
+            ` : html`
+              <li>
+                ${pageIndex}
+              </li>
+            `;
+          }
+          
           return html`
             <li>
-              <a href=${url}>
-                ${pageIndex}
-              </a>
+              ${pageIndex}
             </li>
           `;
         })}
