@@ -1,5 +1,5 @@
 import {LitElement, html, css, nothing} from 'lit';
-import {customElement, property, query} from 'lit/decorators';
+import {customElement, property, query, state} from 'lit/decorators';
 import { repeat } from 'lit/directives/repeat';
 import { baseCss } from './base-css';
 
@@ -57,9 +57,17 @@ export class PaginationNav extends LitElement {
   @property({ type: Boolean })
   private isCurrent = false;
 
+  @state()
+  private limit = 50;
+
+  @state()
+  private type = '';
+
   override firstUpdated() {
     this.baseUrlPath = new URL(this.firstPage).pathname;
     this.isCurrent = new URL(this.firstPage).searchParams.has('current');
+    this.limit = new URL(this.firstPage).searchParams.has('limit') ? Number(new URL(this.firstPage).searchParams.get('limit')) : 50;
+    this.type = new URL(this.firstPage).searchParams.get('type');
     this.firstPageIndex = Number(new URL(this.firstPage).searchParams.get('page')) || 1;
     this.lastPageIndex = Number(new URL(this.lastPage).searchParams.get('page')) || 1;
     this.totalPages = this.lastPageIndex - this.firstPageIndex + 1;
@@ -100,7 +108,7 @@ export class PaginationNav extends LitElement {
       <ol>
         ${repeat(new Array(this.totalPages), (value, index) => {
           const pageIndex = index + 1;
-          const url = pageIndex === this.currentPageIndex ? '' : `${this.baseUrlPath}?page=${pageIndex}${this.isCurrent ? '&current' : ''}`;
+          const url = pageIndex === this.currentPageIndex ? '' : `${this.baseUrlPath}?page=${pageIndex}${this.isCurrent ? '&current' : ''}${this.type ? `&type=${this.type}` : ''}${this.limit ? `&limit=${this.limit}` : ''}`;
 
           if (pageIndex === this.firstPageIndex) {
             return url ? html`
