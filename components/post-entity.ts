@@ -96,6 +96,11 @@ export class PostEntity extends LitElement {
 
     return html`
       <div class="left-rail">
+        ${this.entity.published ? html`
+          <p>
+            <small>Published ${this.entity.published}</small>
+          </p>
+        ` : nothing}
         ${this.attributedTo ? html`
           <a class="actor-lockup" target="_blank" href=${this.attributedTo.url}>
             ${this.attributedTo.icon ? html`
