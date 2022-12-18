@@ -8,6 +8,7 @@ export class PaginationNav extends LitElement {
   static styles = [baseCss, css`
     :host {
       display: block;
+      font-weight: bold;
     }
 
     ol {
@@ -15,6 +16,11 @@ export class PaginationNav extends LitElement {
       display: flex;
       margin: 0;
       padding: 0;
+      gap: 8px;
+    }
+
+    a {
+      color: var(--text-on-light-background-color);
     }
   `];
 
@@ -83,6 +89,14 @@ export class PaginationNav extends LitElement {
       `;
     }
 
+    if (this.totalPages === 1) {
+      return html`
+        <li>
+          Page 1 / 1
+        </li>
+      `;
+    }
+
     return html`
       <ol>
         ${repeat(new Array(this.totalPages), (value, index) => {
@@ -91,7 +105,7 @@ export class PaginationNav extends LitElement {
           if (pageIndex === this.currentPageIndex) {
             return html`
               <li>
-                Page ${pageIndex} / ${this.totalPages}
+                ${pageIndex}
               </li>   
             `;
           }
