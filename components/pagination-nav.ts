@@ -13,11 +13,12 @@ export class PaginationNav extends LitElement {
 
     ol {
       list-style: none;
-      display: flex;
-      flex-direction: column;
+      display: grid;
       margin: 0;
       padding: 0;
       gap: 8px;
+      grid-template-columns: 100%;
+      grid-auto-rows: auto;
     }
   `];
 
