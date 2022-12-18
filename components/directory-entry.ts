@@ -1,5 +1,5 @@
 import { LitElement, html, css, nothing } from 'lit';
-import { customElement, property } from 'lit/decorators';
+import { customElement, property, state } from 'lit/decorators';
 import { repeat } from 'lit/directives/repeat';
 import { baseCss } from './base-css';
 import { AP } from 'activitypub-core-types';
@@ -31,6 +31,12 @@ export class DirectoryEntry extends LitElement {
   @property({ type: Boolean })
   private isDeleted = false;
 
+  @state()
+  private postsCount = -1;
+
+  @state()
+  private followersCount = -1;
+
   override firstUpdated() {
     const url = new URL(this.entityId);
     const isLocal = url.hostname === window.location.hostname;
@@ -41,12 +47,38 @@ export class DirectoryEntry extends LitElement {
       }
     })
       .then(res => res.json())
-      .then(entity => {
+      .then(async entity => {
         if (entity.type === 'Tombstone') {
           throw new Error('Deleted');
         }
 
         this.entity = entity;
+
+        if (!entity.sensitive) {
+          const [
+            postsCount,
+            followersCount,
+          ] = await Promise.all([
+            fetch(`${entity.outbox}?type=Announce,Create`, {
+              headers: {
+                'Accept': 'application/activity+json'
+              }
+            })
+            .then(res => res.json())
+            .then(result => Number(result.totalItems)),
+
+            fetch(`${entity.followers}`, {
+              headers: {
+                'Accept': 'application/activity+json'
+              }
+            })
+            .then(res => res.json())
+            .then(result => Number(result.totalItems))
+          ]);
+          
+          this.followersCount = followersCount;
+          this.postsCount = postsCount;
+        }
       })
       .catch(() => {
         this.isDeleted = true;
@@ -132,6 +164,18 @@ export class DirectoryEntry extends LitElement {
           </dt>
           <dd>
             ${this.entity.published}
+          </dd>
+          <dt>
+            Posts
+          </dt>
+          <dd>
+            ${this.postsCount > -1 ? this.postsCount : '...'}
+          </dd>
+          <dt>
+            Followers
+          </dt>
+          <dd>
+            ${this.followersCount > -1 ? this.followersCount : '...'}
           </dd>
         </dl>
       </section>
