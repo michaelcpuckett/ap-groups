@@ -1,0 +1,44 @@
+{% macro collectionEntity(entity) %}
+  <!doctype html>
+  <html>
+    <title>chirp.social - {{ entity.name }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <meta name="description" content="{{ group.summary }}" />
+    <link rel="stylesheet" href="/base.css" />
+    <link rel="stylesheet" href="/index.css" />
+    <body>
+      <div>
+        <div class="root">
+          <div class="container">
+            {{ header() }}
+          </div>
+          <div class="right-rail">
+            <a href="/entity/bot/outbox?page=1&current" class="button button--cta">
+              Group Directory
+              <small>See All Groups</small>
+            </a>
+          </div>
+        </div>
+        <div class="root">
+          <div class="container">
+            <div class="regions">
+              <div class="region">
+                {{ pagination(entity) }}
+              </div>
+            </div>
+          </div>
+          <div class="right-rail">
+            {% if entity.name == 'Shared' or entity.name === 'Outbox' %}
+              {% if entity.attributedTo %}
+                <group-entity-details entity-id="{{ entity.attributedTo }}"></group-entity-details>
+              {% endif %}
+            {% endif %}
+            {{ about() }}
+          </div>
+        </div>
+      </div>
+      <script type="module" src="/group-entity.js"></script>
+    </body>
+  </html>
+{% endmacro %}

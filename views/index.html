@@ -1,5 +1,5 @@
-{% from "header.html" import header with context %}
-{% from "about.html" import about with context %}
+{% from "partials/header.html" import header with context %}
+{% from "partials/about.html" import about with context %}
 
 <!doctype html>
 <html>
@@ -16,7 +16,6 @@
   <div class="root">
     <div class="container">
       {{ header() }}
-
       {{ about() }}
 
       <section role="region" aria-labelledby="how-heading">
@@ -41,17 +40,6 @@
             You can block people from getting reposted or delete the Group.
           </li>
         </ol>
-      </section>
-
-      <section role="region" aria-labelledby="featured-heading">
-        <h2 id="featured-heading">
-          Featured Groups
-        </h2>
-        <ul>
-          <li>
-            <a href="/@art">@art</a>
-          </li>
-        </ul>
       </section>
 
       <section role="region" aria-labelledby="need-help-heading">

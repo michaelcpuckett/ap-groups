@@ -1,0 +1,8 @@
+{% macro pagination(entity) %}
+  <pagination-nav
+    first-page="{{ entity.first }}"
+    prev-page="{{ entity.prev }}"
+    next-page="{{ entity.next }}"
+    last-page="{{ entity.last }}">
+  </pagination-nav>
+{% endmacro %}

@@ -1,0 +1,84 @@
+{% macro groupEntity(entity) %}
+  <!doctype html>
+  <html>
+    <title>@{{ entity.preferredUsername }}@chirp.social</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <meta name="description" content="{{ group.summary }}" />
+    <link rel="stylesheet" href="base.css" />
+    <link rel="stylesheet" href="index.css" />
+    <body>
+      <div class="root">
+        <div class="container">
+          {{ header() }}
+          <section role="region">
+            <h1>
+              {% if entity.name %}
+                {{ entity.name }}
+              {% else %}
+                {{ entity.preferredUsername }}
+              {% endif %}
+            </h1>
+            <div class="avatar-summary">
+              {% if entity.icon %}
+                <img
+                  class="avatar"
+                  height="100"
+                  width="100"
+                  src="{{ entity.icon.url }}"
+                />
+              {% endif %}
+              <div>
+                <p>
+                  <strong>
+                    @{{ entity.preferredUsername }}@chirp.social
+                  </strong>
+                </p>
+                <p>
+                  <a href="{{ entity.outbox }}?page=1&current">
+                    All Posts from
+                    @{{ entity.preferredUsername }}@chirp.social
+                  </a>
+                </p>
+                {% if entity.summary %}
+                {% endif %}
+                  <dl>
+                    <dt>
+                      Group Summary
+                    </dt>
+                    <dd>
+                      {{ entity.summary }}
+                    </dd>
+                    {% for attachment in entity.attachment %}
+                      <dt>
+                        {{ attachment.name }}
+                      </dt>
+                      <dd>
+                        {{ attachment.value }}
+                      </dd>
+                    {% endfor %}
+                    <dt>
+                      Followers
+                    </dt>
+                    <dd>
+                      {{ followersCount }}
+                    </dd>
+                  </dl>
+              </div>
+            </div>
+          </section>
+          <script type="module" src="group-entity.js"></script>
+        </div>
+        <div class="right-rail">
+          <header>
+            <a href="/entity/bot/outbox?page=1&current" class="button button--cta">
+              Group Directory
+              <span>See All Groups</span>
+            </a>
+          </header>
+          {{ about() }}
+        </div>
+      </div>
+    </body>
+  </html>
+{% endmacro %}
