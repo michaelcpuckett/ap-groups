@@ -58,7 +58,7 @@ export class PaginationNav extends LitElement {
   private isCurrent = false;
 
   @state()
-  private limit = 50;
+  private limit = '';
 
   @state()
   private type = '';
@@ -66,7 +66,7 @@ export class PaginationNav extends LitElement {
   override firstUpdated() {
     this.baseUrlPath = new URL(this.firstPage).pathname;
     this.isCurrent = new URL(this.firstPage).searchParams.has('current');
-    this.limit = new URL(this.firstPage).searchParams.has('limit') ? Number(new URL(this.firstPage).searchParams.get('limit')) : 50;
+    this.limit = new URL(this.firstPage).searchParams.get('limit');
     this.type = new URL(this.firstPage).searchParams.get('type');
     this.firstPageIndex = Number(new URL(this.firstPage).searchParams.get('page')) || 1;
     this.lastPageIndex = Number(new URL(this.lastPage).searchParams.get('page')) || 1;
