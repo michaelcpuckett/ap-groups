@@ -29,7 +29,10 @@ export class SearchUsersForm extends LitElement {
   @state()
   private hasFetchedUsernames = false;
 
-  private fetchUsernames() {
+  @state()
+  private isLoading = false;
+
+  private async fetchUsernames() {
     if (this.hasFetchedUsernames) {
       return;
     }
@@ -40,7 +43,7 @@ export class SearchUsersForm extends LitElement {
       return;
     }
 
-    fetch(new URL(this.entityId).pathname, {
+    await fetch(new URL(this.entityId).pathname, {
       headers: {
         'Accept': 'application/activity+json'
       }
@@ -74,14 +77,16 @@ export class SearchUsersForm extends LitElement {
     event.preventDefault();
   }
 
-  private handleSearchInput(event: InputEvent) {
+  private async handleSearchInput(event: InputEvent) {
     const target = event.currentTarget;
 
     if (!(target instanceof HTMLInputElement)) {
       return;
     }
 
-    this.fetchUsernames();
+    this.isLoading = true;
+    await this.fetchUsernames();
+    this.isLoading = false;
     this.results = this.getResults(target.value.toLowerCase());
   }
 
@@ -110,6 +115,7 @@ export class SearchUsersForm extends LitElement {
                 type="search"
               />
               <div role="panel">
+                ${this.isLoading ? 'Loading...' : ''}
                 ${repeat(this.results.slice(0, 5), (username) => {
                   return html`
                     <a href=${`/@${username}/outbox?page=1&current`}>
