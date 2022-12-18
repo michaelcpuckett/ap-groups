@@ -32,7 +32,7 @@
               </summary>
               <group-details
                 group-actor-id="{{ actor.id }}"
-                followers-url="{{ actor.followers.url }}"
+                followers-url="{{ actor.followers }}"
                 outbox-url="{{ actor.outbox.url }}"
                 upload-media-url="{{ actor.endpoints.uploadMedia }}"
                 {% if actor.attachment %}
@@ -64,7 +64,7 @@
               </summary>
               <post-form
                 group-actor-id="{{ actor.id }}"
-                followers-url="{{ actor.followers.url }}"
+                followers-url="{{ actor.followers }}"
                 outbox-url="{{ actor.outbox.url }}">
               </post-form>
             </details>
