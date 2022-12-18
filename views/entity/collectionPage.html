@@ -23,6 +23,11 @@
         <div class="root">
           <div class="container">
             <div class="regions">
+              {% if entity.name == 'Outbox' and entity.attributedTo == 'http://localhost:3000/entity/bot' %}
+                <div class="region">
+                  <search-users-form entity-id="{{ entity.id }}"></search-users-form>
+                </div>
+              {% endif %}
               {% set items = entity.items %}
               {% if entity.type == 'OrderedCollectionPage' %}
                 {% set items = entity.orderedItems %}
@@ -59,7 +64,7 @@
             </div>
           </div>
           <div class="right-rail">
-            {% if entity.name == 'Shared' or entity.name === 'Outbox' %}
+            {% if entity.name == 'Shared' or entity.name == 'Outbox' %}
               {% if entity.attributedTo %}
                 <group-entity-details entity-id="{{ entity.attributedTo }}"></group-entity-details>
               {% endif %}
