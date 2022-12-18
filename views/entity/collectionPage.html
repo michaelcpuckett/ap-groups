@@ -23,7 +23,7 @@
         <div class="root">
           <div class="container">
             <div class="regions">
-              {% if entity.name == 'Outbox' and entity.attributedTo == 'http://localhost:3000/entity/bot' %}
+              {% if entity.name == 'Outbox' and r/entity\/bot/.test(entity.attributedTo) %}
                 <div class="region">
                   <search-users-form entity-id="{{ entity.id }}"></search-users-form>
                 </div>
