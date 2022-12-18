@@ -133,20 +133,6 @@ export class PaginationNav extends LitElement {
               </li>
             `;
           }
-
-          if (pageIndex === this.prevPageIndex) {
-            return url ? html`
-              <li>
-                <a href=${url}>
-                  ← (${pageIndex})
-                </a>
-              </li>
-            ` : html`
-              <li>
-                ${pageIndex}
-              </li>
-            `;
-          }
           
           return url ? html`
             <li>
