@@ -84,7 +84,7 @@ export class DirectoryEntry extends LitElement {
     return html`
       <section class="region">
         ${(this.entity.icon && 'url' in this.entity.icon) ? html`
-          <a href=${`${this.entity.outbox}?page=1&current`} style="display: block">
+          <a href=${`${this.entity.outbox}?page=1&current&type=Announce,Create`} style="display: block">
             <img
               class="avatar"
               height="100"
@@ -93,7 +93,7 @@ export class DirectoryEntry extends LitElement {
             />
           </a>
         ` : nothing}
-        <a href=${`${this.entity.outbox}?page=1&current`}>
+        <a href=${`${this.entity.outbox}?page=1&current&type=Announce,Create`}>
           <strong>
             ${this.entity.name}
           </strong>
@@ -103,7 +103,7 @@ export class DirectoryEntry extends LitElement {
             Handle
           </dt>
           <dd>
-            <a href=${`${this.entity.outbox}?page=1&current`}>
+            <a href=${`${this.entity.outbox}?page=1&current&type=Announce,Create`}>
               @${this.entity.preferredUsername}@chirp.social
             </a>
           </dd>
