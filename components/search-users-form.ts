@@ -10,6 +10,10 @@ export class SearchUsersForm extends LitElement {
     :host {
       display: block;
     }
+
+    a {
+      display: block;
+    }
   `];
 
   @property({ type: String, reflect: true, attribute: 'entity-id' })
