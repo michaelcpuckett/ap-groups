@@ -125,7 +125,7 @@ button {
 .button {
   background-color: var(--light-background-color);
   color: var(--text-on-light-background-color);
-  border-radius: 8px;
+  border-radius: 0;
   padding: .5em .875em;
   text-decoration: none;
   box-shadow: 1px 2px 1px black;
@@ -137,7 +137,7 @@ button {
   background: var(--accent-color);
   color: var(--text-on-accent-color);
   font-size: 1.5em;
-  border-radius: 12px;
+  border-radius: 0;
   padding: 12px 16px;
   place-items: center;
   place-content: center;
@@ -153,14 +153,13 @@ button {
 
 .regions {
   display: grid;
-  gap: 32px;
 }
 
 .region {
   padding: 32px;
-  border-radius: 18px;
-  box-shadow: var(--box-shadow);
+  border-radius: 0;
   background-color: var(--dark-background-color);
-  font-size: 1.333em;
+  font-size: 1.125em;
   color: var(--text-on-dark-background-color);
+  border: 1px solid;
 }

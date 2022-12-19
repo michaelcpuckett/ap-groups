@@ -30,7 +30,7 @@ export class PostEntity extends LitElement {
     }
 
     .attachment {
-      border-radius: 8px;
+      border-radius: 0;
       overflow: hidden;
     }
   `];

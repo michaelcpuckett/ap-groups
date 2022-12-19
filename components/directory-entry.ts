@@ -13,9 +13,15 @@ export class DirectoryEntry extends LitElement {
       justify-content: space-between;
       align-items: center;
       width: 100%;
+    }
 
     dt {
       font-weight: bold;
+    }
+
+    strong {
+      display: block;
+      font-size: 1.5em;
     }
   `];
 
@@ -133,16 +139,18 @@ export class DirectoryEntry extends LitElement {
 
     if (this.entity.sensitive && !this.allowSensitive) {
       return html`
-        <details>
-          <summary>
-            18+ / Sensitive / NSFW
-          </summary>
-          <p>
-            <a href=${this.entity.url}>
-              @${this.entity.preferredUsername}@chirp.social
-            </a>
-          </p>
-        </details>
+        <section class="region">
+          <details>
+            <summary>
+              Click to View 18+ / Sensitive / NSFW Group
+            </summary>
+            <p>
+              <a href=${this.entity.url}>
+                @${this.entity.preferredUsername}@chirp.social
+              </a>
+            </p>
+          </details>
+        </section>
       `;
     }
 

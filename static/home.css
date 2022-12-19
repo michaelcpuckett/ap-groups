@@ -47,7 +47,7 @@ input {
 .input {
   padding: .5em;
   border: 1px solid;
-  border-radius: 8px;
+  border-radius: 0;
   font-size: .875em;
   font-weight: normal;
   background-color: var(--dark-background-color);
@@ -57,7 +57,7 @@ input {
 .button {
   background-color: var(--light-background-color);
   color: var(--text-on-light-background-color);
-  border-radius: 8px;
+  border-radius: 0;
   font-size: 1.125em;
   padding: .5em .875em;
   max-width: max-content;
@@ -112,7 +112,7 @@ input {
   background: gray;
   width: 60px;
   height: 30px;
-  border-radius: 8px;
+  border-radius: 0;
   position: relative;
 }
 
@@ -124,7 +124,7 @@ input {
   left: 4px;
   height: calc(100% - 8px);
   width: calc(50% - 8px);
-  border-radius: 8px;
+  border-radius: 0;
 }
 
 .toggle-button:checked {
@@ -138,14 +138,13 @@ input {
 
 .regions {
   display: grid;
-  gap: 32px;
 }
 
 .region {
   padding: 32px;
-  border-radius: 18px;
-  box-shadow: var(--box-shadow);
+  border-radius: 0;
   background-color: var(--dark-background-color);
   color: var(--text-on-dark-background-color);
-  font-size: 1.333em;
+  font-size: 1.125em;
+  border: 1px solid;
 }

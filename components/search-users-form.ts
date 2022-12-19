@@ -103,7 +103,7 @@ export class SearchUsersForm extends LitElement {
         @submit=${this.handleSubmit}
         novalidate>
         <div role="table">
-          <label role="row" class="label">
+          <label role="row">
             <span role="columnheader" class="label-text">
               Search Groups by Username
             </span>

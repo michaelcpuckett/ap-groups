@@ -15,59 +15,61 @@
 <body>
   <div class="root">
     <div class="container">
-      {{ header() }}
-      {{ about() }}
+      <div class="regions">
+        {{ header() }}
+        {{ about() }}
 
-      <section role="region" aria-labelledby="how-heading">
-        <h2 id="how-heading">
-          How does this work?
-        </h2>
-        <ol>
-          <li>
-            Sign up for an Group account on this page.
-          </li>
-          <li>
-            Follow the Group.
-          </li>
-          <li>
-            Post a message addressed to the Group.
-          </li>
-          <li>
-            The Group will repost it immediately, for all followers to see.
-          </li>
-          <li>
-            Log in to manage your Group.
-            You can block people from getting reposted or delete the Group.
-          </li>
-        </ol>
-      </section>
+        <section class="region" aria-labelledby="how-heading">
+          <h2 id="how-heading">
+            How does this work?
+          </h2>
+          <ol>
+            <li>
+              Sign up for an Group account on this page.
+            </li>
+            <li>
+              Follow the Group.
+            </li>
+            <li>
+              Post a message addressed to the Group.
+            </li>
+            <li>
+              The Group will repost it immediately, for all followers to see.
+            </li>
+            <li>
+              Log in to manage your Group.
+              You can block people from getting reposted or delete the Group.
+            </li>
+          </ol>
+        </section>
 
-      <section role="region" aria-labelledby="need-help-heading">
-        <h2 id="need-help-heading">
-          Support
-        </h2>
-        <p>
-          Please open a ticket on
-          <a target="_blank" href="https://github.com/michaelcpuckett/ap-groups">
-            Github
-          </a>
-        </p>
-      </section>
+        <section class="region" aria-labelledby="need-help-heading">
+          <h2 id="need-help-heading">
+            Support
+          </h2>
+          <p>
+            Please open a ticket on
+            <a target="_blank" href="https://github.com/michaelcpuckett/ap-groups">
+              Github
+            </a>
+          </p>
+        </section>
 
-      <section role="region" aria-labelledby="who-heading">
-        <h2 id="who-heading">
-          Who made this?
-        </h2>
-        <p>
-          This is primarily a side project made by 
-          <a target="_blank" href="https://a11y.social/@mpuckett">
-            @mpuckett@a11y.social
-          </a>
-        </p>
-        <p>
-          I'm using Firebase Authentication for sign-ups, so I can't see the passwords.
-        </p>
-      </section>
+        <section class="region" aria-labelledby="who-heading">
+          <h2 id="who-heading">
+            Who made this?
+          </h2>
+          <p>
+            This is primarily a side project made by 
+            <a target="_blank" href="https://a11y.social/@mpuckett">
+              @mpuckett@a11y.social
+            </a>
+          </p>
+          <p>
+            I'm using Firebase Authentication for sign-ups, so I can't see the passwords.
+          </p>
+        </section>
+      </div>
     </div>
 
     <div class="right-rail">

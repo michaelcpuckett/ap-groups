@@ -8,71 +8,59 @@
     <link rel="stylesheet" href="/base.css" />
     <link rel="stylesheet" href="/index.css" />
     <body>
-      <div>
-        <div class="root">
-          <div class="container">
-            {{ header() }}
-          </div>
-          <div class="right-rail">
-            <a href="/entity/bot/outbox?page=1&current&type=Create&limit=20" class="button button--cta">
-              Group Directory
-              <small>See All Groups</small>
-            </a>
+      <div class="root">
+        <div class="container">
+          {{ header() }}
+          <div class="regions">
+            {% set items = entity.items %}
+            {% if entity.type == 'OrderedCollectionPage' %}
+              {% set items = entity.orderedItems %}
+            {% endif %}
+            {% if items.length %}
+              <div class="region">
+                {{ pagination(entity) }}
+              </div>
+              {% for item in items %}
+                {% if item.type == 'Announce' %}
+                  <div class="region">
+                    <announce-entity entity-id="{{ item.id }}"></announce-entity>
+                  </div>
+                {% endif %}
+                {% if item.type == 'Create' and item.object.id and item.object.type == 'Note' %}
+                  <div class="region">
+                    The group posted a Note:
+
+                    <p>{{ item.object.content }}</p>
+                  </div>
+                {% endif %}
+                {% if item.type == 'Create' and item.object.id and item.object.type == 'Group' %}
+                  <directory-entry entity-id="{{ item.object.id }}"></directory-entry>
+                {% endif %}
+              {% endfor %}
+              <div class="region">
+                {{ pagination(entity) }}
+              </div>
+            {% else %}
+              <div class="region">
+                No posts yet.
+              </div>
+            {% endif %}
           </div>
         </div>
-        <div class="root">
-          <div class="container">
-            <div class="regions">
-              {% if entity.name == 'Outbox' and r/entity\/bot/.test(entity.attributedTo) %}
-                <div class="region">
-                  <search-users-form entity-id="{{ entity.id }}"></search-users-form>
-                </div>
-              {% endif %}
-              {% set items = entity.items %}
-              {% if entity.type == 'OrderedCollectionPage' %}
-                {% set items = entity.orderedItems %}
-              {% endif %}
-              {% if items.length %}
-                <div class="region">
-                  {{ pagination(entity) }}
-                </div>
-                {% for item in items %}
-                  {% if item.type == 'Announce' %}
-                    <div class="region">
-                      <announce-entity entity-id="{{ item.id }}"></announce-entity>
-                    </div>
-                  {% endif %}
-                  {% if item.type == 'Create' and item.object.id and item.object.type == 'Note' %}
-                    <div class="region">
-                      The group posted a Note:
-
-                      <p>{{ item.object.content }}</p>
-                    </div>
-                  {% endif %}
-                  {% if item.type == 'Create' and item.object.id and item.object.type == 'Group' %}
-                    <directory-entry entity-id="{{ item.object.id }}"></directory-entry>
-                  {% endif %}
-                {% endfor %}
-                <div class="region">
-                  {{ pagination(entity) }}
-                </div>
-              {% else %}
-                <div class="region">
-                  No posts here.
-                </div>
-              {% endif %}
+        <div class="right-rail">
+          {% if entity.name == 'Outbox' and r/entity\/bot/.test(entity.attributedTo) %}
+            <div class="region">
+              <search-users-form entity-id="{{ entity.id }}"></search-users-form>
             </div>
-          </div>
-          <div class="right-rail">
-            {% if entity.name == 'Shared' or entity.name == 'Outbox' %}
-              {% if entity.attributedTo %}
-                {% if not r/entity\/bot/.test(entity.attributedTo) %}
-                  <directory-entry entity-id="{{ entity.attributedTo }}"></directory-entry>
-                {% endif %}
+          {% endif %}
+          {% if entity.name == 'Shared' or entity.name == 'Outbox' %}
+            {% if entity.attributedTo %}
+              {% if not r/entity\/bot/.test(entity.attributedTo) %}
+                <directory-entry entity-id="{{ entity.attributedTo }}"></directory-entry>
               {% endif %}
             {% endif %}
-            {{ about() }}
-          </div>
+          {% endif %}
+          {{ about() }}
         </div>
       </div>
       <script type="module" src="/group-entity.js"></script>

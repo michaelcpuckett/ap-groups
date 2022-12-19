@@ -58,7 +58,7 @@ export const baseCss = css`
   .input {
     padding: .5em;
     border: 1px solid;
-    border-radius: 8px;
+    border-radius: 0;
     font-size: .875em;
     font-weight: normal;
     background-color: var(--dark-background-color);
@@ -68,7 +68,7 @@ export const baseCss = css`
   .button {
     background-color: var(--light-background-color);
     color: var(--text-on-light-background-color);
-    border-radius: 8px;
+    border-radius: 0;
     font-size: 1.125em;
     padding: .5em .875em;
     max-width: max-content;
@@ -123,7 +123,7 @@ export const baseCss = css`
     background: gray;
     width: 60px;
     height: 30px;
-    border-radius: 8px;
+    border-radius: 0;
     position: relative;
   }
 
@@ -135,7 +135,7 @@ export const baseCss = css`
     left: 4px;
     height: calc(100% - 8px);
     width: calc(50% - 8px);
-    border-radius: 8px;
+    border-radius: 0;
   }
 
   .toggle-button:checked {
@@ -149,16 +149,16 @@ export const baseCss = css`
 
   .regions {
     display: grid;
-    gap: 32px;
   }
 
   .region {
     padding: 32px;
-    border-radius: 18px;
-    box-shadow: var(--box-shadow);
+    border-radius: 0;
     background-color: var(--dark-background-color);
     color: var(--text-on-dark-background-color);
     width: 100%;
+    border: 1px solid;
+    font-size: 1.125em;
   }
 
   .eyebrow {
@@ -173,7 +173,7 @@ export const baseCss = css`
   }
 
   .avatar--small {
-    border-radius: 8px;
+    border-radius: 0;
     height: 70px;
     width: 70px;
     background: var(--accent-color);
@@ -192,7 +192,7 @@ export const baseCss = css`
     place-items: center;
     place-content: center;
     border: 1px solid lightgray;
-    border-radius: 8px;
+    border-radius: 0;
     padding: 8px;
     aspect-ratio: 1;
   }

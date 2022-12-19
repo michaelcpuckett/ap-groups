@@ -12,7 +12,6 @@ export class ForgotPasswordForm extends LitElement {
       display: block;
       padding: 1em;
       border: 1px solid;
-      border-radius: 4px;
     }
   `];
 

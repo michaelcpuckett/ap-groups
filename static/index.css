@@ -6,7 +6,7 @@
   line-height: 1.25;
   padding: .5em 0;
   margin: 0;
-  border-radius: 18px;
+  border-radius: 0;
   background-color: var(--dark-background-color);
   text-decoration: none;
   font-family: 'passion', sans-serif;
@@ -55,8 +55,8 @@ h2 {
 
 .container {
   display: grid;
-  grid-gap: 24px;
   align-content: flex-start;
+  border: 1px solid white;
 }
 
 .container h2 {
@@ -75,7 +75,7 @@ figure {
   max-width: max-content;
   margin: 8px auto;
   padding: 8px calc(8px + 1em);
-  border-radius: 8px;
+  border-radius: 0;
   font-size: 1.125em;
 }
 
@@ -85,8 +85,6 @@ figure {
 
 .root {
   display: grid;
-  row-gap: 24px;
-  padding: 24px;
   align-content: flex-start;
 }
 
@@ -105,19 +103,22 @@ header a span {
 .right-rail {
   gap: 24px;
   display: grid;
+  border: 1px solid white;
+}
+
+.right-rail h2 {
+  text-align: center;
 }
 
 @media (min-width: 1200px) {
   .root {
-    column-gap: 24px;
-    row-gap: 0;
     grid-template-columns: 2.5fr 1fr;
   }
   
   .container {
     grid-column: 1 / 2;
     display: grid;
-    gap: 24px;
+    border: 1px solid white;
   }
 
   .right-rail {
@@ -125,10 +126,9 @@ header a span {
     grid-column: 2 / 3;
     background-color: var(--dark-background-color);
     color: var(--text-on-dark-background-color);
-    border-radius: 18px;
+    border-radius: 0;
     overflow: hidden;
     align-content: flex-start;
-    box-shadow: var(--box-shadow);
   }
 
   signup-form,
@@ -136,14 +136,12 @@ header a span {
   forgot-password-form {
     background-color: var(--light-background-color);
     color: var(--text-on-light-background-color);
-    border-radius: 18px;
-    box-shadow: var(--box-shadow);
+    border-radius: 0;
   }
 
   .container section {
     padding: 32px;
-    border-radius: 18px;
-    box-shadow: var(--box-shadow);
+    border-radius: 0;
     background-color: var(--dark-background-color);
     color: var(--text-on-dark-background-color);
   }
