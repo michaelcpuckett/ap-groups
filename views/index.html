@@ -1,5 +1,6 @@
 {% from "partials/header.html" import header with context %}
 {% from "partials/about.html" import about with context %}
+{% from "partials/directoryLink.html" import directoryLink with context %}
 
 <!doctype html>
 <html>
@@ -60,7 +61,7 @@
             Who made this?
           </h2>
           <p>
-            This is primarily a side project made by 
+            This is a side project made primarily by 
             <a target="_blank" href="https://a11y.social/@mpuckett">
               @mpuckett@a11y.social
             </a>
@@ -73,12 +74,8 @@
     </div>
 
     <div class="right-rail">
-      <header>
-        <a href="/entity/bot/outbox?page=1&current&type=Create&limit=20" class="button button--cta">
-          Group Directory
-          <span>See All Groups</span>
-        </a>
-      </header>
+      {{ directoryLink() }}
+
       <div class="forms">
         <div class="form">
           <h2 id="login-heading">

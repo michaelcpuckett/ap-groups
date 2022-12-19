@@ -24,6 +24,8 @@
             </div>
           {% endif %}
           {% if entity.name == 'Shared' or entity.name === 'Outbox' %}
+            {{ directoryLink() }}
+
             {% if entity.attributedTo %}
               {% if not r/entity\/bot/.test(entity.attributedTo) %}
                 <directory-entry entity-id="{{ entity.attributedTo }}"></directory-entry>
