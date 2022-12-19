@@ -31,7 +31,9 @@
           <div class="right-rail">
             {% if entity.name == 'Shared' or entity.name === 'Outbox' %}
               {% if entity.attributedTo %}
-                <group-entity-details entity-id="{{ entity.attributedTo }}"></group-entity-details>
+                {% if not r/entity\/bot/.test(entity.attributedTo) %}
+                  <directory-entry entity-id="{{ entity.attributedTo }}"></directory-entry>
+                {% endif %}
               {% endif %}
             {% endif %}
             {{ about() }}
