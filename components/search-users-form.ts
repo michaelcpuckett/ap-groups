@@ -105,7 +105,7 @@ export class SearchUsersForm extends LitElement {
         <div role="table">
           <label role="row">
             <span role="columnheader" class="label-text">
-              Search Groups by Username
+              Search All Groups by Username
             </span>
             <span role="cell">
               <input
