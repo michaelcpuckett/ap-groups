@@ -48,30 +48,35 @@ export class PostEntity extends LitElement {
   private isDeleted = false;
 
   override firstUpdated() {
-    const url = new URL(this.entityId);
-    const isLocal = url.host === window.location.host;
+    try {
+      const url = new URL(this.entityId);
+      const isLocal = url.host === window.location.host;
 
-    fetch(isLocal ? this.entityId : `/proxy?resource=${this.entityId}`, {
-      headers: {
-        'Accept': 'application/activity+json'
-      }
-    })
-    .then(res => res.json())
-    .then(entity => {
-      this.entity = entity;
-      this.isDeleted = this.entity.type === AP.ExtendedObjectTypes.TOMBSTONE || (Array.isArray(this.entity.type) && this.entity.type.includes(AP.ExtendedObjectTypes.TOMBSTONE));
-
-      return fetch(`/proxy?resource=${this.entity.attributedTo}`, {
+      fetch(isLocal ? this.entityId : `/proxy?resource=${this.entityId}`, {
         headers: {
           'Accept': 'application/activity+json'
         }
       })
-    })
-    .then(res => res.json())
-    .then(actor => this.attributedTo = actor)
-    .catch(() => {
+      .then(res => res.json())
+      .then(entity => {
+        this.entity = entity;
+        this.isDeleted = this.entity.type === AP.ExtendedObjectTypes.TOMBSTONE || (Array.isArray(this.entity.type) && this.entity.type.includes(AP.ExtendedObjectTypes.TOMBSTONE));
+
+        return fetch(`/proxy?resource=${this.entity.attributedTo}`, {
+          headers: {
+            'Accept': 'application/activity+json'
+          }
+        })
+      })
+      .then(res => res.json())
+      .then(actor => this.attributedTo = actor)
+      .catch(() => {
+        this.isDeleted = true;
+      });
+    } catch (error) {
+      console.log(error);
       this.isDeleted = true;
-    });
+    }
   }
 
   render() {

@@ -22,6 +22,14 @@ export const baseCss = css`
     max-width: 100%;
   }
 
+  p {
+    margin: 0;
+  }
+  
+  p + p {
+    margin-top: 1em;
+  }
+
   a {
     color: var(--link-color);
   }

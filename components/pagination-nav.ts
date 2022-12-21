@@ -115,7 +115,7 @@ export class PaginationNav extends LitElement {
           if (pageIndex === this.firstPageIndex) {
             return url ? html`
               <li>
-                <a href=${url}>
+                <a href=${url} class="button button--tag" >
                   ⇤ ${pageIndex}
                 </a>
               </li>
@@ -129,7 +129,7 @@ export class PaginationNav extends LitElement {
           if (pageIndex === this.lastPageIndex) {
             return url ? html`
               <li>
-                <a href=${url}>
+                <a href=${url} class="button button--tag" >
                 ${pageIndex} ⇥
                 </a>
               </li>
@@ -142,7 +142,7 @@ export class PaginationNav extends LitElement {
           
           return url ? html`
             <li>
-              <a href=${url}>
+              <a href=${url} class="button button--tag" >
                 ${pageIndex}
               </a>
             </li>

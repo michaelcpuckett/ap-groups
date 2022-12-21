@@ -35,7 +35,7 @@
                   </strong>
                 </p>
                 <p>
-                  <a href="{{ entity.outbox }}?page=1&current&type=Announce,Create">
+                  <a href="{{ entity.url }}/shared?page=1&current">
                     All Posts from
                     @{{ entity.preferredUsername }}@chirp.social
                   </a>
@@ -47,7 +47,7 @@
                       Group Summary
                     </dt>
                     <dd>
-                      {{ entity.summary }}
+                      {{ entity.summary | safe }}
                     </dd>
                     {% for attachment in entity.attachment %}
                       <dt>

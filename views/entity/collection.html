@@ -18,12 +18,7 @@
           </div>
         </div>
         <div class="right-rail">
-          {% if entity.name == 'Outbox' and r/entity\/bot/.test(entity.attributedTo) %}
-            <div class="region">
-              <search-users-form entity-id="{{ entity.id }}"></search-users-form>
-            </div>
-          {% endif %}
-          {% if entity.name == 'Shared' or entity.name === 'Outbox' %}
+          {% if entity.name == 'Shared' %}
             {{ directoryLink() }}
 
             {% if entity.attributedTo %}

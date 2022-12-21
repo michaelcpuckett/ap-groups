@@ -3,6 +3,7 @@ import {customElement, property, query} from 'lit/decorators';
 import { repeat } from 'lit/directives/repeat';
 import { baseCss } from './base-css';
 import { AP } from 'activitypub-core-types';
+import { unsafeHTML } from 'lit/directives/unsafe-html';
 
 @customElement('group-entity-details')
 export class GroupEntityDetails extends LitElement {
@@ -96,7 +97,7 @@ export class GroupEntityDetails extends LitElement {
             Group Description
           </span>
           <dd>
-            ${this.entity.summary ?? ''}
+            ${unsafeHTML(this.entity.summary ?? '')}
           </span>
         </div>
         ${Array.isArray(this.entity.attachment) ? repeat(this.entity.attachment, attachment => {

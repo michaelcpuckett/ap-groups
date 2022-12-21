@@ -1,5 +1,5 @@
-import {LitElement, html, css, nothing} from 'lit';
-import {customElement, property, query} from 'lit/decorators';
+import {LitElement, html, css, nothing, PropertyValues} from 'lit';
+import {customElement, property, query, state} from 'lit/decorators';
 import { baseCss } from './base-css';
 import { AP } from 'activitypub-core-types';
 
@@ -90,6 +90,15 @@ export class GroupDetails extends LitElement {
   @property({ type: Boolean })
   private isFileReadyToUpload = false;
 
+  @state()
+  private textSummary = '';
+
+  override firstUpdated() {
+    const wrapperElement = window.document.createElement('div');
+    wrapperElement.innerHTML = this.summary ?? '';
+    this.textSummary = wrapperElement.innerText;
+  }
+
   private async handleSubmit(event: SubmitEvent) {
     event.preventDefault();
     
@@ -100,13 +109,47 @@ export class GroupDetails extends LitElement {
     const name = this.nameInputElement.value;
     const manager = this.managerInputElement.value || 'Anonymous';
     const rules = this.rulesTextareaElement.value || 'Be nice.';
-    const summary = this.summaryTextareaElement.value;
     const manuallyApprovesFollowers = this.manuallyApprovesFollowersElement.checked;
     const sensitive = this.sensitiveElement.checked;
+
+    const rawSummary = this.summaryTextareaElement.value;
+    const htmlSummary = this.encode4HTML(rawSummary);
+    const hashtags = []
+    const summary = htmlSummary.replace(/\#([\w]+)/g, (match: string, hashtag: string) => {
+      hashtags.push(hashtag);
+      return `<a href="https://chirp.social/hashtag/${hashtag}">#${hashtag}</a>`;
+    });
 
     if (this.isFileReadyToUpload) {
       await this.handleAvatarUpload();
     }
+
+    const group = {
+      id: this.groupActorId,
+      name,
+      summary,
+      manuallyApprovesFollowers,
+      sensitive,
+      image: this.defaultBannerImage,
+      attachment: [{
+        type: 'PropertyValue',
+        name: 'Group Manager',
+        value: manager,
+      }, {
+        type: 'PropertyValue',
+        name: 'Group Rules',
+        value: rules,
+      }],
+      ...hashtags.length ? {
+        tag: [...new Set(hashtags)].map(hashtag => ({
+          type: 'Hashtag',
+          name: `#${hashtag}`,
+          url: `https://chirp.social/hashtag/${hashtag}`,
+        })),
+      } : null,
+    };
+
+    console.log(group);
 
     fetch(this.outboxUrl, {
       method: 'POST',
@@ -127,23 +170,7 @@ export class GroupDetails extends LitElement {
           this.followersUrl,
         ],
         actor: this.groupActorId,
-        object: {
-          id: this.groupActorId,
-          name,
-          summary,
-          manuallyApprovesFollowers,
-          sensitive,
-          image: this.defaultBannerImage,
-          attachment: [{
-            type: 'PropertyValue',
-            name: 'Group Manager',
-            value: manager,
-          }, {
-            type: 'PropertyValue',
-            name: 'Group Rules',
-            value: rules,
-          }],
-        },
+        object: group,
       }),
     })
     .then((res) => {
@@ -207,6 +234,36 @@ export class GroupDetails extends LitElement {
 
   private handleFileInputTriggerClick() {
     this.fileInputElement?.click();
+  }
+
+  private encode4HTML(str: string) {
+    return str
+        .replace(/\r\n?/g,'\n')
+        // normalize newlines - I'm not sure how these
+        // are parsed in PC's. In Mac's they're \n's
+        .replace(/(^((?!\n)\s)+|((?!\n)\s)+$)/gm,'')
+        // trim each line
+        .replace(/(?!\n)\s+/g,' ')
+        // reduce multiple spaces to 2 (like in "a    b")
+        .replace(/^\n+|\n+$/g,'')
+        // trim the whole string
+        .replace(/[<>&"']/g, character => {
+        // replace these signs with encoded versions
+            switch (character) {
+                case '<'    : return '&lt;';
+                case '>'    : return '&gt;';
+                case '&'    : return '&amp;';
+                case '"'    : return '&quot;';
+                case '\''   : return '&apos;';
+            }
+        })
+        .replace(/\n{2,}/g,'</p><p>')
+        // replace 2 or more consecutive empty lines with these
+        .replace(/\n/g,'<br />')
+        // replace single newline symbols with the <br /> entity
+        .replace(/^(.+?)$/,'<p>$1</p>');
+        // wrap all the string into <p> tags
+        // if there's at least 1 non-empty character
   }
 
   render() {
@@ -289,7 +346,7 @@ export class GroupDetails extends LitElement {
               Group Description
             </span>
             <span role="cell">
-              <textarea name="summary">${this.summary ?? ''}</textarea>
+              <textarea name="summary">${this.textSummary ?? ''}</textarea>
             </span>
           </label>
           <label role="row" class="label">

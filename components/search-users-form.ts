@@ -118,7 +118,7 @@ export class SearchUsersForm extends LitElement {
                 ${this.isLoading ? 'Loading...' : ''}
                 ${repeat(this.results.slice(0, 5), (username) => {
                   return html`
-                    <a href=${`/@${username}/outbox?page=1&current&type=Announce,Create`}>
+                    <a href=${`/@${username}/shared?page=1&current`}>
                       ${username}
                     </a>
                   `;

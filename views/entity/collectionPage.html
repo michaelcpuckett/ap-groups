@@ -4,7 +4,6 @@
     <title>chirp.social - {{ entity.name }} - Page {{ entity.page }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
-    <meta name="description" content="{{ group.summary }}" />
     <link rel="stylesheet" href="/base.css" />
     <link rel="stylesheet" href="/index.css" />
     <body>
@@ -21,6 +20,63 @@
                 {{ pagination(entity) }}
               </div>
               {% for item in items %}
+                {% if item.type == 'Collection' %}
+                  <div class="region">
+                    <a href="{{ item.id }}?page=1">
+                      <h2>{{ item.name }}</h2>
+                      Groups: {{ item.totalItems }}
+                    </a>
+                  </div>
+                {% endif %}
+                {% if item.type == 'Group' %}
+                  <div class="region">
+                    {% if item.icon.url %}
+                      <a href="{{ item.url }}/shared?page=1&current" style="display: block">
+                        <img
+                          class="avatar"
+                          height="100"
+                          width="100"
+                          src="{{ item.icon.url }}"
+                        />
+                      </a>
+                    {% endif %}
+                    <a href="{{ item.url }}/shared?page=1&current">
+                      <strong>
+                        {{ item.name }}
+                      </strong>
+                    </a>
+                    <dl>
+                      <dt>
+                        Handle
+                      </dt>
+                      <dd>
+                        <a href="{{ item.url }}/shared?page=1&current">
+                          @{{ item.preferredUsername }}@chirp.social
+                        </a>
+                      </dd>
+                      <dt>
+                        Bio
+                      </dt>
+                      <dd>
+                        {{ item.summary | safe }}
+                      </dd>
+                      {% for attachment in item.attachment %}
+                        <dt>
+                          {{ attachment.name }}
+                        </dt>
+                        <dd>
+                          {{ attachment.value }}
+                        </dd>
+                      {% endfor %}
+                      <dt>
+                        Added
+                      </dt>
+                      <dd>
+                        {{ item.published }}
+                      </dd>
+                    </dl>
+                  </div>
+                {% endif %}
                 {% if item.type == 'Announce' %}
                   <div class="region">
                     <announce-entity entity-id="{{ item.id }}"></announce-entity>
@@ -48,18 +104,21 @@
           </div>
         </div>
         <div class="right-rail">
-          {% if entity.name == 'Outbox' and r/entity\/bot/.test(entity.attributedTo) %}
-            <div class="region">
-              <search-users-form entity-id="{{ entity.id }}"></search-users-form>
-            </div>
-          {% endif %}
-          {% if entity.name == 'Shared' or entity.name == 'Outbox' %}
-            {{ directoryLink() }}
+          {% set firstCharacter = entity.name | first %}
+          {% if entity.name == 'Shared' or entity.name == 'Hashtags' or firstCharacter == '#' %}
             {% if entity.attributedTo %}
               {% if not r/entity\/bot/.test(entity.attributedTo) %}
                 <directory-entry entity-id="{{ entity.attributedTo }}"></directory-entry>
               {% endif %}
             {% endif %}
+
+            {% if not entity.name == 'Hashtags' %}
+              {{ directoryLink() }}
+            {% endif %}
+
+            <div class="region">
+              <search-users-form entity-id="http://localhost:3000/entity/bot/outbox"></search-users-form>
+            </div>
           {% endif %}
           {{ about() }}
         </div>

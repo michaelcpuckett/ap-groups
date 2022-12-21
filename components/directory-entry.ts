@@ -3,6 +3,7 @@ import { customElement, property, state } from 'lit/decorators';
 import { repeat } from 'lit/directives/repeat';
 import { baseCss } from './base-css';
 import { AP } from 'activitypub-core-types';
+import { unsafeHTML } from 'lit/directives/unsafe-html';
 
 @customElement('directory-entry')
 export class DirectoryEntry extends LitElement {
@@ -157,7 +158,7 @@ export class DirectoryEntry extends LitElement {
     return html`
       <section class="region">
         ${(this.entity.icon && 'url' in this.entity.icon) ? html`
-          <a href=${`${this.entity.outbox}?page=1&current&type=Announce,Create`} style="display: block">
+          <a href=${`${this.entity.url}/shared?page=1&current`} style="display: block">
             <img
               class="avatar"
               height="100"
@@ -166,7 +167,7 @@ export class DirectoryEntry extends LitElement {
             />
           </a>
         ` : nothing}
-        <a href=${`${this.entity.outbox}?page=1&current&type=Announce,Create`}>
+        <a href=${`${this.entity.url}/shared?page=1&current`}>
           <strong>
             ${this.entity.name}
           </strong>
@@ -176,7 +177,7 @@ export class DirectoryEntry extends LitElement {
             Handle
           </dt>
           <dd>
-            <a href=${`${this.entity.outbox}?page=1&current&type=Announce,Create`}>
+            <a href=${`${this.entity.url}/shared?page=1&current`}>
               @${this.entity.preferredUsername}@chirp.social
             </a>
           </dd>
@@ -184,7 +185,7 @@ export class DirectoryEntry extends LitElement {
             Bio
           </dt>
           <dd>
-            ${this.entity.summary}
+            ${unsafeHTML(this.entity.summary)}
           </dd>
           ${Array.isArray(this.entity.attachment) ? repeat(this.entity.attachment, attachment => {
             const propertyValue = attachment as unknown as {

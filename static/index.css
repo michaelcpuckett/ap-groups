@@ -64,9 +64,12 @@ h2 {
   border: 1px 
 }
 
-.container p,
-.container li {
-  font-size: 1.333em;
+p {
+  margin: 0;
+}
+
+p + p {
+  margin-top: 1em;
 }
 
 figure {
