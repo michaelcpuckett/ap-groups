@@ -93,10 +93,37 @@ export class GroupDetails extends LitElement {
   @state()
   private textSummary = '';
 
+  @state()
+  private textRules = '';
+
   override firstUpdated() {
-    const wrapperElement = window.document.createElement('div');
-    wrapperElement.innerHTML = this.summary ?? '';
-    this.textSummary = wrapperElement.innerText;
+    const summaryWrapperElement = window.document.createElement('div');
+    summaryWrapperElement.innerHTML = this.summary ?? '';
+    this.textSummary = this.getInnerText(summaryWrapperElement);
+
+    const rulesWrapperElement = window.document.createElement('div');
+    rulesWrapperElement.innerHTML = this.rules ?? 'Be nice.';
+    this.textRules = this.getInnerText(rulesWrapperElement);
+  }
+
+  private getInnerText(element: Element) {
+    return Array.from(element.childNodes).map((node: Element) => {
+      if (node.nodeType === 1) {
+        if (node.nodeName.toLowerCase() === 'p') {
+          return this.getInnerText(node) + '\n\n';
+        } else if (node.nodeName.toLowerCase() === 'br') {
+          return this.getInnerText(node) + '\n';
+        } else {
+          return this.getInnerText(node);
+        }
+      }
+
+      if (node.nodeType === 3) {
+        return node.nodeValue;
+      }
+
+      return '';
+    }).join('').replace(/\n+$/, '');
   }
 
   private async handleSubmit(event: SubmitEvent) {
@@ -108,9 +135,11 @@ export class GroupDetails extends LitElement {
 
     const name = this.nameInputElement.value;
     const manager = this.managerInputElement.value || 'Anonymous';
-    const rules = this.rulesTextareaElement.value || 'Be nice.';
     const manuallyApprovesFollowers = this.manuallyApprovesFollowersElement.checked;
     const sensitive = this.sensitiveElement.checked;
+
+    const rawRules = this.rulesTextareaElement.value || 'Be nice.';
+    const htmlRules = this.encode4HTML(rawRules);
 
     const rawSummary = this.summaryTextareaElement.value;
     const htmlSummary = this.encode4HTML(rawSummary);
@@ -138,7 +167,7 @@ export class GroupDetails extends LitElement {
       }, {
         type: 'PropertyValue',
         name: 'Group Rules',
-        value: rules,
+        value: htmlRules,
       }],
       ...hashtags.length ? {
         tag: [...new Set(hashtags)].map(hashtag => ({
@@ -148,8 +177,6 @@ export class GroupDetails extends LitElement {
         })),
       } : null,
     };
-
-    console.log(group);
 
     fetch(this.outboxUrl, {
       method: 'POST',
@@ -343,10 +370,13 @@ export class GroupDetails extends LitElement {
           </label>
           <label role="row" class="label">
             <span class="label-text" role="columnheader">
-              Group Description
+              Group Description / Hashtags for Discovery
             </span>
             <span role="cell">
-              <textarea name="summary">${this.textSummary ?? ''}</textarea>
+              <textarea name="summary" rows="5">${this.textSummary ?? ''}</textarea>
+            </span>
+            <span class="hint-text">
+              Add #hashtags here to be featured in the directory. Adult hashtags are not allowed.
             </span>
           </label>
           <label role="row" class="label">
@@ -354,7 +384,7 @@ export class GroupDetails extends LitElement {
               Group Rules
             </span>
             <span role="cell">
-              <textarea name="rules">${this.rules ?? 'Be nice.'}</textarea>
+              <textarea name="rules" rows="5">${this.textRules ?? 'Be nice.'}</textarea>
             </span>
           </label>
           <label role="row" class="label">
