@@ -112,7 +112,7 @@ export class GroupEntityDetails extends LitElement {
                 ${propertyValue.name}
               </dt>
               <dd>
-                ${propertyValue.value}
+                ${unsafeHTML(propertyValue.value)}
               </dd>
             </div>
           `;

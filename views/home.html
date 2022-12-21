@@ -40,7 +40,7 @@
                     {% if attachment.name == 'Group Manager' %}
                       manager="{{ attachment.value }}"
                     {% elif attachment.name == 'Group Rules' %}
-                      rules="{{ attachment.value }}"
+                      rules="{{ attachment.value | safe }}"
                     {% endif %}
                   {% endfor %}
                 {% endif %}

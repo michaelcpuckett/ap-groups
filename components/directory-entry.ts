@@ -197,7 +197,7 @@ export class DirectoryEntry extends LitElement {
                 ${propertyValue.name}
               </dt>
               <dd>
-                ${propertyValue.value}
+                ${unsafeHTML(propertyValue.value)}
               </dd>
             `;
           }) : nothing}

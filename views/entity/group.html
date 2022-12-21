@@ -54,7 +54,7 @@
                         {{ attachment.name }}
                       </dt>
                       <dd>
-                        {{ attachment.value }}
+                        {{ attachment.value | safe }}
                       </dd>
                     {% endfor %}
                     <dt>
