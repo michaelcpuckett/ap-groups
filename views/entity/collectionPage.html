@@ -22,7 +22,7 @@
               {% for item in items %}
                 {% if item.type == 'Collection' %}
                   <div class="region">
-                    <a href="{{ item.id }}?page=1">
+                    <a href="{{ item.id }}">
                       <h2>{{ item.name }}</h2>
                       Groups: {{ item.totalItems }}
                     </a>
@@ -31,7 +31,7 @@
                 {% if item.type == 'Group' %}
                   <div class="region">
                     {% if item.icon.url %}
-                      <a href="{{ item.url }}/shared?page=1&current" style="display: block">
+                      <a href="{{ item.url }}/shared?current" style="display: block">
                         <img
                           class="avatar"
                           height="100"
@@ -40,7 +40,7 @@
                         />
                       </a>
                     {% endif %}
-                    <a href="{{ item.url }}/shared?page=1&current">
+                    <a href="{{ item.url }}/shared?current">
                       <strong>
                         {{ item.name }}
                       </strong>
@@ -50,7 +50,7 @@
                         Handle
                       </dt>
                       <dd>
-                        <a href="{{ item.url }}/shared?page=1&current">
+                        <a href="{{ item.url }}/shared?current">
                           @{{ item.preferredUsername }}@chirp.social
                         </a>
                       </dd>
