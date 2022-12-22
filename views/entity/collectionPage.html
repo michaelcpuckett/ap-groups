@@ -80,6 +80,7 @@
                 {% if item.type == 'Announce' %}
                   <div class="region">
                     <announce-entity entity-id="{{ item.id }}"></announce-entity>
+                    <textarea>{{ item | dump }}</textarea>
                   </div>
                 {% endif %}
                 {% if item.type == 'Create' and item.object.id and item.object.type == 'Note' %}
