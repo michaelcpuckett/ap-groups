@@ -79,8 +79,56 @@
                 {% endif %}
                 {% if item.type == 'Announce' %}
                   <div class="region">
-                    <announce-entity entity-id="{{ item.id }}"></announce-entity>
-                    <textarea>{{ item | dump }}</textarea>
+                    <div class="announce-entity">
+                      <div class="left-rail">
+                        {% if item.object.published %}
+                          <p>
+                            <small>
+                              {{ item.object.published }}
+                            </small>
+                          </p>
+                        {% endif %}
+                        {% if item.object.attributedTo %}
+                          <a class="actor-lockup" target="_blank" href="{{ item.object.attributedTo.url }}">
+                            {% if item.object.attributedTo.icon.url %}
+                              <img
+                                class="avatar avatar--small"
+                                src="{{ item.object.attributedTo.icon.url }}"
+                                height="70"
+                                width="70"
+                              />
+                            {% else %}
+                              <span class="avatar avatar--small"></span>
+                            {% endif %}
+                            <span class="actor-username">
+                              @{{ item.object.attributedTo.preferredUsername }}
+                            </span>
+                          </a>
+                          <a
+                            class="permalink"
+                            target="_blank"
+                            href="{{ item.object.id }}">
+                            Permalink
+                          </a>
+                        {% endif %}
+                      </div>
+                      <div class="main">
+                        {% if item.object.attachment %}
+                          {% if item.object.attachment.length %}
+                            {% for attachment in item.object.attachment %}
+                              {% if attachment.url %}
+                                <img class="attachment" src="{{ attachment.url }}" />
+                              {% endif %}
+                            {% endfor %}
+                          {% else %}
+                            {% if item.object.attachment.url %}
+                              <img class="attachment" src="{{ item.object.attachment.url }}" />
+                            {% endif %}
+                          {% endif %}
+                        {% endif %}
+                        {{ item.object.content | safe }}
+                      </div>
+                    </div>
                   </div>
                 {% endif %}
                 {% if item.type == 'Create' and item.object.id and item.object.type == 'Note' %}
@@ -106,11 +154,55 @@
         </div>
         <div class="right-rail">
           {% set firstCharacter = entity.name | first %}
-          {% if entity.name == 'Shared' or entity.name == 'Hashtags' or firstCharacter == '#' %}
-            {% if entity.attributedTo %}
-              {% if not r/entity\/bot/.test(entity.attributedTo) %}
-                <directory-entry entity-id="{{ entity.attributedTo }}"></directory-entry>
-              {% endif %}
+          {% if attributedTo.url %}
+            {% if not r/entity\/bot/.test(attributedTo) %}
+              <div class="region">
+                  {% if attributedTo.icon.url %}
+                    <a href="{{ attributedTo.url }}/shared?current" style="display: block">
+                      <img
+                        class="avatar"
+                        height="100"
+                        width="100"
+                        src="{{ attributedTo.icon.url }}"
+                      />
+                    </a>
+                  {% endif %}
+                  <a href="{{ attributedTo.url }}/shared?current">
+                    <strong>
+                      {{ attributedTo.name }}
+                    </strong>
+                  </a>
+                  <dl>
+                    <dt>
+                      Handle
+                    </dt>
+                    <dd>
+                      <a href="{{ attributedTo.url }}/shared?current">
+                        @{{ attributedTo.preferredUsername }}@chirp.social
+                      </a>
+                    </dd>
+                    <dt>
+                      Bio
+                    </dt>
+                    <dd>
+                      {{ attributedTo.summary | safe }}
+                    </dd>
+                    {% for attachment in attributedTo.attachment %}
+                      <dt>
+                        {{ attachment.name }}
+                      </dt>
+                      <dd>
+                        {{ attachment.value | safe }}
+                      </dd>
+                    {% endfor %}
+                    <dt>
+                      Added
+                    </dt>
+                    <dd>
+                      {{ attributedTo.published }}
+                    </dd>
+                  </dl>
+              </div>
             {% endif %}
 
             {{ directoryLink() }}

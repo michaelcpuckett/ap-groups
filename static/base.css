@@ -163,3 +163,17 @@ button {
   color: var(--text-on-dark-background-color);
   border: 1px solid;
 }
+
+@media (min-width: 600px) {
+  .announce-entity {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: 200px minmax(0, 1fr);
+  }
+}
+
+.left-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

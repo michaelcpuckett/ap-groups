@@ -75,7 +75,7 @@ const renderDirectoryPage = async (directoryPageProps: { currentUrl: string; gro
 };
 
 function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
-  if (entity.type !== 'Group') {
+  if (entity.type !== AP.ActorTypes.GROUP) {
     throw new AssertionError({ message: 'Entity is not a Group.' });
   }
 }
@@ -347,24 +347,85 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
 
               const orderedItems = await Promise.all(orderedItemIds.map(async (item: AP.Announce) => {
                 const objectId = getId(item.object);
-                const object = await mongoDbAdapter.fetchEntityById(objectId);
+
+                if (!objectId || !(objectId instanceof URL)) {
+                  return {
+                    ...item,
+                    object: {
+                      type: AP.ExtendedObjectTypes.TOMBSTONE,
+                    },
+                  };
+                }
+
+                const object = await mongoDbAdapter.fetchEntityById(objectId) as AP.Note;
 
                 if (!object) {
                   return {
                     ...item,
                     object: {
                       type: AP.ExtendedObjectTypes.TOMBSTONE,
-                    }
+                    },
                   };
                 }
 
-                return {
-                  ...item,
-                  object,
-                };
+                if (object.attributedTo instanceof URL) {
+                  const attributedTo = await mongoDbAdapter.fetchEntityById(object.attributedTo);
+                  
+                  if (attributedTo) {
+                    return {
+                      ...item,
+                      object: {
+                        ...object,
+                        attributedTo,
+                      },
+                    }
+                  } else {
+                    return {
+                      ...item,
+                      object: {
+                        ...object,
+                        attributedTo: {
+                          type: AP.ExtendedObjectTypes.TOMBSTONE,
+                        },
+                      },
+                    };
+                  }
+                } else {
+                  return {
+                    ...item,
+                    object,
+                  };
+                }
               }));
 
+              if (entity.attributedTo instanceof URL) {
+                const attributedTo = await mongoDbAdapter.findEntityById(entity.attributedTo);
+
+                if (!attributedTo) {
+                  return {
+                    attributedTo: {
+                      type: AP.ExtendedObjectTypes.TOMBSTONE,
+                    },
+                    entity: {
+                      ...entity,
+                      orderedItems,
+                    }
+                  }
+                }
+
+                return {
+                  attributedTo,
+                  entity: {
+                    ...entity,
+                    orderedItems,
+                  },
+                }
+              }
+
               return {
+                attributedTo: {
+                  type: AP.ExtendedObjectTypes.TOMBSTONE,
+                },
                 entity: {
                   ...entity,
                   orderedItems,
