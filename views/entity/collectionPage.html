@@ -22,7 +22,7 @@
               {% for item in items %}
                 {% if item.type == 'Collection' %}
                   <div class="region">
-                    <a href="{{ item.id }}">
+                    <a href="{{ item.id }}?sort=name">
                       <h2>{{ item.name }}</h2>
                       Groups: {{ item.totalItems }}
                     </a>
