@@ -142,8 +142,19 @@ export class GroupDetails extends LitElement {
     const htmlRules = this.encode4HTML(rawRules);
 
     const rawSummary = this.summaryTextareaElement.value;
-    const htmlSummary = this.encode4HTML(rawSummary);
-    const hashtags = []
+
+    const summaryWithLinks = [];
+    for (const word of rawSummary.split(' ')) {
+      if (word.startsWith('https://')) {
+        summaryWithLinks.push(`<a href="${word}">${word}</a>`);
+      } else {
+        summaryWithLinks.push(word);
+      }
+    }
+
+    const htmlSummary = this.encode4HTML(summaryWithLinks.join(' '));
+
+    const hashtags = [];
     const summary = htmlSummary.replace(/\#([\w]+)/g, (match: string, hashtag: string) => {
       hashtags.push(hashtag);
       return `<a href="https://chirp.social/hashtag/${hashtag}">#${hashtag}</a>`;
@@ -274,16 +285,6 @@ export class GroupDetails extends LitElement {
         // reduce multiple spaces to 2 (like in "a    b")
         .replace(/^\n+|\n+$/g,'')
         // trim the whole string
-        .replace(/[<>&"']/g, character => {
-        // replace these signs with encoded versions
-            switch (character) {
-                case '<'    : return '&lt;';
-                case '>'    : return '&gt;';
-                case '&'    : return '&amp;';
-                case '"'    : return '&quot;';
-                case '\''   : return '&apos;';
-            }
-        })
         .replace(/\n{2,}/g,'</p><p>')
         // replace 2 or more consecutive empty lines with these
         .replace(/\n/g,'<br />')
