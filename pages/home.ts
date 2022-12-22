@@ -66,3 +66,48 @@ for (const buttonElement of buttonElements) {
     }
   });
 }
+
+const addAdministratorForm = window.document.querySelector('#add-administrator-form');
+
+if (addAdministratorForm) {
+  addAdministratorForm.addEventListener('input', () => {
+    addAdministratorForm.classList.remove('has-error');
+  });
+
+  addAdministratorForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const email = addAdministratorForm.querySelector<HTMLInputElement>('[name="email"]')?.value;
+    const emailConfirm = addAdministratorForm.querySelector<HTMLInputElement>('[name="email-confirm"]')?.value;
+
+    if (!email) {
+      addAdministratorForm.classList.add('has-error');
+      const errorMessage = addAdministratorForm.querySelector('[name="email"]').parentElement.querySelector('.error-message');
+      errorMessage.textContent = 'Required';
+      return;
+    }
+
+    if (email !== emailConfirm) {
+      addAdministratorForm.classList.add('has-error');
+      const errorMessage = addAdministratorForm.querySelector('[name="email"]').closest('label').querySelector('.error-message');
+      errorMessage.textContent = 'Fields don\'t match.';
+      return;
+    }
+
+    fetch(`/user/admin`, {
+      method: 'POST',
+      body: JSON.stringify({
+        email,
+      }),
+    })
+    .then(res => res.json())
+    .then((result) => {
+      if (result.success) {
+        window.location.reload();
+      } else {
+        addAdministratorForm.classList.add('has-error');
+        const errorMessage = addAdministratorForm.querySelector('[name="email"]').closest('label').querySelector('.error-message');
+        errorMessage.textContent = result.error;
+      }
+    });
+  });
+}

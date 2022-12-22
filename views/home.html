@@ -135,6 +135,63 @@
           </section>
 
           <section>
+            <details open>
+              <summary>
+                Administrators ({{ admins.length }})
+              </summary>
+              <div>
+                <ul>
+                  {% for admin in admins %}
+                    <li>
+                      {{ admin }}
+                    </li>
+                  {% endfor %}
+                </ul>
+                <details>
+                  <summary class="button">
+                    Add Administrator
+                  </summary>
+                  <form id="add-administrator-form" novalidate>
+                    <label class="label">
+                      <span class="label-text">
+                        Admin Email
+                      </span>
+                      <input class="input" type="email" name="email" />
+                      <p class="hint-text">
+                        An email can only be associated with one Group.
+                        Consider using <code>user<strong>+groupname</strong>@gmail.com</code>
+                        if using Gmail or similar.
+                      </p>
+                      <p class="hint-text">
+                        The user will need to follow the Forgot Password instructions
+                        on the home page.
+                      </p>
+                      <p class="error-message">
+                        
+                      </p>
+                    </label>
+                    <label class="label">
+                      <span class="label-text">
+                        Admin Email (Repeat to Confirm)
+                      </span>
+                      <input class="input" type="email" name="email-confirm" />
+                      <p class="hint-text">
+                        There is no way to delete Administrators yet!
+                      </p>
+                      <p class="error-message">
+
+                      </p>
+                    </label>
+                    <button type="submit" class="button">
+                      Submit
+                    </button>
+                  </form>
+                </details>
+              </div>
+            </details>
+          </section>
+
+          <section>
             {% if members.length %}
               <details>
             {% else %}

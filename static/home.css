@@ -148,3 +148,7 @@ input {
   font-size: 1.125em;
   border: 1px solid;
 }
+
+#add-administrator-form:not(.has-error) .error-message {
+  display: none;
+}

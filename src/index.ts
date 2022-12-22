@@ -9,12 +9,12 @@ import { FtpStorageAdapter } from 'activitypub-core-storage-ftp';
 import { DeliveryAdapter } from 'activitypub-core-delivery';
 import { ServiceAccount } from 'firebase-admin';
 import { ServerResponse, IncomingMessage } from 'http';
-import { LOCAL_DOMAIN, isType, SERVER_ACTOR_ID, getId, ACTIVITYSTREAMS_CONTENT_TYPE, ACCEPT_HEADER, JRD_CONTENT_TYPE, HTML_CONTENT_TYPE, convertUrlsToStrings } from 'activitypub-core-utilities';
+import { LOCAL_DOMAIN, isType, SERVER_ACTOR_ID, getId, ACTIVITYSTREAMS_CONTENT_TYPE, ACCEPT_HEADER, JRD_CONTENT_TYPE, HTML_CONTENT_TYPE, convertUrlsToStrings, parseStream, streamToString } from 'activitypub-core-utilities';
 import * as nunjucks from 'nunjucks';
 import { AP } from 'activitypub-core-types';
 import * as path from 'path';
 import { AssertionError } from 'assert';
-import { assertIsApTransitiveActivity } from 'activitypub-core-types/lib/assertions';
+import * as cookie from 'cookie';
 
 const app = express.default();
 app.use(express.static(path.resolve(__dirname, '../static')));
@@ -467,18 +467,31 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
               requests,
               members,
               blocks,
+              adminIds,
             ] = await Promise.all([
               mongoDbAdapter.findEntityById(sharedUrl).then((collection: AP.OrderedCollection) => collection.orderedItems).catch(() => []),
               mongoDbAdapter.findEntityById(requestsUrl).then((collection: AP.Collection) => collection.items).catch(() => []),
               mongoDbAdapter.findEntityById(membersUrl).then((collection: AP.Collection) => collection.items).catch(() => []),
               mongoDbAdapter.findEntityById(blocksUrl).then((collection: AP.Collection) => collection.items).catch(() => []),
+              mongoDbAdapter.db.collection('username').find({
+                value: actor.preferredUsername,
+              }).toArray(),
             ]);
+
+            const admins = [];
+
+            for (const adminId of adminIds) {
+              admins.push((await mongoDbAdapter.db.collection('account').findOne({
+                _id: adminId._id
+              })).value);
+            }
 
             return {
               shared,
               requests,
               members,
               blocks,
+              admins,
             };
           },
         }
@@ -486,6 +499,51 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
     }),
   );
 
+  app.post('/user/admin', async (req: IncomingMessage, res: ServerResponse) => {
+    try {
+      const result = JSON.parse(await streamToString(req));
+      const { email } = result;
+
+      if (!email) {
+        throw new Error('Bad request: No email.');
+      }
+
+      const cookies = cookie.parse(req.headers.cookie ?? '');
+
+      const actor = await mongoDbAdapter.getActorByUserId(
+        await firebaseAuthAdapter.getUserIdByToken(cookies.__session ?? ''),
+      );
+
+      if (!actor) {
+        throw new Error('Bad request: Not authorized.');
+      }
+
+      const user = await firebaseAuthAdapter.createUser.call(firebaseAuthAdapter, {
+        email,
+        preferredUsername: actor.preferredUsername,
+      });
+
+      await Promise.all([
+        mongoDbAdapter.saveString('account', user.uid, email),
+        mongoDbAdapter.saveString('username', user.uid, actor.preferredUsername),
+      ]);
+
+      res.statusCode = 200;
+      res.write(
+        JSON.stringify({
+          success: true,
+        })
+      );
+      res.end();
+    } catch (error) {
+      res.statusCode = 500;
+      res.write(JSON.stringify({
+        error: `${error || 'Unknown error'}`,
+      }));
+      res.end();
+    }
+  });
+  
   app.listen(process.env.PORT ?? 3000, () => {
     console.log('Running...');
   });

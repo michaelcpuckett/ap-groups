@@ -30,6 +30,11 @@ export const baseCss = css`
     margin-top: 1em;
   }
 
+  code {
+    font-size: 1.125em;
+    font-family: monospace;
+  }
+
   a {
     color: var(--link-color);
   }

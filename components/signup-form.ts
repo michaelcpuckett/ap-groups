@@ -215,7 +215,9 @@ export class SignupForm extends LitElement {
             name="email"
           />
           <span class="hint-text">
-            You will be the primary account manager.
+            An email can only be associated with one Group.
+            Consider using <code>user<strong>+groupname</strong>@gmail.com</code>
+            if using Gmail or similar.
           </span>
           ${this.emailError ? html`
             <span class="error-message">

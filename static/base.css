@@ -105,6 +105,11 @@ dt {
   font-weight: bold;
 }
 
+code {
+  font-size: 1.125em;
+  font-family: monospace;
+}
+
 button {
   appearance: none;
   padding: 0;

@@ -85,6 +85,9 @@ export class ForgotPasswordForm extends LitElement {
             type="email"
             name="email"
           />
+          <span class="hint-text">
+            You will need to check your Spam folder.
+          </span>
           ${this.emailError ? html`
             <span class="error-message">
               ${this.emailError}
