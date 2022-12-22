@@ -9,7 +9,7 @@ import { FtpStorageAdapter } from 'activitypub-core-storage-ftp';
 import { DeliveryAdapter } from 'activitypub-core-delivery';
 import { ServiceAccount } from 'firebase-admin';
 import { ServerResponse, IncomingMessage } from 'http';
-import { LOCAL_DOMAIN, isType, SERVER_ACTOR_ID, getId } from 'activitypub-core-utilities';
+import { LOCAL_DOMAIN, isType, SERVER_ACTOR_ID, getId, ACTIVITYSTREAMS_CONTENT_TYPE, ACCEPT_HEADER, JRD_CONTENT_TYPE, HTML_CONTENT_TYPE } from 'activitypub-core-utilities';
 import * as nunjucks from 'nunjucks';
 import { AP } from 'activitypub-core-types';
 import * as path from 'path';
@@ -161,6 +161,53 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
               const activity = this.activity as AP.Update;
               const object = activity.object as AP.Group;
               const objectId = getId(object);
+
+              const rawAttachments = (object.attachment ? Array.isArray(object.attachment) ? object.attachment : [object.attachment] : []) as unknown as Array<{
+                name: string;
+                value: string;
+              }>;
+
+              const attachments = [];
+
+              for (const attachment of rawAttachments) {
+                console.log(attachment);
+                if (attachment.name === 'Group Manager' && attachment.value.startsWith('@')) {
+                  console.log(attachment.value);
+                  const [, username, domain] = attachment.value.split('@');
+                  console.log(username, domain)
+
+                  const finger = await mongoDbAdapter.fetch(`https://${domain}/.well-known/webfinger?resource=acct:${username}@${domain}`, {
+                    headers: {
+                      [ACCEPT_HEADER]: JRD_CONTENT_TYPE,
+                    },
+                  })
+                  .then(res => res.json())
+                  .catch(() => null);
+
+                  if (finger && finger.links) {
+                    const profileUrl = finger.links.find(({ type }) => type === HTML_CONTENT_TYPE)?.href;
+
+                    if (profileUrl) {
+                      attachments.push({
+                        ...attachment,
+                        value: `<a href="${profileUrl}">@${username}@${domain}</a>`,
+                      });
+                    } else {
+                      attachments.push(attachment);
+                    }
+                  } else {
+                    attachments.push(attachment);
+                  }
+                } else {
+                  attachments.push(attachment);
+                }
+              }
+
+              ((this.activity as AP.Update).object as AP.Group).attachment = attachments;
+
+              console.log((this.activity as AP.Update).object);
+              console.log(attachments);
+
               const hashtags = (object.tag ? Array.isArray(object.tag) ? object.tag : [object.tag] : []) as AP.Link[];
 
               // Loop over the Group's existing hashtags.
@@ -207,10 +254,6 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                     await mongoDbAdapter.removeItem(new URL(hashtagsCollectionId), new URL(hashtagCollectionId));
                   }
                 }
-              }
-
-              if (!hashtags.length) {
-                return;
               }
 
               // Loop over the updated hashtags.

@@ -38,9 +38,9 @@
                 {% if actor.attachment %}
                   {% for attachment in actor.attachment %}
                     {% if attachment.name == 'Group Manager' %}
-                      manager="{{ attachment.value }}"
+                      manager='{{ attachment.value | safe }}'
                     {% elif attachment.name == 'Group Rules' %}
-                      rules="{{ attachment.value | safe }}"
+                      rules='{{ attachment.value | safe }}'
                     {% endif %}
                   {% endfor %}
                 {% endif %}
@@ -52,7 +52,7 @@
                 {% endif %}
                 icon="{{ actor.icon | dump }}"
                 name="{{ actor.name }}"
-                summary="{{ actor.summary }}">
+                summary='{{ actor.summary | safe }}''>
               </group-details>
             </details>
           </section>

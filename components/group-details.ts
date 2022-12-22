@@ -96,6 +96,9 @@ export class GroupDetails extends LitElement {
   @state()
   private textRules = '';
 
+  @state()
+  private textManager = '';
+
   override firstUpdated() {
     const summaryWrapperElement = window.document.createElement('div');
     summaryWrapperElement.innerHTML = this.summary ?? '';
@@ -104,6 +107,10 @@ export class GroupDetails extends LitElement {
     const rulesWrapperElement = window.document.createElement('div');
     rulesWrapperElement.innerHTML = this.rules ?? 'Be nice.';
     this.textRules = this.getInnerText(rulesWrapperElement);
+
+    const managerWrapperElement = window.document.createElement('div');
+    managerWrapperElement.innerHTML = this.manager ?? 'Anonymous';
+    this.textManager = this.getInnerText(managerWrapperElement);
   }
 
   private getInnerText(element: Element) {
@@ -368,7 +375,7 @@ export class GroupDetails extends LitElement {
               Group Manager
             </span>
             <span role="cell">
-              <input type="text" name="manager" value=${this.manager ?? 'Anonymous'} />
+              <input type="text" name="manager" value=${this.textManager ?? 'Anonymous'} />
             </span>
             <span class="hint-text">
               The @handle where people can contact you, otherwise "Anonymous"
