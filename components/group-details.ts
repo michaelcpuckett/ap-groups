@@ -143,16 +143,21 @@ export class GroupDetails extends LitElement {
 
     const rawSummary = this.summaryTextareaElement.value;
 
-    const summaryWithLinks = [];
-    for (const word of rawSummary.split(' ')) {
+    const links = [];
+    
+    for (const word of rawSummary.split(/[ \n]+/g)) {
       if (word.startsWith('https://')) {
-        summaryWithLinks.push(`<a href="${word}">${word}</a>`);
-      } else {
-        summaryWithLinks.push(word);
+        if (links.indexOf(word) === -1) {
+          links.push(word);
+        }
       }
     }
 
-    const htmlSummary = this.encode4HTML(summaryWithLinks.join(' '));
+    let htmlSummary = this.encode4HTML(rawSummary);
+
+    for (const link of links) {
+      htmlSummary = htmlSummary.replace(new RegExp(link, 'g'), `<a href="${link}">${link}</a>`);
+    }
 
     const hashtags = [];
     const summary = htmlSummary.replace(/\#([\w]+)/g, (match: string, hashtag: string) => {
