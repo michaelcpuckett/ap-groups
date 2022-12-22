@@ -63,11 +63,15 @@ export class PaginationNav extends LitElement {
   @state()
   private type = '';
 
+  @state()
+  private sort = '';
+
   override firstUpdated() {
     this.baseUrlPath = new URL(this.firstPage).pathname;
     this.isCurrent = new URL(this.firstPage).searchParams.has('current');
     this.limit = new URL(this.firstPage).searchParams.get('limit');
     this.type = new URL(this.firstPage).searchParams.get('type');
+    this.sort = new URL(this.firstPage).searchParams.get('sort');
     this.firstPageIndex = Number(new URL(this.firstPage).searchParams.get('page')) || 1;
     this.lastPageIndex = Number(new URL(this.lastPage).searchParams.get('page')) || 1;
     this.totalPages = this.lastPageIndex - this.firstPageIndex + 1;
@@ -95,7 +99,7 @@ export class PaginationNav extends LitElement {
     }
 
     if (this.totalPages === 1) {
-      const url = `${this.baseUrlPath}?page=1${this.isCurrent ? '&current' : ''}${this.type ? `&type=${this.type}` : ''}${this.limit ? `&limit=${this.limit}` : ''}`;
+      const url = `${this.baseUrlPath}?page=1${this.isCurrent ? '&current' : ''}${this.type ? `&type=${this.type}` : ''}${this.limit ? `&limit=${this.limit}` : ''}${this.sort ? `&sort=${this.sort}` : ''}`;
 
       return html`
         <ol>
