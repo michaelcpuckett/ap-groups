@@ -1,0 +1,52 @@
+{% macro announcedEntity(note) %}
+  <div class="announced-entity">
+    <div class="left-rail">
+      {% if note.published %}
+        <p>
+          <small>
+            {{ note.published }}
+          </small>
+        </p>
+      {% endif %}
+      {% if note.attributedTo %}
+        <a class="actor-lockup" target="_blank" href="{{ note.attributedTo.url }}">
+          {% if note.attributedTo.icon.url %}
+            <img
+              class="avatar avatar--small"
+              src="{{ note.attributedTo.icon.url }}"
+              height="70"
+              width="70"
+            />
+          {% else %}
+            <span class="avatar avatar--small"></span>
+          {% endif %}
+          <span class="actor-username">
+            @{{ note.attributedTo.preferredUsername }}
+          </span>
+        </a>
+        <a
+          class="permalink"
+          target="_blank"
+          href="{{ note.id }}">
+          Permalink
+        </a>
+      {% endif %}
+    </div>
+    <div class="main">
+      {% if note.attachment %}
+        {% if note.attachment.length %}
+          {% for attachment in note.attachment %}
+            {% if attachment.url %}
+              <img class="attachment" src="{{ attachment.url }}" />
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          {% if note.attachment.url %}
+            <img class="attachment" src="{{ note.attachment.url }}" />
+          {% endif %}
+        {% endif %}
+      {% endif %}
+      {{ note.content | safe }}
+    </div>
+  </div>
+{% endmacro %}

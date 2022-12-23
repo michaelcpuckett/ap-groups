@@ -1,4 +1,4 @@
-{% macro collectionPageEntity(entity) %}
+{% macro collectionPageEntityPage(entity) %}
   <!doctype html>
   <html>
     <title>chirp.social - {{ entity.name }} - Page {{ entity.page }}</title>
@@ -30,105 +30,12 @@
                 {% endif %}
                 {% if item.type == 'Group' %}
                   <div class="region">
-                    {% if item.icon.url %}
-                      <a href="{{ item.url }}/shared?current" style="display: block">
-                        <img
-                          class="avatar"
-                          height="100"
-                          width="100"
-                          src="{{ item.icon.url }}"
-                        />
-                      </a>
-                    {% endif %}
-                    <a href="{{ item.url }}/shared?current">
-                      <strong>
-                        {{ item.name }}
-                      </strong>
-                    </a>
-                    <dl>
-                      <dt>
-                        Handle
-                      </dt>
-                      <dd>
-                        <a href="{{ item.url }}/shared?current">
-                          @{{ item.preferredUsername }}@chirp.social
-                        </a>
-                      </dd>
-                      <dt>
-                        Bio
-                      </dt>
-                      <dd>
-                        {{ item.summary | safe }}
-                      </dd>
-                      {% for attachment in item.attachment %}
-                        <dt>
-                          {{ attachment.name }}
-                        </dt>
-                        <dd>
-                          {{ attachment.value | safe }}
-                        </dd>
-                      {% endfor %}
-                      <dt>
-                        Added
-                      </dt>
-                      <dd>
-                        {{ item.published }}
-                      </dd>
-                    </dl>
+                    {{ groupEntity(item) }}
                   </div>
                 {% endif %}
                 {% if item.type == 'Announce' %}
                   <div class="region">
-                    <div class="announce-entity">
-                      <div class="left-rail">
-                        {% if item.object.published %}
-                          <p>
-                            <small>
-                              {{ item.object.published }}
-                            </small>
-                          </p>
-                        {% endif %}
-                        {% if item.object.attributedTo %}
-                          <a class="actor-lockup" target="_blank" href="{{ item.object.attributedTo.url }}">
-                            {% if item.object.attributedTo.icon.url %}
-                              <img
-                                class="avatar avatar--small"
-                                src="{{ item.object.attributedTo.icon.url }}"
-                                height="70"
-                                width="70"
-                              />
-                            {% else %}
-                              <span class="avatar avatar--small"></span>
-                            {% endif %}
-                            <span class="actor-username">
-                              @{{ item.object.attributedTo.preferredUsername }}
-                            </span>
-                          </a>
-                          <a
-                            class="permalink"
-                            target="_blank"
-                            href="{{ item.object.id }}">
-                            Permalink
-                          </a>
-                        {% endif %}
-                      </div>
-                      <div class="main">
-                        {% if item.object.attachment %}
-                          {% if item.object.attachment.length %}
-                            {% for attachment in item.object.attachment %}
-                              {% if attachment.url %}
-                                <img class="attachment" src="{{ attachment.url }}" />
-                              {% endif %}
-                            {% endfor %}
-                          {% else %}
-                            {% if item.object.attachment.url %}
-                              <img class="attachment" src="{{ item.object.attachment.url }}" />
-                            {% endif %}
-                          {% endif %}
-                        {% endif %}
-                        {{ item.object.content | safe }}
-                      </div>
-                    </div>
+                    {{ announcedEntity(item.object) }}
                   </div>
                 {% endif %}
                 {% if item.type == 'Create' and item.object.id and item.object.type == 'Note' %}
@@ -139,7 +46,7 @@
                   </div>
                 {% endif %}
                 {% if item.type == 'Create' and item.object.id and item.object.type == 'Group' %}
-                  <directory-entry entity-id="{{ item.object.id }}"></directory-entry>
+                  {{ groupEntity(item.object) }}
                 {% endif %}
               {% endfor %}
               <div class="region">
@@ -157,51 +64,7 @@
           {% if attributedTo.url %}
             {% if not r/entity\/bot/.test(attributedTo) %}
               <div class="region">
-                  {% if attributedTo.icon.url %}
-                    <a href="{{ attributedTo.url }}/shared?current" style="display: block">
-                      <img
-                        class="avatar"
-                        height="100"
-                        width="100"
-                        src="{{ attributedTo.icon.url }}"
-                      />
-                    </a>
-                  {% endif %}
-                  <a href="{{ attributedTo.url }}/shared?current">
-                    <strong>
-                      {{ attributedTo.name }}
-                    </strong>
-                  </a>
-                  <dl>
-                    <dt>
-                      Handle
-                    </dt>
-                    <dd>
-                      <a href="{{ attributedTo.url }}/shared?current">
-                        @{{ attributedTo.preferredUsername }}@chirp.social
-                      </a>
-                    </dd>
-                    <dt>
-                      Bio
-                    </dt>
-                    <dd>
-                      {{ attributedTo.summary | safe }}
-                    </dd>
-                    {% for attachment in attributedTo.attachment %}
-                      <dt>
-                        {{ attachment.name }}
-                      </dt>
-                      <dd>
-                        {{ attachment.value | safe }}
-                      </dd>
-                    {% endfor %}
-                    <dt>
-                      Added
-                    </dt>
-                    <dd>
-                      {{ attributedTo.published }}
-                    </dd>
-                  </dl>
+                {{ groupEntity(attributedTo) }}
               </div>
             {% endif %}
 

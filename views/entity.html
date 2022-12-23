@@ -3,18 +3,21 @@
 {% from "partials/pagination.html" import pagination with context %}
 {% from "partials/directoryLink.html" import directoryLink with context %}
 
-{% from "entity/collection.html" import collectionEntity with context %}
-{% from "entity/collectionPage.html" import collectionPageEntity with context %}
-{% from "entity/group.html" import groupEntity with context %}
+{% from "entity/announcedEntity.html" import announcedEntity with context %}
+{% from "entity/groupEntity.html" import groupEntity with context %}
+
+{% from "entity/collection.html" import collectionEntityPage with context %}
+{% from "entity/collectionPage.html" import collectionPageEntityPage with context %}
+{% from "entity/group.html" import groupEntityPage with context %}
 
 {% if entity.type === 'Collection' or entity.type === 'OrderedCollection' %}
-  {{ collectionEntity(entity) }}
+  {{ collectionEntityPage(entity) }}
 {% endif %}
 
 {% if entity.type == 'CollectionPage' or entity.type == 'OrderedCollectionPage' %}
-  {{ collectionPageEntity(entity) }}
+  {{ collectionPageEntityPage(entity) }}
 {% endif %}
 
 {% if entity.type === 'Group' %}
-  {{ groupEntity(entity) }}
+  {{ groupEntityPage(entity) }}
 {% endif %}

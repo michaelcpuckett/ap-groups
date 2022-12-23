@@ -1,0 +1,49 @@
+{% macro groupEntity(group) %}
+  <div class="group-entity">
+    {% if group.icon.url %}
+      <a href="{{ group.url }}/shared?current" style="display: block">
+        <img
+          class="avatar"
+          height="100"
+          width="100"
+          src="{{ group.icon.url }}"
+        />
+      </a>
+    {% endif %}
+    <a href="{{ group.url }}/shared?current">
+      <strong>
+        {{ group.name }}
+      </strong>
+    </a>
+    <dl>
+      <dt>
+        Handle
+      </dt>
+      <dd>
+        <a href="{{ group.url }}/shared?current">
+          @{{ group.preferredUsername }}@chirp.social
+        </a>
+      </dd>
+      <dt>
+        Bio
+      </dt>
+      <dd>
+        {{ group.summary | safe }}
+      </dd>
+      {% for attachment in group.attachment %}
+        <dt>
+          {{ attachment.name }}
+        </dt>
+        <dd>
+          {{ attachment.value | safe }}
+        </dd>
+      {% endfor %}
+      <dt>
+        Added
+      </dt>
+      <dd>
+        {{ group.published }}
+      </dd>
+    </dl>
+  </div>
+{% endmacro %}

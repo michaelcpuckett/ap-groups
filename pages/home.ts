@@ -111,3 +111,54 @@ if (addAdministratorForm) {
     });
   });
 }
+
+window.document.querySelector('#posts')?.addEventListener('click', (event: Event) => {
+  const target = event.target;
+
+  if (!(target instanceof HTMLButtonElement)) {
+    return;
+  }
+
+  const action = target.dataset.action;
+
+  if (!action) {
+    return;
+  }
+
+  const entityId = target.dataset.entityId;
+  const actorId = target.dataset.actorId;
+
+  switch (action) {
+    case 'undo-announce': {
+      if (!entityId || !actorId) {
+        return;
+      }
+      
+      fetch(`${actorId}/outbox`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/activity+json',
+        },
+        body: JSON.stringify({
+          '@context': 'https://www.w3.org/ns/activitystreams',
+          type: 'Undo',
+          actor: `${actorId}`,
+          object: entityId,
+          to: [
+            'https://www.w3.org/ns/activitystreams#Public',
+            `${actorId}/followers`,
+          ],
+        }),
+      }).then(res => {
+        if (res.headers.has('Location')) {
+          window.location.reload();
+        }
+      });
+    }
+    break;
+    default: {
+
+    }
+    break;
+  }
+});

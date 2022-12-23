@@ -58,7 +58,7 @@
           </section>
 
           <section>
-            <details open>
+            <details>
               <summary>
                 Post as the Group
               </summary>
@@ -73,17 +73,28 @@
           <section>
             <details open>
               <summary>
-                Outbox ({{ actor.outbox.totalItems }})
+                Shared Statuses ({{ shared.length }})
               </summary>
-              <div class="regions">
-                {% if actor.outbox.orderedItems.length %}
-                  {% for post in actor.outbox.orderedItems %}
+              <div class="regions" id="posts">
+                {% if shared.length %}
+                  {% for post in shared %}
                     <div class="region">
-                      <announce-entity
-                        entity-id="{{ post }}"
-                        actor-id="{{ actor.id }}"
-                        undo-action>
-                      </announce-entity>
+                      <details class="flyout">
+                        <summary aria-label="Options">
+                          Options...
+                        </summary>
+                        <div>
+                          <button
+                            type="button"
+                            class="button button--tag"
+                            data-action="undo-announce"
+                            data-entity-id="{{ post.id }}"
+                            data-actor-id="{{ post.actor.id or post.actor }}">
+                            Delete
+                          </button>
+                        </div>
+                      </details>
+                      {{ announcedActivity(post.object) }}
                     </div>
                   {% endfor %}
                 {% else %}

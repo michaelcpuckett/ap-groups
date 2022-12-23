@@ -121,7 +121,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
               object: {
                 ...this.activity.object,
                 name: this.activity.object.preferredUsername,
-                summary: `I'm a #chirp.social group! Follow me and mention me to join the conversation.`,
+                summary: `I'm a chirp.social group! Follow me and mention me to join the conversation.`,
                 image: {
                   type: 'Image',
                   url: 'https://media.michaelpuckett.engineer/uploads/banner.png',
