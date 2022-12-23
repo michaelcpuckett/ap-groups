@@ -60,20 +60,20 @@
           </div>
         </div>
         <div class="right-rail">
-          {% set firstCharacter = entity.name | first %}
           {% if attributedTo.url %}
             {% if not r/entity\/bot/.test(attributedTo) %}
               <div class="region">
                 {{ groupEntity(attributedTo) }}
               </div>
             {% endif %}
-
-            {{ directoryLink() }}
-
-            <div class="region">
-              <search-users-form entity-id="http://localhost:3000/entity/bot/outbox"></search-users-form>
-            </div>
           {% endif %}
+          
+          {{ directoryLink() }}
+
+          <div class="region">
+            <search-users-form entity-id="http://localhost:3000/entity/bot/outbox"></search-users-form>
+          </div>
+
           {{ about() }}
         </div>
       </div>
