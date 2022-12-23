@@ -162,6 +162,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
               const activity = this.activity as AP.Update;
               const object = activity.object as AP.Group;
               const objectId = getId(object);
+              const isSensitive = object.sensitive;
 
               const rawAttachments = (object.attachment ? Array.isArray(object.attachment) ? object.attachment : [object.attachment] : []) as unknown as Array<{
                 name: string;
@@ -203,10 +204,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
 
               ((this.activity as AP.Update).object as AP.Group).attachment = attachments;
 
-              console.log((this.activity as AP.Update).object);
-              console.log(attachments);
-
-              const hashtags = (object.tag ? Array.isArray(object.tag) ? object.tag : [object.tag] : []) as AP.Link[];
+              const hashtags = isSensitive ? [] : (object.tag ? Array.isArray(object.tag) ? object.tag : [object.tag] : []) as AP.Link[];
 
               // Loop over the Group's existing hashtags.
 
@@ -216,7 +214,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                 throw new Error('No object.');
               }
 
-              const prevHashtags = (prevObject.tag ? Array.isArray(prevObject.tag) ? prevObject.tag : [prevObject.tag] : []) as AP.Link[];
+              const prevHashtags = isSensitive ? [] : (prevObject.tag ? Array.isArray(prevObject.tag) ? prevObject.tag : [prevObject.tag] : []) as AP.Link[];
 
               for (const prevHashtag of prevHashtags) {
                 const matchingTag = hashtags.find(hashtag => hashtag.name === prevHashtag.name);

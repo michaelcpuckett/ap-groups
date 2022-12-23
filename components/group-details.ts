@@ -386,10 +386,10 @@ export class GroupDetails extends LitElement {
               Group Description / Hashtags for Discovery
             </span>
             <span role="cell">
-              <textarea name="summary" rows="5">${this.textSummary ?? ''}</textarea>
+              <textarea name="summary" rows="4">${this.textSummary ?? ''}</textarea>
             </span>
             <span class="hint-text">
-              Add #hashtags here to be featured in the directory. Adult hashtags are not allowed.
+              Add #hashtags here to be featured in the directory. Hashtags won't show for 18+ Groups.
             </span>
           </label>
           <label role="row" class="label">
@@ -397,7 +397,7 @@ export class GroupDetails extends LitElement {
               Group Rules
             </span>
             <span role="cell">
-              <textarea name="rules" rows="5">${this.textRules ?? 'Be nice.'}</textarea>
+              <textarea name="rules" rows="4">${this.textRules ?? 'Be nice.'}</textarea>
             </span>
           </label>
           <label role="row" class="label">
