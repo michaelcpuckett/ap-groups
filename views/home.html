@@ -78,6 +78,14 @@
               </summary>
               <div class="regions" id="posts">
                 {% if shared.length %}
+                  <div class="region">
+                    <pagination-nav
+                      first-page="{{ pagination.first }}"
+                      prev-page="{{ pagination.prev }}"
+                      next-page="{{ pagination.next }}"
+                      last-page="{{ pagination.last }}">
+                    </pagination-nav>
+                  </div>
                   {% for post in shared %}
                     <div class="region">
                       <details class="flyout">
@@ -98,6 +106,14 @@
                       {{ announcedEntity(post.object) }}
                     </div>
                   {% endfor %}
+                  <div class="region">
+                    <pagination-nav
+                      first-page="{{ pagination.first }}"
+                      prev-page="{{ pagination.prev }}"
+                      next-page="{{ pagination.next }}"
+                      last-page="{{ pagination.last }}">
+                    </pagination-nav>
+                  </div>
                 {% else %}
                   <p>
                     No posts yet.

@@ -455,7 +455,14 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
               return null;
             }
           },
-          getHomePageProps: async (actor: AP.Actor) => {
+          getHomePageProps: async (actor: AP.Actor, rawUrl: string) => {
+            const ITEMS_PER_PAGE = 25;
+            console.log(rawUrl);
+            const url = new URL(`${LOCAL_DOMAIN}${rawUrl}`);
+            const query = url.searchParams;
+            const currentPage = Number(query.get('page') || 1);
+            const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+
             const streams = actor.streams as URL[];
             const sharedUrl = streams.find((stream: URL) => `${stream}`.endsWith('shared'));
             const requestsUrl = streams.find((stream: URL) => `${stream}`.endsWith('requests'));
@@ -478,9 +485,13 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
               }).toArray(),
             ]);
 
+            const sharedIdsArray = (sharedIds ? Array.isArray(sharedIds) ? sharedIds : [sharedIds] : []);
+
+            const lastPageIndex = Math.max(1, Math.ceil(sharedIdsArray.length / ITEMS_PER_PAGE));
+
             const shared = [];
 
-            for (const sharedId of (sharedIds ? Array.isArray(sharedIds) ? sharedIds : [sharedIds] : [])) {
+            for (const sharedId of sharedIdsArray.slice(startIndex, startIndex + ITEMS_PER_PAGE)) {
               const announceActivity = await mongoDbAdapter.findEntityById(sharedId) as AP.Announce;
 
               if (!announceActivity) {
@@ -534,6 +545,16 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
               members,
               blocks,
               admins,
+              pagination: {
+                first: `${LOCAL_DOMAIN}${url.pathname}?page=1`,
+                ...currentPage > 1 ? {
+                  prev: `${LOCAL_DOMAIN}${url.pathname}?page=${currentPage - 1}`,
+                } : null,
+                ...currentPage < lastPageIndex ? {
+                  next: `${LOCAL_DOMAIN}${url.pathname}?page=${currentPage + 1}`,
+                } : null,
+                last: `${LOCAL_DOMAIN}${url.pathname}?page=${lastPageIndex}`,
+              }
             };
           },
         }

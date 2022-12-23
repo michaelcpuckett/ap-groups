@@ -4,6 +4,7 @@ import '../components/request-entity';
 import '../components/block-entity';
 import '../components/announce-entity';
 import '../components/post-form';
+import '../components/pagination-nav';
 
 const buttonElements = Array.from(window.document.querySelectorAll('button[type="button"]'));
 
