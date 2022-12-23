@@ -463,7 +463,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
             const membersUrl = actor.followers as URL;
 
             const [
-              shared,
+              sharedIds,
               requests,
               members,
               blocks,
@@ -477,6 +477,28 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                 value: actor.preferredUsername,
               }).toArray(),
             ]);
+
+            const shared = [];
+
+            for (const sharedId of (sharedIds ? Array.isArray(sharedIds) ? sharedIds : [sharedIds] : [])) {
+              const announceActivity = await mongoDbAdapter.findEntityById(sharedId) as AP.Announce;
+
+              if (!announceActivity) {
+                break;
+              }
+              
+              const objectId = getId(announceActivity.object);
+              const object = await mongoDbAdapter.fetchEntityById(objectId);
+
+              if (!object) {
+                break;
+              }
+
+              shared.push({
+                ...announceActivity,
+                object,
+              });
+            }
 
             const admins = [];
 
