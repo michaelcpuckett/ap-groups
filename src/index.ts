@@ -487,6 +487,13 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                 break;
               }
               
+              const actorId = getId(announceActivity.actor);
+              const actor = await mongoDbAdapter.fetchEntityById(actorId);
+
+              if (!actor) {
+                break;
+              }
+
               const objectId = getId(announceActivity.object);
               const object = await mongoDbAdapter.fetchEntityById(objectId);
 
@@ -496,7 +503,10 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
 
               shared.push({
                 ...announceActivity,
-                object,
+                object: {
+                  ...object,
+                  attributedTo: actor,
+                },
               });
             }
 
