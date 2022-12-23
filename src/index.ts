@@ -456,7 +456,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
             }
           },
           getHomePageProps: async (actor: AP.Actor, rawUrl: string) => {
-            const ITEMS_PER_PAGE = 25;
+            const ITEMS_PER_PAGE = 50;
             console.log(rawUrl);
             const url = new URL(`${LOCAL_DOMAIN}${rawUrl}`);
             const query = url.searchParams;
@@ -546,6 +546,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
               blocks,
               admins,
               pagination: {
+                totalItems: sharedIdsArray.length,
                 first: `${LOCAL_DOMAIN}${url.pathname}?page=1`,
                 ...currentPage > 1 ? {
                   prev: `${LOCAL_DOMAIN}${url.pathname}?page=${currentPage - 1}`,
