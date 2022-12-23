@@ -486,18 +486,18 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
               if (!announceActivity) {
                 break;
               }
-              
-              const actorId = getId(announceActivity.actor);
-              const actor = await mongoDbAdapter.fetchEntityById(actorId);
-
-              if (!actor) {
-                break;
-              }
 
               const objectId = getId(announceActivity.object);
               const object = await mongoDbAdapter.fetchEntityById(objectId);
 
               if (!object) {
+                break;
+              }
+              
+              const actorId = getId(object.attributedTo);
+              const actor = await mongoDbAdapter.fetchEntityById(actorId);
+
+              if (!actor) {
                 break;
               }
 
