@@ -138,7 +138,10 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
             };
           },
           getIsEntityGetRequest(url: string) {
-            if (url.startsWith('/hashtags') || url.startsWith('/hashtag')) {
+            if ([
+              '/hashtags',
+              '/hashtag',
+            ].includes(new URL(url).pathname)) {
               return true;
             }
           },
@@ -462,215 +465,220 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
             }
           },
           getHomePageProps: async (actor: AP.Actor, rawUrl: string) => {
-            const ITEMS_PER_PAGE = 25;
-            const url = new URL(`${LOCAL_DOMAIN}${rawUrl}`);
-            const query = url.searchParams;
-            const currentPage = Number(query.get('page') || 1);
-            const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+            if (rawUrl === '/home') {
+              const ITEMS_PER_PAGE = 25;
+              const url = new URL(`${LOCAL_DOMAIN}${rawUrl}`);
+              const query = url.searchParams;
+              const currentPage = Number(query.get('page') || 1);
+              const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
 
-            const streams = actor.streams as URL[];
-            const sharedUrl = streams.find((stream: URL) => `${stream}`.endsWith('shared'));
-            const requestsUrl = streams.find((stream: URL) => `${stream}`.endsWith('requests'));
-            const blocksUrl = streams.find((stream: URL) => `${stream}`.endsWith('blocks'));
-            const membersUrl = actor.followers as URL;
+              const streams = actor.streams as URL[];
+              const sharedUrl = streams.find((stream: URL) => `${stream}`.endsWith('shared'));
+              const requestsUrl = streams.find((stream: URL) => `${stream}`.endsWith('requests'));
+              const blocksUrl = streams.find((stream: URL) => `${stream}`.endsWith('blocks'));
+              const membersUrl = actor.followers as URL;
 
-            const [
-              {
-                sharedTotalItems,
+              const [
+                {
+                  sharedTotalItems,
+                  shared,
+                },
+                requests,
+                members,
+                blocks,
+                admins,
+              ] = await Promise.all([
+                mongoDbAdapter
+                  .findEntityById(sharedUrl).then((collection: AP.OrderedCollection) => collection.orderedItems)
+                  .then(async (sharedIds: URL[]) => {
+                    const sharedTotalItems = sharedIds.length;
+                    const sliced = (sharedIds ? Array.isArray(sharedIds) ? sharedIds : [sharedIds] : []).slice(startIndex, startIndex + ITEMS_PER_PAGE);
+                    const shared = await Promise.all(sliced.map(async (sharedId) => {
+                      try {
+                        if (!(sharedId instanceof URL)) {
+                          throw new Error('No shared ID');
+                        }
+
+                        const announceActivity = await mongoDbAdapter.findEntityById(sharedId) as AP.Announce;
+        
+                        if (!announceActivity) {
+                          throw new Error('No activity found.');
+                        }
+          
+                        const objectId = getId(announceActivity.object);
+          
+                        if (!objectId) {
+                          throw new Error('No object ID');
+                        }
+          
+                        const object = await mongoDbAdapter.fetchEntityById(objectId) as AP.Note;
+          
+                        if (!object) {
+                          throw new Error('No object');
+                        }
+                        
+                        const actorId = getId(object.attributedTo);
+          
+                        if (!actorId) {
+                          throw new Error('No actor ID');
+                        }
+          
+                        const actor = await mongoDbAdapter.fetchEntityById(actorId);
+          
+                        if (!actor) {
+                          throw new Error('No actor.');
+                        }
+          
+                        return {
+                          ...announceActivity,
+                          object: {
+                            ...object,
+                            attributedTo: actor,
+                          },
+                        };
+                      } catch (error) {
+                        return {
+                          type: AP.ExtendedObjectTypes.TOMBSTONE,
+                        };
+                      }
+                    }));
+
+                    return {
+                      sharedTotalItems,
+                      shared,
+                    };
+                  })
+                  .catch(() => {
+                    return {
+                      sharedTotalItems: 0,
+                      shared: [],
+                    };
+                  }),
+
+                mongoDbAdapter
+                  .findEntityById(requestsUrl)
+                  .then((collection: AP.Collection) => collection.items)
+                  .then(async (items: URL[]) => {
+                    return await Promise.all(items.map(async (item) => {
+                      try {
+                        const foundItem = await mongoDbAdapter.queryById(item) as AP.Follow;
+
+                        if (!foundItem) {
+                          throw new Error('Not found.');
+                        }
+
+                        const actorId = getId(foundItem.actor);
+
+                        if (!actorId) {
+                          throw new Error('No actor ID');
+                        }
+
+                        const foundActor = await mongoDbAdapter.queryById(actorId);
+
+                        if (!foundActor) {
+                          throw new Error('No actor found.');
+                        }
+
+                        return {
+                          ...foundItem,
+                          actor: foundActor,
+                        };
+                      } catch (error) {
+                        return {
+                          type: AP.ExtendedObjectTypes.TOMBSTONE,
+                        };
+                      }
+                    }));
+                  })
+                  .catch(() => []),
+
+                mongoDbAdapter
+                  .findEntityById(membersUrl)
+                  .then((collection: AP.Collection) => collection.items)
+                  .then(async (items: URL[]) => {
+                    return await Promise.all(items.map(async (item) => {
+                      return await mongoDbAdapter.queryById(item);
+                    }));
+                  })
+                  .catch(() => []),
+
+                mongoDbAdapter
+                  .findEntityById(blocksUrl)
+                  .then((collection: AP.Collection) => collection.items)
+                  .then(async (items: URL[]) => {
+                    return await Promise.all(items.map(async (item) => {
+                      try {
+                        const foundItem = await mongoDbAdapter.queryById(item) as AP.Block;
+
+                        if (!foundItem) {
+                          throw new Error('Not found.');
+                        }
+
+                        const actorId = getId(foundItem.object);
+
+                        if (!actorId) {
+                          throw new Error('No actor ID');
+                        }
+
+                        const foundActor = await mongoDbAdapter.queryById(actorId);
+
+                        if (!foundActor) {
+                          throw new Error('No actor found.');
+                        }
+
+                        return {
+                          ...foundItem,
+                          object: foundActor,
+                        };
+                      } catch (error) {
+                        return {
+                          type: AP.ExtendedObjectTypes.TOMBSTONE,
+                        };
+                      }
+                    }));
+                  })
+                  .catch(() => []),
+
+                mongoDbAdapter
+                  .db
+                  .collection('username').find({
+                    value: actor.preferredUsername,
+                  })
+                  .toArray()
+                  .then(async (items) => {
+                    return Promise.all(items.map(async ({ _id }) => {
+                      return (await mongoDbAdapter.db.collection('account').findOne({
+                        _id,
+                      }))?.value;
+                    }));
+                  }),
+              ]);
+
+              const lastPageIndex = Math.max(1, Math.ceil(sharedTotalItems / ITEMS_PER_PAGE));
+
+              return {
                 shared,
-              },
-              requests,
-              members,
-              blocks,
-              admins,
-            ] = await Promise.all([
-              mongoDbAdapter
-                .findEntityById(sharedUrl).then((collection: AP.OrderedCollection) => collection.orderedItems)
-                .then(async (sharedIds: URL[]) => {
-                  const sharedTotalItems = sharedIds.length;
-                  const sliced = (sharedIds ? Array.isArray(sharedIds) ? sharedIds : [sharedIds] : []).slice(startIndex, startIndex + ITEMS_PER_PAGE);
-                  const shared = await Promise.all(sliced.map(async (sharedId) => {
-                    try {
-                      if (!(sharedId instanceof URL)) {
-                        throw new Error('No shared ID');
-                      }
-
-                      const announceActivity = await mongoDbAdapter.findEntityById(sharedId) as AP.Announce;
-      
-                      if (!announceActivity) {
-                        throw new Error('No activity found.');
-                      }
-        
-                      const objectId = getId(announceActivity.object);
-        
-                      if (!objectId) {
-                        throw new Error('No object ID');
-                      }
-        
-                      const object = await mongoDbAdapter.fetchEntityById(objectId) as AP.Note;
-        
-                      if (!object) {
-                        throw new Error('No object');
-                      }
-                      
-                      const actorId = getId(object.attributedTo);
-        
-                      if (!actorId) {
-                        throw new Error('No actor ID');
-                      }
-        
-                      const actor = await mongoDbAdapter.fetchEntityById(actorId);
-        
-                      if (!actor) {
-                        throw new Error('No actor.');
-                      }
-        
-                      return {
-                        ...announceActivity,
-                        object: {
-                          ...object,
-                          attributedTo: actor,
-                        },
-                      };
-                    } catch (error) {
-                      return {
-                        type: AP.ExtendedObjectTypes.TOMBSTONE,
-                      };
-                    }
-                  }));
-
-                  return {
-                    sharedTotalItems,
-                    shared,
-                  };
-                })
-                .catch(() => {
-                  return {
-                    sharedTotalItems: 0,
-                    shared: [],
-                  };
-                }),
-
-              mongoDbAdapter
-                .findEntityById(requestsUrl)
-                .then((collection: AP.Collection) => collection.items)
-                .then(async (items: URL[]) => {
-                  return await Promise.all(items.map(async (item) => {
-                    try {
-                      const foundItem = await mongoDbAdapter.queryById(item) as AP.Follow;
-
-                      if (!foundItem) {
-                        throw new Error('Not found.');
-                      }
-
-                      const actorId = getId(foundItem.actor);
-
-                      if (!actorId) {
-                        throw new Error('No actor ID');
-                      }
-
-                      const foundActor = await mongoDbAdapter.queryById(actorId);
-
-                      if (!foundActor) {
-                        throw new Error('No actor found.');
-                      }
-
-                      return {
-                        ...foundItem,
-                        actor: foundActor,
-                      };
-                    } catch (error) {
-                      return {
-                        type: AP.ExtendedObjectTypes.TOMBSTONE,
-                      };
-                    }
-                  }));
-                })
-                .catch(() => []),
-
-              mongoDbAdapter
-                .findEntityById(membersUrl)
-                .then((collection: AP.Collection) => collection.items)
-                .then(async (items: URL[]) => {
-                  return await Promise.all(items.map(async (item) => {
-                    return await mongoDbAdapter.queryById(item);
-                  }));
-                })
-                .catch(() => []),
-
-              mongoDbAdapter
-                .findEntityById(blocksUrl)
-                .then((collection: AP.Collection) => collection.items)
-                .then(async (items: URL[]) => {
-                  return await Promise.all(items.map(async (item) => {
-                    try {
-                      const foundItem = await mongoDbAdapter.queryById(item) as AP.Block;
-
-                      if (!foundItem) {
-                        throw new Error('Not found.');
-                      }
-
-                      const actorId = getId(foundItem.object);
-
-                      if (!actorId) {
-                        throw new Error('No actor ID');
-                      }
-
-                      const foundActor = await mongoDbAdapter.queryById(actorId);
-
-                      if (!foundActor) {
-                        throw new Error('No actor found.');
-                      }
-
-                      return {
-                        ...foundItem,
-                        object: foundActor,
-                      };
-                    } catch (error) {
-                      return {
-                        type: AP.ExtendedObjectTypes.TOMBSTONE,
-                      };
-                    }
-                  }));
-                })
-                .catch(() => []),
-
-              mongoDbAdapter
-                .db
-                .collection('username').find({
-                  value: actor.preferredUsername,
-                })
-                .toArray()
-                .then(async (items) => {
-                  return Promise.all(items.map(async ({ _id }) => {
-                    return (await mongoDbAdapter.db.collection('account').findOne({
-                      _id,
-                    }))?.value;
-                  }));
-                }),
-            ]);
-
-            const lastPageIndex = Math.max(1, Math.ceil(sharedTotalItems / ITEMS_PER_PAGE));
-
-            console.log(shared);
+                requests,
+                members,
+                blocks,
+                admins,
+                url: rawUrl,
+                pagination: {
+                  totalItems: sharedTotalItems,
+                  first: `${LOCAL_DOMAIN}${url.pathname}?page=1`,
+                  ...currentPage > 1 ? {
+                    prev: `${LOCAL_DOMAIN}${url.pathname}?page=${currentPage - 1}`,
+                  } : null,
+                  ...currentPage < lastPageIndex ? {
+                    next: `${LOCAL_DOMAIN}${url.pathname}?page=${currentPage + 1}`,
+                  } : null,
+                  last: `${LOCAL_DOMAIN}${url.pathname}?page=${lastPageIndex}`,
+                }
+              };
+            }
 
             return {
-              shared,
-              requests,
-              members,
-              blocks,
-              admins,
-              pagination: {
-                totalItems: sharedTotalItems,
-                first: `${LOCAL_DOMAIN}${url.pathname}?page=1`,
-                ...currentPage > 1 ? {
-                  prev: `${LOCAL_DOMAIN}${url.pathname}?page=${currentPage - 1}`,
-                } : null,
-                ...currentPage < lastPageIndex ? {
-                  next: `${LOCAL_DOMAIN}${url.pathname}?page=${currentPage + 1}`,
-                } : null,
-                last: `${LOCAL_DOMAIN}${url.pathname}?page=${lastPageIndex}`,
-              }
+              url: rawUrl,
             };
           },
         }

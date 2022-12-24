@@ -17,7 +17,7 @@
             {% endif %}
             {% if items.length %}
               <div class="region">
-                {{ pagination(entity) }}
+                {{ paginationNav(entity) }}
               </div>
               {% for item in items %}
                 {% if item.type == 'Collection' %}
@@ -50,7 +50,7 @@
                 {% endif %}
               {% endfor %}
               <div class="region">
-                {{ pagination(entity) }}
+                {{ paginationNav(entity) }}
               </div>
             {% else %}
               <div class="region">

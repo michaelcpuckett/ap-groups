@@ -1,4 +1,5 @@
 import '../components/group-details';
+import '../components/group-entity-details';
 import '../components/actor-entity';
 import '../components/request-entity';
 import '../components/announce-entity';

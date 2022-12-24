@@ -1,0 +1,73 @@
+{% macro editProfile() %}
+  <!doctype html>
+  <html>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/base.css" />
+    <link rel="stylesheet" href="/index.css" />
+    <link rel="stylesheet" href="/home.css" />
+    <body>
+      <div>
+        <div class="root">
+          <div class="container">
+            {{  header()  }}
+          </div>
+          <div class="right-rail">
+          </div>
+        </div>
+        <div class="root">
+          <div class="container">
+            <section>
+              <a href="/home">
+                Back to Home
+              </a>
+            </section>
+            <section>
+              <h1>
+                Edit Group Profile
+              </h1>
+            </section>
+            <section>
+              <group-details
+                group-actor-id="{{ actor.id }}"
+                followers-url="{{ actor.followers }}"
+                outbox-url="{{ actor.outbox.url }}"
+                upload-media-url="{{ actor.endpoints.uploadMedia }}"
+                {% if actor.attachment %}
+                  {% for attachment in actor.attachment %}
+                    {% if attachment.name == 'Group Manager' %}
+                      manager="{{ attachment.value | e }}"
+                    {% elif attachment.name == 'Group Rules' %}
+                      rules="{{ attachment.value | e }}"
+                    {% endif %}
+                  {% endfor %}
+                {% endif %}
+                {% if actor.manuallyApprovesFollowers %}
+                  manually-approves-followers
+                {% endif %}
+                {% if actor.sensitive %}
+                  sensitive
+                {% endif %}
+                icon="{{ actor.icon | dump }}"
+                name="{{ actor.name }}"
+                summary="{{ actor.summary | e }}">
+              </group-details>
+            </section>
+          </div>
+          <div class="right-rail">
+            <section>
+              <button
+                data-action="logout"
+                type="button"
+                class="button"
+                id="logout-button">
+                Log Out
+              </button>
+            </section>
+          </div>
+        </div>
+      </div>
+      <script type="module" src="/home.js"></script>
+    </body>
+  </html>
+{% endmacro %}
