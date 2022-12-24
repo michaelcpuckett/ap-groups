@@ -1,7 +1,6 @@
 import '../components/group-details';
 import '../components/actor-entity';
 import '../components/request-entity';
-import '../components/block-entity';
 import '../components/announce-entity';
 import '../components/post-form';
 import '../components/pagination-nav';
@@ -112,6 +111,171 @@ if (addAdministratorForm) {
     });
   });
 }
+
+
+window.document.querySelector('#members')?.addEventListener('click', (event: Event) => {
+  const target = event.target;
+
+  if (!(target instanceof HTMLButtonElement)) {
+    return;
+  }
+
+  const action = target.dataset.action;
+
+  if (!action) {
+    return;
+  }
+
+  const entityId = target.dataset.entityId;
+  const actorId = target.dataset.actorId;
+
+  switch (action) {
+    case 'block': {
+      if (!entityId || !actorId) {
+        return;
+      }
+
+      fetch(`${actorId}/outbox`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/activity+json',
+        },
+        body: JSON.stringify({
+          '@context': 'https://www.w3.org/ns/activitystreams',
+          type: 'Block',
+          actor: actorId,
+          object: entityId,
+        }),
+      }).then(res => {
+        if (res.headers.has('Location')) {
+          window.location.reload();
+        }
+      });
+    };
+    break;
+    default: {
+
+    };
+    break;
+  }
+});
+
+
+window.document.querySelector('#blocks')?.addEventListener('click', (event: Event) => {
+  const target = event.target;
+
+  if (!(target instanceof HTMLButtonElement)) {
+    return;
+  }
+
+  const action = target.dataset.action;
+
+  if (!action) {
+    return;
+  }
+
+  const entityId = target.dataset.entityId;
+  const actorId = target.dataset.actorId;
+
+  switch (action) {
+    case 'unblock': {
+      if (!entityId || !actorId) {
+        return;
+      }
+
+      fetch(`${actorId}/outbox`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/activity+json',
+        },
+        body: JSON.stringify({
+          '@context': 'https://www.w3.org/ns/activitystreams',
+          type: 'Undo',
+          actor: actorId,
+          object: entityId,
+        }),
+      }).then(res => {
+        if (res.headers.has('Location')) {
+          window.location.reload();
+        }
+      });
+    };
+    break;
+    default: {
+
+    };
+    break;
+  }
+});
+window.document.querySelector('#requests')?.addEventListener('click', (event: Event) => {
+  const target = event.target;
+
+  if (!(target instanceof HTMLButtonElement)) {
+    return;
+  }
+
+  const action = target.dataset.action;
+
+  if (!action) {
+    return;
+  }
+
+  const entityId = target.dataset.entityId;
+  const actorId = target.dataset.actorId;
+
+  switch (action) {
+    case 'accept': {
+      if (!entityId || !actorId) {
+        return;
+      }
+
+      fetch(`${actorId}/outbox`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/activity+json',
+        },
+        body: JSON.stringify({
+          '@context': 'https://www.w3.org/ns/activitystreams',
+          type: 'Accept',
+          actor: actorId,
+          object: entityId,
+        }),
+      }).then(res => {
+        if (res.headers.has('Location')) {
+          window.location.reload();
+        }
+      });
+    };
+    break;
+    case 'block': {
+      if (!entityId || !actorId) {
+        return;
+      }
+
+      fetch(`${actorId}/outbox`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/activity+json',
+        },
+        body: JSON.stringify({
+          '@context': 'https://www.w3.org/ns/activitystreams',
+          type: 'Block',
+          actor: actorId,
+          object: entityId,
+        }),
+      }).then(res => {
+        if (res.headers.has('Location')) {
+          window.location.reload();
+        }
+      });
+    };
+    default: {
+
+    };
+    break;
+  }
+});
+
 
 window.document.querySelector('#posts')?.addEventListener('click', (event: Event) => {
   const target = event.target;

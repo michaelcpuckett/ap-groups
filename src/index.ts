@@ -19,8 +19,16 @@ import * as cookie from 'cookie';
 const app = express.default();
 app.use(express.static(path.resolve(__dirname, '../static')));
 
-nunjucks.configure('views', {
+const nunjucksConfig = nunjucks.configure('views', {
   autoescape: true,
+});
+
+nunjucksConfig.addFilter('getHostname', (url) => {
+  try {
+    return new URL(url).hostname;
+  } catch (error) {
+    return '';
+  }
 });
 
 app.get('/', async (req: IncomingMessage, res: ServerResponse) => {
@@ -454,7 +462,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
             }
           },
           getHomePageProps: async (actor: AP.Actor, rawUrl: string) => {
-            const ITEMS_PER_PAGE = 50;
+            const ITEMS_PER_PAGE = 25;
             const url = new URL(`${LOCAL_DOMAIN}${rawUrl}`);
             const query = url.searchParams;
             const currentPage = Number(query.get('page') || 1);
@@ -480,7 +488,8 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                 .findEntityById(sharedUrl).then((collection: AP.OrderedCollection) => collection.orderedItems)
                 .then(async (sharedIds: URL[]) => {
                   const sharedTotalItems = sharedIds.length;
-                  const shared = (await Promise.all((sharedIds ? Array.isArray(sharedIds) ? sharedIds : [sharedIds] : []).slice(startIndex, startIndex + ITEMS_PER_PAGE))).map(async (sharedId) => {
+                  const sliced = (sharedIds ? Array.isArray(sharedIds) ? sharedIds : [sharedIds] : []).slice(startIndex, startIndex + ITEMS_PER_PAGE);
+                  const shared = await Promise.all(sliced.map(async (sharedId) => {
                     try {
                       if (!(sharedId instanceof URL)) {
                         throw new Error('No shared ID');
@@ -528,12 +537,12 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                         type: AP.ExtendedObjectTypes.TOMBSTONE,
                       };
                     }
-                  });
+                  }));
 
                   return {
                     sharedTotalItems,
                     shared,
-                  }
+                  };
                 })
                 .catch(() => {
                   return {
@@ -641,9 +650,9 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                 }),
             ]);
 
-            console.log(admins);
-
             const lastPageIndex = Math.max(1, Math.ceil(sharedTotalItems / ITEMS_PER_PAGE));
+
+            console.log(shared);
 
             return {
               shared,

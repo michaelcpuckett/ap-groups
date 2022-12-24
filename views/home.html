@@ -98,7 +98,7 @@
                             class="button button--tag"
                             data-action="undo-announce"
                             data-entity-id="{{ post.id }}"
-                            data-actor-id="{{ post.actor.id or post.actor }}">
+                            data-actor-id="{{ actor.id }}">
                             Delete
                           </button>
                         </div>
@@ -135,7 +135,7 @@
             </button>
           </section>
 
-          <section>
+          <section id="requests">
             <details>
               <summary>
                 Follower Requests ({{ requests.length }})
@@ -143,9 +143,36 @@
               {% if requests.length %}
                 <ul>
                   {% for request in requests %}
-                    <li>
-
-                    </li>
+                    {% if request %}
+                      <li>
+                        <details class="flyout">
+                          <summary aria-label="Options">
+                            Options...
+                          </summary>
+                          <div>
+                            <button
+                              type="button"
+                              class="button button--tag"
+                              data-action="accept"
+                              data-entity-id="{{ request.id }}"
+                              data-actor-id="{{ actor.id }}">
+                              Accept
+                            </button>
+                            <button
+                              type="button"
+                              class="button button--tag"
+                              data-action="block"
+                              data-entity-id="{{ request.actor.id }}"
+                              data-actor-id="{{ actor.id }}">
+                              Block
+                            </button>
+                          </div>
+                        </details>
+                        <a href="{{ request.actor.url }}">
+                          @{{ request.actor.preferredUsername }}@{{ request.actor.url | getHostname }}
+                        </a>
+                      </li>
+                    {% endif %}
                   {% endfor %}
                 </ul>
               {% else %}
@@ -165,7 +192,9 @@
                 <ul>
                   {% for admin in admins %}
                     <li>
-                      {{ admin }}
+                      {% if admin %}
+                        {{ admin }}
+                      {% endif %}
                     </li>
                   {% endfor %}
                 </ul>
@@ -213,7 +242,7 @@
             </details>
           </section>
 
-          <section>
+          <section id="members">
             {% if members.length %}
               <details>
             {% else %}
@@ -225,13 +254,28 @@
               {% if members.length %}
                 <ul>
                   {% for member in members %}
-                    <li>
-                      <actor-entity
-                        entity-id="{{ member }}"
-                        actor-id="{{ actor.id }}"
-                        block-action>
-                      </actor-entity>
-                    </li>
+                    {% if member %}
+                      <li>
+                        <details class="flyout">
+                          <summary aria-label="Options">
+                            Options...
+                          </summary>
+                          <div>
+                            <button
+                              type="button"
+                              class="button button--tag"
+                              data-action="block"
+                              data-entity-id="{{ member.id }}"
+                              data-actor-id="{{ actor.id }}">
+                              Block
+                            </button>
+                          </div>
+                        </details>
+                        <a href="{{ member.url }}">
+                          @{{ member.preferredUsername }}@{{ member.url | getHostname }}
+                        </a>
+                      </li>
+                    {% endif %}
                   {% endfor %}
                 </ul>
               {% else %}
@@ -246,7 +290,7 @@
             </details>
           </section>
 
-          <section>
+          <section id="blocks">
             <details>
               <summary>
                 Blocked ({{ blocks.length }})
@@ -254,13 +298,26 @@
               {% if blocks.length %}
                 <ul>
                   {% for block in blocks %}
-                    <li>
-                      <block-entity
-                        entity-id="{{ block }}"
-                        actor-id="{{ actor.id }}"
-                        unblock-action>
-                      </block-entity>
-                    </li>
+                    {% if block %}
+                      <li>
+                        <details class="flyout">
+                          <summary aria-label="Options">
+                            Options...
+                          </summary>
+                          <div>
+                            <button
+                              type="button"
+                              class="button button--tag"
+                              data-action="unblock"
+                              data-entity-id="{{ block.id }}"
+                              data-actor-id="{{ actor.id }}">
+                              Block
+                            </button>
+                          </div>
+                        </details>
+                        @{{ block.object.preferredUsername }}@{{ block.object.url | getHostname }}
+                      </li>
+                    {% endif %}
                   {% endfor %}
                 </ul>
               {% else %}
