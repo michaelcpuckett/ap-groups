@@ -455,7 +455,6 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
           },
           getHomePageProps: async (actor: AP.Actor, rawUrl: string) => {
             const ITEMS_PER_PAGE = 50;
-            console.log(rawUrl);
             const url = new URL(`${LOCAL_DOMAIN}${rawUrl}`);
             const query = url.searchParams;
             const currentPage = Number(query.get('page') || 1);
@@ -468,74 +467,183 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
             const membersUrl = actor.followers as URL;
 
             const [
-              sharedIds,
+              {
+                sharedTotalItems,
+                shared,
+              },
               requests,
               members,
               blocks,
-              adminIds,
+              admins,
             ] = await Promise.all([
-              mongoDbAdapter.findEntityById(sharedUrl).then((collection: AP.OrderedCollection) => collection.orderedItems).catch(() => []),
-              mongoDbAdapter.findEntityById(requestsUrl).then((collection: AP.Collection) => collection.items).catch(() => []),
-              mongoDbAdapter.findEntityById(membersUrl).then((collection: AP.Collection) => collection.items).catch(() => []),
-              mongoDbAdapter.findEntityById(blocksUrl).then((collection: AP.Collection) => collection.items).catch(() => []),
-              mongoDbAdapter.db.collection('username').find({
-                value: actor.preferredUsername,
-              }).toArray(),
+              mongoDbAdapter
+                .findEntityById(sharedUrl).then((collection: AP.OrderedCollection) => collection.orderedItems)
+                .then(async (sharedIds: URL[]) => {
+                  const sharedTotalItems = sharedIds.length;
+                  const shared = (await Promise.all((sharedIds ? Array.isArray(sharedIds) ? sharedIds : [sharedIds] : []).slice(startIndex, startIndex + ITEMS_PER_PAGE))).map(async (sharedId) => {
+                    try {
+                      if (!(sharedId instanceof URL)) {
+                        throw new Error('No shared ID');
+                      }
+
+                      const announceActivity = await mongoDbAdapter.findEntityById(sharedId) as AP.Announce;
+      
+                      if (!announceActivity) {
+                        throw new Error('No activity found.');
+                      }
+        
+                      const objectId = getId(announceActivity.object);
+        
+                      if (!objectId) {
+                        throw new Error('No object ID');
+                      }
+        
+                      const object = await mongoDbAdapter.fetchEntityById(objectId) as AP.Note;
+        
+                      if (!object) {
+                        throw new Error('No object');
+                      }
+                      
+                      const actorId = getId(object.attributedTo);
+        
+                      if (!actorId) {
+                        throw new Error('No actor ID');
+                      }
+        
+                      const actor = await mongoDbAdapter.fetchEntityById(actorId);
+        
+                      if (!actor) {
+                        throw new Error('No actor.');
+                      }
+        
+                      return {
+                        ...announceActivity,
+                        object: {
+                          ...object,
+                          attributedTo: actor,
+                        },
+                      };
+                    } catch (error) {
+                      return {
+                        type: AP.ExtendedObjectTypes.TOMBSTONE,
+                      };
+                    }
+                  });
+
+                  return {
+                    sharedTotalItems,
+                    shared,
+                  }
+                })
+                .catch(() => {
+                  return {
+                    sharedTotalItems: 0,
+                    shared: [],
+                  };
+                }),
+
+              mongoDbAdapter
+                .findEntityById(requestsUrl)
+                .then((collection: AP.Collection) => collection.items)
+                .then(async (items: URL[]) => {
+                  return await Promise.all(items.map(async (item) => {
+                    try {
+                      const foundItem = await mongoDbAdapter.queryById(item) as AP.Follow;
+
+                      if (!foundItem) {
+                        throw new Error('Not found.');
+                      }
+
+                      const actorId = getId(foundItem.actor);
+
+                      if (!actorId) {
+                        throw new Error('No actor ID');
+                      }
+
+                      const foundActor = await mongoDbAdapter.queryById(actorId);
+
+                      if (!foundActor) {
+                        throw new Error('No actor found.');
+                      }
+
+                      return {
+                        ...foundItem,
+                        actor: foundActor,
+                      };
+                    } catch (error) {
+                      return {
+                        type: AP.ExtendedObjectTypes.TOMBSTONE,
+                      };
+                    }
+                  }));
+                })
+                .catch(() => []),
+
+              mongoDbAdapter
+                .findEntityById(membersUrl)
+                .then((collection: AP.Collection) => collection.items)
+                .then(async (items: URL[]) => {
+                  return await Promise.all(items.map(async (item) => {
+                    return await mongoDbAdapter.queryById(item);
+                  }));
+                })
+                .catch(() => []),
+
+              mongoDbAdapter
+                .findEntityById(blocksUrl)
+                .then((collection: AP.Collection) => collection.items)
+                .then(async (items: URL[]) => {
+                  return await Promise.all(items.map(async (item) => {
+                    try {
+                      const foundItem = await mongoDbAdapter.queryById(item) as AP.Block;
+
+                      if (!foundItem) {
+                        throw new Error('Not found.');
+                      }
+
+                      const actorId = getId(foundItem.object);
+
+                      if (!actorId) {
+                        throw new Error('No actor ID');
+                      }
+
+                      const foundActor = await mongoDbAdapter.queryById(actorId);
+
+                      if (!foundActor) {
+                        throw new Error('No actor found.');
+                      }
+
+                      return {
+                        ...foundItem,
+                        object: foundActor,
+                      };
+                    } catch (error) {
+                      return {
+                        type: AP.ExtendedObjectTypes.TOMBSTONE,
+                      };
+                    }
+                  }));
+                })
+                .catch(() => []),
+
+              mongoDbAdapter
+                .db
+                .collection('username').find({
+                  value: actor.preferredUsername,
+                })
+                .toArray()
+                .then(async (items) => {
+                  return Promise.all(items.map(async ({ _id }) => {
+                    return (await mongoDbAdapter.db.collection('account').findOne({
+                      _id,
+                    }))?.value;
+                  }));
+                }),
             ]);
 
-            const sharedIdsArray = (sharedIds ? Array.isArray(sharedIds) ? sharedIds : [sharedIds] : []);
+            console.log(admins);
 
-            const lastPageIndex = Math.max(1, Math.ceil(sharedIdsArray.length / ITEMS_PER_PAGE));
-
-            const shared = [];
-
-            for (const sharedId of sharedIdsArray.slice(startIndex, startIndex + ITEMS_PER_PAGE)) {
-              const announceActivity = await mongoDbAdapter.findEntityById(sharedId) as AP.Announce;
-
-              if (!announceActivity) {
-                break;
-              }
-
-              const objectId = getId(announceActivity.object);
-
-              if (!objectId) {
-                break;
-              }
-
-              const object = await mongoDbAdapter.fetchEntityById(objectId) as AP.Note;
-
-              if (!object) {
-                break;
-              }
-              
-              const actorId = getId(object.attributedTo);
-
-              if (!actorId) {
-                break;
-              }
-
-              const actor = await mongoDbAdapter.fetchEntityById(actorId);
-
-              if (!actor) {
-                break;
-              }
-
-              shared.push({
-                ...announceActivity,
-                object: {
-                  ...object,
-                  attributedTo: actor,
-                },
-              });
-            }
-
-            const admins = [];
-
-            for (const adminId of adminIds) {
-              admins.push((await mongoDbAdapter.db.collection('account').findOne({
-                _id: adminId._id
-              })).value);
-            }
+            const lastPageIndex = Math.max(1, Math.ceil(sharedTotalItems / ITEMS_PER_PAGE));
 
             return {
               shared,
@@ -544,7 +652,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
               blocks,
               admins,
               pagination: {
-                totalItems: sharedIdsArray.length,
+                totalItems: sharedTotalItems,
                 first: `${LOCAL_DOMAIN}${url.pathname}?page=1`,
                 ...currentPage > 1 ? {
                   prev: `${LOCAL_DOMAIN}${url.pathname}?page=${currentPage - 1}`,
