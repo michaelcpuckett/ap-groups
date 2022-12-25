@@ -141,7 +141,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
             if ([
               '/hashtags',
               '/hashtag',
-            ].includes(new URL(`${LOCAL_DOMAIN}${url}`).pathname)) {
+            ].includes(new URL(`${LOCAL_DOMAIN}${url}`).pathname.split('/')[1])) {
               return true;
             }
           },
