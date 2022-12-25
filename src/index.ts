@@ -139,8 +139,8 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
           },
           getIsEntityGetRequest(url: string) {
             if ([
-              '/hashtags',
-              '/hashtag',
+              'hashtags',
+              'hashtag',
             ].includes(new URL(`${LOCAL_DOMAIN}${url}`).pathname.split('/')[1])) {
               return true;
             }
