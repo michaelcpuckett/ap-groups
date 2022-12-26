@@ -1,0 +1,111 @@
+{% macro managersPage() %}
+  <!doctype html>
+  <html>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/home-new.css" />
+    <body>
+      <div class="container">
+        <div class="main-content">
+          <main role="main">
+            {{ homeNav(url | getPathname) }}
+            {% if managers.length %}
+              <div class="pagination">
+                <div class="pagination-inner">
+                  <div class="space-between">
+                    <h2 class="heading">
+                      Managers ({{ pagination.totalItems }})
+                    </h2>
+                    <pagination-nav
+                      first-page="{{ pagination.first }}"
+                      prev-page="{{ pagination.prev }}"
+                      next-page="{{ pagination.next }}"
+                      last-page="{{ pagination.last }}">
+                    </pagination-nav>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            <div class="posts" id="managers">
+              {% if managers.length %}
+                {% for manager in managers %}
+                  <div class="post">
+                    <div class="post-body">
+                      <div class="post-body-inner post-body-inner--left">
+                        <form id="add-administrator-form" novalidate="">
+                          <label class="label">
+                            <span class="label-text">
+                              Admin Email
+                            </span>
+                            <input class="input" type="email" name="email" control-id="ControlID-1">
+                            <p class="hint-text">
+                              An email can only be associated with one Group.
+                              Consider using <code>user<strong>+groupname</strong>@gmail.com</code>
+                              if using Gmail or similar.
+                            </p>
+                            <p class="hint-text">
+                            The user will need to follow the Forgot Password instructions
+                            on the home page.
+                            </p>
+                            <p class="error-message"></p>
+                          </label>
+                          <label class="label">
+                            <span class="label-text">
+                              Admin Email (Repeat to Confirm)
+                            </span>
+                            <input class="input" type="email" name="email-confirm" />
+                            <p class="hint-text">
+                              There is no way to delete Administrators yet!
+                            </p>
+                            <p class="error-message"></p>
+                          </label>
+                          <button type="submit" class="button" control-id="ControlID-3">
+                            Submit
+                          </button>
+                        </form>
+                      </div>
+                      <div class="post-body-inner post-body-inner--main">
+                        <div class="post-content">
+                          {% if not manager %}
+                            <p>Manager not found.</p>
+                          {% else %}
+                            <h3>
+                              <a
+                                target="_blank"
+                                href="mailto:{{ manager }}">
+                                {{ manager }}
+                              </a>
+                            </h3>
+                          {% endif %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              {% else %}
+                <p>
+                  No managers yet.
+                </p>
+              {% endif %}
+            </div>
+            {% if managers.length %}
+              <div class="pagination">
+                <div class="pagination-inner">
+                  <div class="space-between">
+                    <pagination-nav
+                      first-page="{{ pagination.first }}"
+                      prev-page="{{ pagination.prev }}"
+                      next-page="{{ pagination.next }}"
+                      last-page="{{ pagination.last }}">
+                    </pagination-nav>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          </main>
+        </div>
+      </div>
+      <script type="module" src="/home.js"></script>
+    </body>
+  </html>
+{% endmacro %}

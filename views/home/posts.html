@@ -8,55 +8,7 @@
       <div class="container">
         <div class="main-content">
           <main role="main">
-            <nav role="navigation" class="tabs">
-              <div class="tabs-inner tabs-inner--left">
-                chirp.social
-              </div>
-              <div class="tabs-inner tabs-inner--main">
-                <div class="tabs-box">
-                  <ul class="tabs-list">
-                    <li>
-                      <a href="/home">Profile</a>
-                    </li>
-                    <li>
-                      <a href="/home/posts" rel="current">Posts ({{ pagination.totalItems }})</a>
-                    </li>
-                    <li>
-                      <a href="/home/managers">Managers ({{ admins.length }})</a>
-                    </li>
-                    <li>
-                      <a href="/home/members">Members ({{ members.length }})</a>
-                    </li>
-                    <li>
-                      <a href="/home/requests">Requests ({{ requests.length }})</a>
-                    </li>
-                    <li>
-                      <a href="/home/blocks">Blocked ({{ blocks.length }})</a>
-                    </li>
-                    <li>
-                      <a href="/home/settings">Settings</a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="tabs-navigation">
-                  <button type="button" class="button" hidden rel="prev" tabindex="-1" aria-hidden="true">
-                    🡄
-                  </button>
-                  <button type="button" class="button" style="justify-self: flex-end;" rel="next" tabindex="-1" aria-hidden="true">
-                    🡆
-                  </button>
-                </div>
-              </div>
-              <div class="tabs-inner tabs-inner--right">
-                <button
-                  data-action="logout"
-                  type="button"
-                  class="button"
-                  id="logout-button">
-                  Log Out
-                </button>
-              </div>
-            </nav>
+            {{ homeNav(url | getPathname) }}
             {% if shared.length %}
               <div class="pagination">
                 <div class="pagination-inner">
@@ -219,9 +171,6 @@
             {% endif %}
           </main>
         </div>
-        <aside role="complementary">
-
-        </aside>
       </div>
       <script type="module" src="/home.js"></script>
     </body>

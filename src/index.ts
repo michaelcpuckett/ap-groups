@@ -520,6 +520,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
 
               const isPostsPage = url.pathname === '/home/posts';
               const isMembersPage = url.pathname === '/home/members';
+              const isManagersPage = url.pathname === '/home/managers';
 
               const [
                 {
@@ -532,7 +533,10 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                   members,
                 },
                 blocks,
-                admins,
+                {
+                  managersTotalItems,
+                  managers,
+                },
               ] = await Promise.all([
                 mongoDbAdapter
                   .findEntityById(sharedUrl)
@@ -715,15 +719,31 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                     value: actor.preferredUsername,
                   })
                   .toArray()
-                  .then(async (items) => {
-                    return Promise.all(items.map(async ({ _id }) => {
+                  .then(async (itemIds) => {
+                    const managers = await Promise.all(itemIds.map(async ({ _id }) => {
                       return (await mongoDbAdapter.db.collection('account').findOne({
                         _id,
                       }))?.value;
                     }));
+                    
+                    const managersTotalItems = managers.length;
+
+                    if (!isManagersPage) {
+                      return {
+                        managersTotalItems,
+                        managers,
+                      };
+                    }
+                    
+                    const sliced = managers.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+ 
+                    return {
+                      managersTotalItems,
+                      managers: sliced,
+                    }
                   }),
               ]);
-              const totalItems = isPostsPage ? sharedTotalItems : isMembersPage ? membersTotalItems : 0;
+              const totalItems = isPostsPage ? sharedTotalItems : isMembersPage ? membersTotalItems : isManagersPage ? managersTotalItems : 0;
               const lastPageIndex = Math.max(1, Math.ceil(totalItems / ITEMS_PER_PAGE));
 
               return {
@@ -731,7 +751,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                 requests,
                 members,
                 blocks,
-                admins,
+                managers,
                 url: rawUrl,
                 pagination: {
                   totalItems,

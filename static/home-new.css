@@ -2,12 +2,16 @@
   box-sizing: border-box;
 }
 
+:root {
+  --primary-color: #14dac3;
+  --accent-color: #015252;
+}
+
 body {
   font-family: system-ui, sans-serif;
   margin: 0;
   display: grid;
   width: 100%;
-  /*background: #cde7d1;*/
   background: #001616;
   color: white;
 }
@@ -49,6 +53,7 @@ button {
   place-items: center;
   place-content: center;
   width: max-content;
+  cursor: pointer;
 }
 
 .button:not([hidden]) {
@@ -82,6 +87,7 @@ summary {
   place-items: center;
   place-content: center;
   width: 100%;
+  cursor: pointer;
 }
 .flyout {
   position: absolute;
@@ -91,6 +97,13 @@ summary {
   background: white;
   border-radius: 8px;
   left: 0;
+  top: 100%;
+  margin: 0;
+  width: 100%;
+  list-style-position: inside;
+  text-align: left;
+  color: black;
+  z-index: 2;
 }
 
 .post {
@@ -142,9 +155,8 @@ summary {
 
 .tabs-inner--main {
   position: relative;
-  font-size: 1.333em;
+  font-size: 1.125em;
   overflow: hidden;
-  font-family: 'passion', sans-serif;
 }
 
 .space-between {
@@ -213,18 +225,7 @@ h2 {
 
 .post-actor {
   display: grid;
-}
-
-@media (min-width: 900px) {
-  .post-actor {
-    justify-items: flex-end;
-  }
-}
-
-.post-actor img {
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid;
+  width: max-content;
 }
 
 .post-attachments {
@@ -274,7 +275,7 @@ dd {
 
 @media (min-width: 900px) {
   .tabs {
-    height: calc(1.333em + 32px);
+    height: calc(1.125em + 32px);
     line-height: 1;
   }
 }
@@ -344,6 +345,7 @@ dd {
   background-color: #015252;
   color: white;
   text-transform: uppercase;
+  font-weight: bold;
 }
 
 .tabs-inner--main a[rel="current"] {
@@ -362,6 +364,7 @@ dd {
   color: black;
   position: relative;
   z-index: 1;
+  border-radius: 4px;
 }
 
 .tabs-inner--left {
@@ -377,4 +380,21 @@ dd {
 
 .tabs-inner--right button {
   width: 100%;
+}
+
+.post-actor-avatar {
+  display: grid;
+  width: 70px;
+  height: 70px;
+  background-color: var(--accent-color);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid;
+}
+
+#members .post-content {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px;
 }
