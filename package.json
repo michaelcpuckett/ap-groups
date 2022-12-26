@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node ./src/index.ts",
+    "dev": "nodemon ./src/index.ts",
     "format": "prettier --config .prettierrc \"**/*.ts\" --write",
     "build": "parcel build --dist-dir=static && tsc --project src/tsconfig.json",
     "serve": "node ./lib/index.js",
@@ -58,6 +58,7 @@
     "crypto-browserify": "^3.12.0",
     "events": "^3.3.0",
     "https-browserify": "^1.0.0",
+    "nodemon": "^2.0.20",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
     "prettier": "^2.7.1",

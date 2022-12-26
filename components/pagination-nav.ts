@@ -19,6 +19,14 @@ export class PaginationNav extends LitElement {
       padding: 0;
       gap: 8px;
     }
+
+    ol,
+    li {
+      align-items: center;
+      display: grid;
+      grid-auto-flow: column;
+      justify-content: flex-start;
+    }
   `];
 
   @property({type: String, attribute: 'first-page'})

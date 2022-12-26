@@ -5,10 +5,13 @@
 {% from "entity/groupEntity.html" import groupEntity with context %}
 
 {% from "home/editProfile.html" import editProfile with context %}
-{% from "home/index.html" import index with context %}
+{% from "home/posts.html" import postsPage with context %}
+{% from "home/members.html" import membersPage with context %}
 
-{% if url === '/home/edit-profile' %}
-  {{ editProfile() }}
+{% if url | getPathname === '/home/posts' %}
+  {{ postsPage() }}
+{% elif url | getPathname === '/home/members' %}
+  {{ membersPage() }}
 {% else %}
-  {{ index() }}
+  {{ editProfile() }}
 {% endif %}

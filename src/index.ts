@@ -31,6 +31,47 @@ nunjucksConfig.addFilter('getHostname', (url) => {
   }
 });
 
+nunjucksConfig.addFilter('getPathname', (url) => {
+  try {
+    return new URL(`${LOCAL_DOMAIN}${url}`).pathname;
+  } catch (error) {
+    return '';
+  }
+});
+
+nunjucksConfig.addFilter('dateFromNow', (dateString) => {
+  const date = new Date(dateString);
+  const nowDate = Date.now();
+  const rft = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
+  const SECOND = 1000;
+  const MINUTE = 60 * SECOND;
+  const HOUR = 60 * MINUTE;
+  const DAY = 24 * HOUR;
+  const WEEK = 7 * DAY;
+  const MONTH = 30 * DAY;
+  const YEAR = 365 * DAY;
+  const intervals = [
+    { ge: YEAR, divisor: YEAR, unit: 'year' },
+    { ge: MONTH, divisor: MONTH, unit: 'month' },
+    { ge: WEEK, divisor: WEEK, unit: 'week' },
+    { ge: DAY, divisor: DAY, unit: 'day' },
+    { ge: HOUR, divisor: HOUR, unit: 'hour' },
+    { ge: MINUTE, divisor: MINUTE, unit: 'minute' },
+    { ge: 30 * SECOND, divisor: SECOND, unit: 'seconds' },
+    { ge: 0, divisor: 1, text: 'just now' },
+  ];
+  const now = new Date(nowDate).getTime();
+  const diff = now - (typeof date === 'object' ? date : new Date(date)).getTime();
+  const diffAbs = Math.abs(diff);
+  for (const interval of intervals) {
+    if (diffAbs >= interval.ge) {
+      const x = Math.round(Math.abs(diff) / interval.divisor);
+      const isFuture = diff < 0;
+      return interval.unit ? rft.format(isFuture ? x : -x, interval.unit as unknown as Intl.RelativeTimeFormatUnit) : interval.text;
+    }
+  }
+})
+
 app.get('/', async (req: IncomingMessage, res: ServerResponse) => {
   if (!res.headersSent) {
     res.statusCode = 200;
@@ -465,8 +506,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
             }
           },
           getHomePageProps: async (actor: AP.Actor, rawUrl: string) => {
-            if (rawUrl === '/home') {
-              const ITEMS_PER_PAGE = 25;
+              const ITEMS_PER_PAGE = 50;
               const url = new URL(`${LOCAL_DOMAIN}${rawUrl}`);
               const query = url.searchParams;
               const currentPage = Number(query.get('page') || 1);
@@ -478,20 +518,35 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
               const blocksUrl = streams.find((stream: URL) => `${stream}`.endsWith('blocks'));
               const membersUrl = actor.followers as URL;
 
+              const isPostsPage = url.pathname === '/home/posts';
+              const isMembersPage = url.pathname === '/home/members';
+
               const [
                 {
                   sharedTotalItems,
                   shared,
                 },
                 requests,
-                members,
+                {
+                  membersTotalItems,
+                  members,
+                },
                 blocks,
                 admins,
               ] = await Promise.all([
                 mongoDbAdapter
-                  .findEntityById(sharedUrl).then((collection: AP.OrderedCollection) => collection.orderedItems)
+                  .findEntityById(sharedUrl)
+                  .then((collection: AP.OrderedCollection) => collection.orderedItems)
                   .then(async (sharedIds: URL[]) => {
                     const sharedTotalItems = sharedIds.length;
+
+                    if (!isPostsPage) {
+                      return {
+                        sharedTotalItems,
+                        shared: sharedIds,
+                      };
+                    }
+
                     const sliced = (sharedIds ? Array.isArray(sharedIds) ? sharedIds : [sharedIds] : []).slice(startIndex, startIndex + ITEMS_PER_PAGE);
                     const shared = await Promise.all(sliced.map(async (sharedId) => {
                       try {
@@ -595,12 +650,27 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                 mongoDbAdapter
                   .findEntityById(membersUrl)
                   .then((collection: AP.Collection) => collection.items)
-                  .then(async (items: URL[]) => {
-                    return await Promise.all(items.map(async (item) => {
-                      return await mongoDbAdapter.queryById(item);
-                    }));
+                  .then(async (itemIds: URL[]) => {
+                    if (!isMembersPage) {
+                      return {
+                        membersTotalItems: itemIds.length,
+                        members: itemIds,
+                      };
+                    }
+
+                    const sliced = (itemIds ? Array.isArray(itemIds) ? itemIds : [itemIds] : []).slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+                    return {
+                      membersTotalItems: itemIds.length,
+                      members: await Promise.all(sliced.map(async (item) => {
+                        return await mongoDbAdapter.queryById(item);
+                      })),
+                    };
                   })
-                  .catch(() => []),
+                  .catch(() => ({
+                    membersTotalItems: 0,
+                    members: []
+                  })),
 
                 mongoDbAdapter
                   .findEntityById(blocksUrl)
@@ -653,8 +723,8 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                     }));
                   }),
               ]);
-
-              const lastPageIndex = Math.max(1, Math.ceil(sharedTotalItems / ITEMS_PER_PAGE));
+              const totalItems = isPostsPage ? sharedTotalItems : isMembersPage ? membersTotalItems : 0;
+              const lastPageIndex = Math.max(1, Math.ceil(totalItems / ITEMS_PER_PAGE));
 
               return {
                 shared,
@@ -664,7 +734,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                 admins,
                 url: rawUrl,
                 pagination: {
-                  totalItems: sharedTotalItems,
+                  totalItems,
                   first: `${LOCAL_DOMAIN}${url.pathname}?page=1`,
                   ...currentPage > 1 ? {
                     prev: `${LOCAL_DOMAIN}${url.pathname}?page=${currentPage - 1}`,
@@ -675,11 +745,6 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                   last: `${LOCAL_DOMAIN}${url.pathname}?page=${lastPageIndex}`,
                 }
               };
-            }
-
-            return {
-              url: rawUrl,
-            };
           },
         }
       ]

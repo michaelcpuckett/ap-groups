@@ -85,7 +85,6 @@ export const baseCss = css`
     font-size: 1.125em;
     padding: .5em .875em;
     max-width: max-content;
-    box-shadow: 1px 2px 1px black;
     border: 1px solid;
   }
 

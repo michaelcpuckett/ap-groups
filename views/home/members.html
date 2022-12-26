@@ -1,0 +1,198 @@
+{% macro membersPage() %}
+  <!doctype html>
+  <html>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/home-new.css" />
+    <body>
+      <div class="container">
+        <div class="main-content">
+          <main role="main">
+            <nav role="navigation" class="tabs">
+              <div class="tabs-inner tabs-inner--left">
+                chirp.social
+              </div>
+              <div class="tabs-inner tabs-inner--main">
+                <div class="tabs-box">
+                  <ul class="tabs-list">
+                    <li>
+                      <a href="/home">Profile</a>
+                    </li>
+                    <li>
+                      <a href="/home/posts">Posts ({{ shared.length }})</a>
+                    </li>
+                    <li>
+                      <a href="/home/managers">Managers ({{ admins.length }})</a>
+                    </li>
+                    <li>
+                      <a href="/home/members"  rel="current">Members ({{ pagination.totalItems }})</a>
+                    </li>
+                    <li>
+                      <a href="/home/requests">Requests ({{ requests.length }})</a>
+                    </li>
+                    <li>
+                      <a href="/home/blocks">Blocked ({{ blocks.length }})</a>
+                    </li>
+                    <li>
+                      <a href="/home/settings">Settings</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="tabs-navigation">
+                  <button type="button" class="button" hidden rel="prev" tabindex="-1" aria-hidden="true">
+                    🡄
+                  </button>
+                  <button type="button" class="button" style="justify-self: flex-end;" rel="next" tabindex="-1" aria-hidden="true">
+                    🡆
+                  </button>
+                </div>
+              </div>
+              <div class="tabs-inner tabs-inner--right">
+                <button
+                  data-action="logout"
+                  type="button"
+                  class="button"
+                  id="logout-button">
+                  Log Out
+                </button>
+              </div>
+            </nav>
+            {% if members.length %}
+              <div class="pagination">
+                <div class="pagination-inner">
+                  <div class="space-between">
+                    <h2 class="heading">
+                      Members ({{ pagination.totalItems }})
+                    </h2>
+                    <pagination-nav
+                      first-page="{{ pagination.first }}"
+                      prev-page="{{ pagination.prev }}"
+                      next-page="{{ pagination.next }}"
+                      last-page="{{ pagination.last }}">
+                    </pagination-nav>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            <div class="posts" id="members">
+              {% if members.length %}
+                {% for member in members %}
+                  <div class="post">
+                    <div class="post-body">
+                      <div class="post-body-inner post-body-inner--left">
+                        <h3>
+                          {% if member.published and member.url %}
+                            <a
+                              class="permalink"
+                              target="_blank"
+                              href="{{ member.url }}">
+                              {{ member.published | dateFromNow }}
+                            </a>
+                          {% endif %}
+                        </h3>
+                        <dl>
+                          {% if member.attributedTo %}
+                            <dt>
+                              Avatar
+                            </dt>
+                            <dd>
+                              {% if member.icon.url %}
+                                <a
+                                  class="post-actor"
+                                  target="_blank"
+                                  href="{{ member.url }}">
+                                  <img
+                                    class="post-actor-avatar post-actor-avatar--small"
+                                    src="{{ member.icon.url }}"
+                                    height="70"
+                                    width="70"
+                                    alt=""
+                                  />
+                                {% else %}
+                                  <span class="post-actor-avatar post-actor-avatar--small"></span>
+                                {% endif %}
+                              </a>
+                            {% endif %}
+                          </dd>
+                          <dt>
+                            User
+                          </dt>
+                          <dd>
+                            <a
+                              class="post-actor-username"
+                              target="_blank"
+                              href="{{ member.url }}">
+                              @{{ member.preferredUsername }}
+                            </a>
+                          </dd>
+                          <dt>
+                            Domain
+                          </dt>
+                          <dd>
+                            <a
+                              class="post-actor-domain"
+                              target="_blank"
+                              href="https://{{ member.url | getHostname }}">
+                              {{ member.url | getHostname}}
+                            </a>
+                          </dd>
+                        </dl>
+                      </div>
+                      <div class="post-body-inner post-body-inner--main">
+                        <div class="post-content">
+                          {{ member.content | safe }}
+                        </div>
+                      </div>
+                      <div class="post-body-inner post-body-inner--right">
+                        <details class="flyout-container">
+                          <summary
+                            aria-label="Options"
+                            class="button">
+                            Options...
+                          </summary>
+                          <ul class="flyout">
+                            <li>
+                              <button
+                                type="button"
+                                data-action="undo-announce"
+                                data-entity-id="{{ sharedItem.id }}"
+                                data-actor-id="{{ actor.id }}">
+                                Delete Post
+                              </button>
+                            </li>
+                          </ul>
+                        </details>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              {% else %}
+                <p>
+                  No members yet.
+                </p>
+              {% endif %}
+            </div>
+            {% if members.length %}
+              <div class="pagination">
+                <div class="pagination-inner">
+                  <div class="space-between">
+                    <pagination-nav
+                      first-page="{{ pagination.first }}"
+                      prev-page="{{ pagination.prev }}"
+                      next-page="{{ pagination.next }}"
+                      last-page="{{ pagination.last }}">
+                    </pagination-nav>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          </main>
+        </div>
+        <aside role="complementary">
+
+        </aside>
+      </div>
+      <script type="module" src="/home.js"></script>
+    </body>
+  </html>
+{% endmacro %}
