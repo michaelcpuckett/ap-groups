@@ -254,7 +254,7 @@ h2 {
 }
 
 @media (min-width: 900px) {
-  .post-actor {
+  .post-body-inner--left .post-actor {
     justify-content: flex-end;
   }
 }

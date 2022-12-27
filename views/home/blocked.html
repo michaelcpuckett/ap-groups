@@ -29,7 +29,7 @@
                 </div>
               </div>
             </div>
-            <div class="posts" id="blocks">
+            <div class="posts" id="blocked">
               {% if blocks.length %}
                 {% for block in blocks %}
                   <div class="post">
@@ -84,7 +84,7 @@
                             <li>
                               <button
                                 type="button"
-                                data-action="undo"
+                                data-action="unblock"
                                 data-entity-id="{{ block.id }}"
                                 data-actor-id="{{ actor.id }}">
                                 Unblock
