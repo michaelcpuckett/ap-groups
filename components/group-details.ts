@@ -411,6 +411,9 @@ export class GroupDetails extends LitElement {
                 name="manuallyApprovesFollowers"
                 ?checked=${this.manuallyApprovesFollowers}
               />
+              <p class="hint-text">
+                Otherwise the server will automatically accept all followers.
+              </p>
             </span>
           </label>
           <label role="row" class="label">

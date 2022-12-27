@@ -1,70 +1,64 @@
-{% macro editProfile() %}
+{% macro editProfilePage() %}
   <!doctype html>
   <html>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="/base.css" />
-    <link rel="stylesheet" href="/index.css" />
-    <link rel="stylesheet" href="/home.css" />
+    <link rel="stylesheet" href="/home-new.css" />
     <body>
-      <div>
-        <div class="root">
-          <div class="container">
-            {{  header()  }}
-          </div>
-          <div class="right-rail">
-          </div>
-        </div>
-        <div class="root">
-          <div class="container">
-            <section>
-              <a href="/home">
-                Back to Home
-              </a>
-            </section>
-            <section>
-              <h1>
-                Edit Group Profile
-              </h1>
-            </section>
-            <section>
-              <group-details
-                group-actor-id="{{ actor.id }}"
-                followers-url="{{ actor.followers }}"
-                outbox-url="{{ actor.outbox.url }}"
-                upload-media-url="{{ actor.endpoints.uploadMedia }}"
-                {% if actor.attachment %}
-                  {% for attachment in actor.attachment %}
-                    {% if attachment.name == 'Group Manager' %}
-                      manager="{{ attachment.value | e }}"
-                    {% elif attachment.name == 'Group Rules' %}
-                      rules="{{ attachment.value | e }}"
-                    {% endif %}
-                  {% endfor %}
-                {% endif %}
-                {% if actor.manuallyApprovesFollowers %}
-                  manually-approves-followers
-                {% endif %}
-                {% if actor.sensitive %}
-                  sensitive
-                {% endif %}
-                icon="{{ actor.icon | dump }}"
-                name="{{ actor.name }}"
-                summary="{{ actor.summary | e }}">
-              </group-details>
-            </section>
-          </div>
-          <div class="right-rail">
-            <section>
-              <button
-                data-action="logout"
-                type="button"
-                class="button"
-                id="logout-button">
-                Log Out
-              </button>
-            </section>
-          </div>
+      <div class="container">
+        <div class="main-content">
+          <main role="main">
+            {{ homeNav(url | getPathname) }}
+            <div class="pagination">
+              <div class="pagination-inner pagination-inner--left">
+
+              </div>
+              <div class="pagination-inner pagination-inner--main">
+                <div class="space-between">
+                  <h2 class="heading">
+                    Group Profile
+                  </h2>
+                </div>
+              </div>
+            </div>
+            <div class="posts" id="edit-profile">
+              <div class="post">
+                <div class="post-body">
+                  <div class="post-body-inner post-body-inner--left">
+                    
+                  </div>
+                  <div class="post-body-inner post-body-inner--main">
+                    <div class="post-content">
+                      <group-details
+                        group-actor-id="{{ actor.id }}"
+                        followers-url="{{ actor.followers }}"
+                        outbox-url="{{ actor.outbox.url }}"
+                        upload-media-url="{{ actor.endpoints.uploadMedia }}"
+                        {% if actor.attachment %}
+                          {% for attachment in actor.attachment %}
+                            {% if attachment.name == 'Group Manager' %}
+                              manager="{{ attachment.value | e }}"
+                            {% elif attachment.name == 'Group Rules' %}
+                              rules="{{ attachment.value | e }}"
+                            {% endif %}
+                          {% endfor %}
+                        {% endif %}
+                        {% if actor.manuallyApprovesFollowers %}
+                          manually-approves-followers
+                        {% endif %}
+                        {% if actor.sensitive %}
+                          sensitive
+                        {% endif %}
+                        icon="{{ actor.icon | dump }}"
+                        name="{{ actor.name }}"
+                        summary="{{ actor.summary | e }}">
+                      </group-details>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </main>
         </div>
       </div>
       <script type="module" src="/home.js"></script>

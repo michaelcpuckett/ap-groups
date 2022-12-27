@@ -2,12 +2,19 @@
   box-sizing: border-box;
 }
 
+:root {
+  --primary-color: #14dac3;
+  --accent-color: #015252;
+  --error-color: red;
+  --light-background-color: #14dac3;
+  --text-on-light-background-color: black;
+}
+
 body {
   font-family: system-ui, sans-serif;
   margin: 0;
   display: grid;
   width: 100%;
-  /*background: #cde7d1;*/
   background: #001616;
   color: white;
 }
@@ -31,11 +38,31 @@ img {
   max-width: 100%;
 }
 
+
+textarea,
+input {
+  font: inherit;
+  line-height: inherit;
+  width: 100%;
+}
+
+.textarea,
+.input {
+  padding: .5em;
+  border: 1px solid;
+  border-radius: 0;
+  font-size: .875em;
+  font-weight: normal;
+  background-color: var(--dark-background-color);
+  color: var(--text-on-dark-background-color);
+}
+
 a {
   color: #14dac3;
 }
 
-button {
+button,
+a.button {
   appearance: none;
   padding: 0;
   margin: 0;
@@ -49,13 +76,15 @@ button {
   place-items: center;
   place-content: center;
   width: max-content;
+  cursor: pointer;
 }
 
 .button:not([hidden]) {
   display: inline-flex;
 }
 
-.button {
+.button,
+a.button {
   border-radius: 8px;
   padding: 4px 8px;
   text-decoration: none;
@@ -68,7 +97,6 @@ button {
   position: relative;
 }
 summary {
-  appearance: none;
   padding: 0;
   margin: 0;
   border: 0;
@@ -76,12 +104,10 @@ summary {
   font: inherit;
   line-height: inherit;
   background: transparent;
-  display: inline-flex;
-  min-height: 48px;
-  min-width: 48px;
   place-items: center;
   place-content: center;
   width: 100%;
+  cursor: pointer;
 }
 .flyout {
   position: absolute;
@@ -91,6 +117,19 @@ summary {
   background: white;
   border-radius: 8px;
   left: 0;
+  top: 100%;
+  margin: 0;
+  width: 100%;
+  list-style-position: inside;
+  text-align: left;
+  color: black;
+  z-index: 2;
+}
+
+.flyout-container summary {
+  display: inline-flex;
+  min-height: 48px;
+  min-width: 48px;
 }
 
 .post {
@@ -134,7 +173,7 @@ summary {
     grid-template-columns: 180px minmax(0, 1fr) 180px;
   }
   
-  .pagination-inner,
+  .pagination-inner--main,
   .tabs-inner--main {
     grid-column: 2 / 3;
   }
@@ -142,9 +181,8 @@ summary {
 
 .tabs-inner--main {
   position: relative;
-  font-size: 1.333em;
+  font-size: 1.125em;
   overflow: hidden;
-  font-family: 'passion', sans-serif;
 }
 
 .space-between {
@@ -217,14 +255,8 @@ h2 {
 
 @media (min-width: 900px) {
   .post-actor {
-    justify-items: flex-end;
+    justify-content: flex-end;
   }
-}
-
-.post-actor img {
-  border-radius: 8px;
-  overflow: hidden;
-  border: 1px solid;
 }
 
 .post-attachments {
@@ -274,7 +306,7 @@ dd {
 
 @media (min-width: 900px) {
   .tabs {
-    height: calc(1.333em + 32px);
+    height: calc(1.125em + 32px);
     line-height: 1;
   }
 }
@@ -288,7 +320,7 @@ dd {
   .tabs-inner--main {
     grid-row: 2 / 3;
     grid-column: 1 / 3;
-    height: calc(1em + 32px);
+    height: calc(1.125em + 32px);
   }
   
   .tabs-inner--right {
@@ -344,6 +376,7 @@ dd {
   background-color: #015252;
   color: white;
   text-transform: uppercase;
+  font-weight: bold;
 }
 
 .tabs-inner--main a[rel="current"] {
@@ -362,6 +395,7 @@ dd {
   color: black;
   position: relative;
   z-index: 1;
+  border-radius: 4px;
 }
 
 .tabs-inner--left {
@@ -375,6 +409,61 @@ dd {
   }
 }
 
-.tabs-inner--right button {
+.pagination-inner--right .button,
+.tabs-inner--right .button {
   width: 100%;
+}
+
+.post-actor-avatar {
+  display: grid;
+  width: 70px;
+  height: 70px;
+  background-color: var(--accent-color);
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid;
+}
+
+#members .post-content {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 16px;
+}
+
+
+.label {
+  display: flex;
+  flex-direction: column;
+}
+
+.label-text {
+  display: block;
+}
+
+.error-message {
+  color: var(--error-color);
+  display: block;
+  font-weight: bold;
+}
+
+form:not(.has-error) .error-message {
+  display: none;
+}
+
+form .button[type="submit"] {
+  width: 100%;
+  margin: 16px 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  -webkit-clip-path: inset(0px 0px 99.9% 99.9%);
+  clip-path: inset(0px 0px 99.9% 99.9%);
+  overflow: hidden;
+  height: 1px;
+  width: 1px;
+  padding: 0;
+  border: 0;
 }

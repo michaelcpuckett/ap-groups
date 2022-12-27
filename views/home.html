@@ -1,17 +1,33 @@
 {% from "partials/header.html" import header with context %}
+{% from "partials/homeNav.html" import homeNav with context %}
 {% from "partials/paginationNav.html" import paginationNav with context %}
 
 {% from "entity/announcedEntity.html" import announcedEntity with context %}
 {% from "entity/groupEntity.html" import groupEntity with context %}
 
-{% from "home/editProfile.html" import editProfile with context %}
+{% from "home/editProfile.html" import editProfilePage with context %}
 {% from "home/posts.html" import postsPage with context %}
 {% from "home/members.html" import membersPage with context %}
+{% from "home/managers.html" import managersPage with context %}
+{% from "home/addManager.html" import addManagerPage with context %}
+{% from "home/settings.html" import settingsPage with context %}
+{% from "home/requests.html" import requestsPage with context %}
+{% from "home/blocked.html" import blockedPage with context %}
 
-{% if url | getPathname === '/home/posts' %}
+{% if url | getPathname == '/home/posts' %}
   {{ postsPage() }}
-{% elif url | getPathname === '/home/members' %}
+{% elif url | getPathname == '/home/members' %}
   {{ membersPage() }}
+{% elif url | getPathname == '/home/managers' %}
+  {{ managersPage() }}
+{% elif url | getPathname == '/home/add-manager' %}
+  {{ addManagerPage() }}  
+{% elif url | getPathname == '/home/settings' %}
+  {{ settingsPage() }}
+{% elif url | getPathname == '/home/requests' %}
+  {{ requestsPage() }}
+{% elif url | getPathname == '/home/blocked' %}
+  {{ blockedPage() }}
 {% else %}
-  {{ editProfile() }}
+  {{ editProfilePage() }}
 {% endif %}

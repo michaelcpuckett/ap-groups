@@ -520,19 +520,31 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
 
               const isPostsPage = url.pathname === '/home/posts';
               const isMembersPage = url.pathname === '/home/members';
+              const isManagersPage = url.pathname === '/home/managers';
+              const isBlockedPage = url.pathname === '/home/blocked';
+              const isRequestsPage = url.pathname === '/home/requests';
 
               const [
                 {
                   sharedTotalItems,
                   shared,
                 },
-                requests,
+                {
+                  requestsTotalItems,
+                  requests,
+                },
                 {
                   membersTotalItems,
                   members,
                 },
-                blocks,
-                admins,
+                {
+                  blocksTotalItems,
+                  blocks,
+                },
+                {
+                  managersTotalItems,
+                  managers,
+                },
               ] = await Promise.all([
                 mongoDbAdapter
                   .findEntityById(sharedUrl)
@@ -614,7 +626,18 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                   .findEntityById(requestsUrl)
                   .then((collection: AP.Collection) => collection.items)
                   .then(async (items: URL[]) => {
-                    return await Promise.all(items.map(async (item) => {
+                    const requestsTotalItems = items.length;
+
+                    if (!isRequestsPage) {
+                      return {
+                        requestsTotalItems,
+                        requests: items,
+                      };
+                    }
+
+                    const sliced = items.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+                    const requests = await Promise.all(sliced.map(async (item) => {
                       try {
                         const foundItem = await mongoDbAdapter.queryById(item) as AP.Follow;
 
@@ -644,8 +667,16 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                         };
                       }
                     }));
+
+                    return {
+                      requestsTotalItems,
+                      requests,
+                    };
                   })
-                  .catch(() => []),
+                  .catch(() => ({
+                    requestsTotalItems: 0,
+                    requests: [],
+                  })),
 
                 mongoDbAdapter
                   .findEntityById(membersUrl)
@@ -676,7 +707,16 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                   .findEntityById(blocksUrl)
                   .then((collection: AP.Collection) => collection.items)
                   .then(async (items: URL[]) => {
-                    return await Promise.all(items.map(async (item) => {
+                    const blocksTotalItems = items.length;
+
+                    if (!isBlockedPage) {
+                      return {
+                        blocksTotalItems,
+                        blocks: items,
+                      }
+                    }
+
+                    const blocks = await Promise.all(items.map(async (item) => {
                       try {
                         const foundItem = await mongoDbAdapter.queryById(item) as AP.Block;
 
@@ -706,8 +746,16 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                         };
                       }
                     }));
+                    
+                    return {
+                      blocksTotalItems,
+                      blocks,
+                    };
                   })
-                  .catch(() => []),
+                  .catch(() => ({
+                    blocksTotalItems: 0,
+                    blocks: [],
+                  })),
 
                 mongoDbAdapter
                   .db
@@ -715,15 +763,36 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                     value: actor.preferredUsername,
                   })
                   .toArray()
-                  .then(async (items) => {
-                    return Promise.all(items.map(async ({ _id }) => {
+                  .then(async (itemIds) => {
+                    const managers = await Promise.all(itemIds.map(async ({ _id }) => {
                       return (await mongoDbAdapter.db.collection('account').findOne({
                         _id,
                       }))?.value;
                     }));
-                  }),
+                    
+                    const managersTotalItems = managers.length;
+
+                    if (!isManagersPage) {
+                      return {
+                        managersTotalItems,
+                        managers,
+                      };
+                    }
+                    
+                    const sliced = managers.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+ 
+                    return {
+                      managersTotalItems,
+                      managers: sliced,
+                    }
+                  })
+                  .catch(() => ({
+                    managersTotalItems: 0,
+                    managers: [],
+                  })),
               ]);
-              const totalItems = isPostsPage ? sharedTotalItems : isMembersPage ? membersTotalItems : 0;
+
+              const totalItems = isPostsPage ? sharedTotalItems : isMembersPage ? membersTotalItems : isManagersPage ? managersTotalItems : isRequestsPage ? requestsTotalItems : isBlockedPage ? blocksTotalItems : 0;
               const lastPageIndex = Math.max(1, Math.ceil(totalItems / ITEMS_PER_PAGE));
 
               return {
@@ -731,7 +800,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                 requests,
                 members,
                 blocks,
-                admins,
+                managers,
                 url: rawUrl,
                 pagination: {
                   totalItems,

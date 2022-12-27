@@ -9,15 +9,20 @@ import '../components/pagination-nav';
 const buttonElements = Array.from(window.document.querySelectorAll('button[type="button"]'));
 
 function logout() {
-  const cookies = window.document.cookie.split(";");
-
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i];
-    const eqPos = cookie.indexOf('=');
-    const name = eqPos > -1 ? cookie.slice(0, eqPos) : cookie;
-    window.document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  var cookies = document.cookie.split("; ");
+  for (var c = 0; c < cookies.length; c++) {
+      var d = window.location.hostname.split(".");
+      while (d.length > 0) {
+          var cookieBase = encodeURIComponent(cookies[c].split(";")[0].split("=")[0]) + '=; expires=Thu, 01-Jan-1970 00:00:01 GMT; domain=' + d.join('.') + ' ;path=';
+          var p = location.pathname.split('/');
+          document.cookie = cookieBase + '/';
+          while (p.length > 0) {
+              document.cookie = cookieBase + p.join('/');
+              p.pop();
+          };
+          d.shift();
+      }
   }
-
   window.location.reload();
 }
 
@@ -47,7 +52,6 @@ function deleteGroup(actorId: string) {
   });
 }
 
-
 for (const buttonElement of buttonElements) {
   if (!(buttonElement instanceof HTMLElement)) {
     continue;
@@ -59,8 +63,8 @@ for (const buttonElement of buttonElements) {
         logout();
       }
       break;
-      case 'delete': {
-        deleteGroup(buttonElement.dataset.id);
+      case 'delete-group': {
+        deleteGroup(buttonElement.dataset.entityId);
       }
       default: {}
       break;
@@ -162,7 +166,7 @@ window.document.querySelector('#members')?.addEventListener('click', (event: Eve
 });
 
 
-window.document.querySelector('#blocks')?.addEventListener('click', (event: Event) => {
+window.document.querySelector('#blocked')?.addEventListener('click', (event: Event) => {
   const target = event.target;
 
   if (!(target instanceof HTMLButtonElement)) {

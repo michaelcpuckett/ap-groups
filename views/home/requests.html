@@ -1,4 +1,4 @@
-{% macro membersPage() %}
+{% macro requestsPage() %}
   <!doctype html>
   <html>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -16,9 +16,9 @@
               <div class="pagination-inner pagination-inner--main">
                 <div class="space-between">
                   <h2 class="heading">
-                    Members ({{ pagination.totalItems }})
+                    Requests ({{ pagination.totalItems }})
                   </h2>
-                  {% if members.length %}
+                  {% if requests.length %}
                     <pagination-nav
                       first-page="{{ pagination.first }}"
                       prev-page="{{ pagination.prev }}"
@@ -29,9 +29,9 @@
                 </div>
               </div>
             </div>
-            <div class="posts" id="members">
-              {% if members.length %}
-                {% for member in members %}
+            <div class="posts" id="requests">
+              {% if requests.length %}
+                {% for request in requests %}
                   <div class="post">
                     <div class="post-body">
                       <div class="post-body-inner post-body-inner--left">
@@ -39,17 +39,17 @@
                       </div>
                       <div class="post-body-inner post-body-inner--main">
                         <div class="post-content">
-                          {% if not member.url %}
-                            <p>Member not found.</p>
+                          {% if not request.url %}
+                            <p>Request not found.</p>
                           {% else %}
-                            {% if member.icon.url %}
+                            {% if request.actor.icon.url %}
                               <a
                                 class="post-actor"
                                 target="_blank"
-                                href="{{ member.url }}">
+                                href="{{ request.actor.url }}">
                                 <img
                                   class="post-actor-avatar post-actor-avatar--small"
-                                  src="{{ member.icon.url }}"
+                                  src="{{ request.actor.icon.url }}"
                                   height="70"
                                   width="70"
                                   alt=""
@@ -63,11 +63,11 @@
                               <a
                                 class="post-actor-username"
                                 target="_blank"
-                                href="{{ member.url }}">
-                                @{{ member.preferredUsername }}</a><br />@<a
+                                href="{{ request.actor.url }}">
+                                @{{ request.actor.preferredUsername }}</a><br />@<a
                                 class="post-actor-domain"
                                 target="_blank"
-                                href="https://{{ member.url | getHostname }}">{{ member.url | getHostname}}
+                                href="https://{{ request.actor.url | getHostname }}">{{ request.actor.url | getHostname}}
                               </a>
                             </h3>
                           {% endif %}
@@ -84,10 +84,19 @@
                             <li>
                               <button
                                 type="button"
-                                data-action="block"
-                                data-entity-id="{{ member.id }}"
+                                data-action="accept"
+                                data-entity-id="{{ request.id }}"
                                 data-actor-id="{{ actor.id }}">
-                                Block Member
+                                Accept
+                              </button>
+                            </li>
+                            <li>
+                              <button
+                                type="button"
+                                data-action="block"
+                                data-entity-id="{{ request.actor.id }}"
+                                data-actor-id="{{ actor.id }}">
+                                Block
                               </button>
                             </li>
                           </ul>
@@ -103,13 +112,13 @@
                       
                     </div>
                     <div class="post-body-inner post-body-inner--main">
-                      No members yet.
+                      No member requests.
                     </div>
                   </div>
                 </div>
               {% endif %}
             </div>
-            {% if members.length %}
+            {% if requests.length %}
               <div class="pagination">
                 <div class="pagination-inner pagination-inner--left">
 

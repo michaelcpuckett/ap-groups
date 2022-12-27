@@ -1,0 +1,74 @@
+{% macro homeNav(currentUrl) %}
+  <nav role="navigation" class="tabs">
+    <div class="tabs-inner tabs-inner--left">
+      <a href="/">
+        chirp.social
+      </a>
+    </div>
+    <div class="tabs-inner tabs-inner--main">
+      <div class="tabs-box">
+        <ul class="tabs-list">
+          <li>
+            {% set url = '/home' %}
+            <a href="{{ url }}" {% if currentUrl == url %}rel="current"{% endif %}>
+              Profile
+            </a>
+          </li>
+          <li>
+            {% set url = '/home/posts' %}
+            <a href="{{ url }}" {% if currentUrl == url %}rel="current"{% endif %}>
+              Posts ({% if currentUrl == url %}{{ pagination.totalItems }}{% else %}{{ shared.length }}{% endif %})
+            </a>
+          </li>
+          <li>
+            {% set url = '/home/members' %}
+            <a href="{{ url }}" {% if currentUrl == url %}rel="current"{% endif %}>
+              Members ({% if currentUrl == url %}{{ pagination.totalItems }}{% else %}{{ members.length }}{% endif %})
+            </a>
+          </li>
+          <li>
+            {% set url = '/home/requests' %}
+            <a href="{{ url }}" {% if currentUrl == url %}rel="current"{% endif %}>
+              Requests ({% if currentUrl == url %}{{ pagination.totalItems }}{% else %}{{ requests.length }}{% endif %})
+            </a>
+          </li>
+          <li>
+            {% set url = '/home/blocked' %}
+            <a href="{{ url }}" {% if currentUrl == url %}rel="current"{% endif %}>
+              Blocked ({% if currentUrl == url %}{{ pagination.totalItems }}{% else %}{{ blocks.length }}{% endif %})
+            </a>
+          </li>
+          <li>
+            {% set url = '/home/managers' %}
+            <a href="{{ url }}" {% if currentUrl == url or currentUrl == '/home/add-manager' %}rel="current"{% endif %}>
+              Managers ({% if currentUrl == url %}{{ pagination.totalItems }}{% else %}{{ managers.length }}{% endif %})
+            </a>
+          </li>
+          <li>
+            {% set url = '/home/settings' %}
+            <a href="{{ url }}" {% if currentUrl == url %}rel="current"{% endif %}>
+              Settings
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="tabs-navigation">
+        <button type="button" class="button" hidden rel="prev" aria-label="Scroll to left">
+          🡄
+        </button>
+        <button type="button" class="button" style="justify-self: flex-end;" rel="next" aria-label="Scroll to right">
+          🡆
+        </button>
+      </div>
+    </div>
+    <div class="tabs-inner tabs-inner--right">
+      <button
+        data-action="logout"
+        type="button"
+        class="button"
+        id="logout-button">
+        Log Out
+      </button>
+    </div>
+  </nav>
+{% endmacro %}
