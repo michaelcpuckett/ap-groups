@@ -20,12 +20,12 @@ body {
 }
 
 .container {
-  padding: 8px;
+  padding: 0 8px 8px;
 }
 
 @media (min-width: 900px) {
   .container {
-    padding: 24px;
+    padding: 0 24px 24px;
   }
 }
 
@@ -123,7 +123,7 @@ summary {
   list-style-position: inside;
   text-align: left;
   color: black;
-  z-index: 2;
+  z-index: 1;
 }
 
 .flyout-container summary {
@@ -182,7 +182,6 @@ summary {
 .tabs-inner--main {
   position: relative;
   font-size: 1.125em;
-  overflow: hidden;
 }
 
 .space-between {
@@ -233,7 +232,6 @@ h2 {
   font-size: 2.5em;
 }
 
-.tabs-inner--main,
 .post-body-inner--main {
   box-shadow: inset 0 0 2.5px black, 0 0 2.5px black;
   border-radius: 4px;
@@ -320,7 +318,6 @@ dd {
   .tabs-inner--main {
     grid-row: 2 / 3;
     grid-column: 1 / 3;
-    height: calc(1.125em + 32px);
   }
   
   .tabs-inner--right {
@@ -349,25 +346,18 @@ dd {
   }
 }
 
-.tabs-box {
-  display: flex;
-  overflow-x: auto;
-  overflow-y: hidden;
-  position: absolute;
-  left: 0;
-  right: 0;
-}
-
 .tabs-list {
-  max-width: max-content;
-  min-width: 100%;
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 2;
 }
 
-.tabs-inner--main a {
+.tabs-inner--main a,
+.tabs-inner--main button {
   display: flex;
   padding: 16px;
   white-space: nowrap;
@@ -377,6 +367,8 @@ dd {
   color: white;
   text-transform: uppercase;
   font-weight: bold;
+  width: 100%;
+  justify-content: flex-start;
 }
 
 .tabs-inner--main a[rel="current"] {
@@ -401,6 +393,7 @@ dd {
 .tabs-inner--left {
   display: grid;
   align-items: center;
+  height: 1.125em;
 }
 
 @media (min-width: 900px) {
@@ -466,4 +459,23 @@ form .button[type="submit"] {
   width: 1px;
   padding: 0;
   border: 0;
+}
+
+.tabs-details {
+  display: grid;
+  height: 100%;
+}
+
+.tabs-details summary {
+  display: grid;
+  font-weight: bold;
+  height: 3em;
+  background: #14dac3;
+  grid-auto-flow: column;
+  grid-template-rows: 100%;
+  gap: 6px;
+  grid-template-columns: 1.5em auto;
+  justify-content: flex-start;
+  padding: 6px 12px;
+  color: black;
 }

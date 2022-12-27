@@ -1,12 +1,18 @@
 {% macro homeNav(currentUrl) %}
   <nav role="navigation" class="tabs">
     <div class="tabs-inner tabs-inner--left">
-      <a href="/">
-        chirp.social
-      </a>
     </div>
     <div class="tabs-inner tabs-inner--main">
-      <div class="tabs-box">
+      <details class="tabs-details">
+        <summary>
+          <svg aria-hidden="true" viewBox="0 0 1000 1000">
+            <path d="M500,10C229.4,10,10,229.4,10,500c0,270.7,219.4,490,490,490c270.7,0,490-219.3,490-490C990,229.4,770.7,10,500,10z M500,924.7C265.8,924.7,75.3,734.2,75.3,500S265.8,75.3,500,75.3S924.7,265.8,924.7,500S734.2,924.7,500,924.7z"/>
+            <path d="M761.3,467.3H238.7c-18,0-32.7,14.6-32.7,32.7c0,18,14.6,32.7,32.7,32.7h522.7c18,0,32.7-14.7,32.7-32.7C794,482,779.3,467.3,761.3,467.3z"/>
+            <path d="M761.3,271.3H238.7c-18,0-32.7,14.6-32.7,32.7c0,18,14.6,32.7,32.7,32.7h522.7c18,0,32.7-14.6,32.7-32.7C794,286,779.3,271.3,761.3,271.3z"/>
+            <path d="M761.3,663.3H238.7c-18,0-32.7,14.7-32.7,32.7s14.6,32.7,32.7,32.7h522.7c18,0,32.7-14.7,32.7-32.7C794,678,779.3,663.3,761.3,663.3z"/>
+          </svg>
+          Main Menu
+        </summary>
         <ul class="tabs-list">
           <li>
             {% set url = '/home' %}
@@ -50,25 +56,16 @@
               Settings
             </a>
           </li>
+          <li>
+            <button
+              data-action="logout"
+              type="button"
+              id="logout-button">
+              Log Out
+            </button>
+          </li>
         </ul>
-      </div>
-      <div class="tabs-navigation">
-        <button type="button" class="button" hidden rel="prev" aria-label="Scroll to left">
-          🡄
-        </button>
-        <button type="button" class="button" style="justify-self: flex-end;" rel="next" aria-label="Scroll to right">
-          🡆
-        </button>
-      </div>
-    </div>
-    <div class="tabs-inner tabs-inner--right">
-      <button
-        data-action="logout"
-        type="button"
-        class="button"
-        id="logout-button">
-        Log Out
-      </button>
+      </details>
     </div>
   </nav>
 {% endmacro %}
