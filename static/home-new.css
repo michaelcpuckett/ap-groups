@@ -479,3 +479,7 @@ form .button[type="submit"] {
   padding: 6px 12px;
   color: black;
 }
+
+.tabs-details summary svg {
+  height: 1em;
+}
