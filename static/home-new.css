@@ -20,12 +20,15 @@ body {
 }
 
 .container {
-  padding: 0 8px 8px;
+  padding: 8px;
+  display: grid;
+  gap: 8px;
 }
 
 @media (min-width: 900px) {
   .container {
-    padding: 0 24px 24px;
+    padding: 24px;
+    gap: 24px;
   }
 }
 
@@ -93,9 +96,34 @@ a.button {
   color: black;
   font-weight: bold;
 }
+
+.header {
+  display: flex;
+  align-items: center;
+  height: 3em;
+  width: 100%;
+}
+
+.group-avatar {
+  flex: 0 0 auto;
+  width: max-content;
+  background-color: var(--accent-color);
+  color: white;
+  height: 100%;
+  display: flex;
+  padding: 12px;
+}
+
+.group-avatar img {
+  height: 100%;
+  overflow: hidden;
+  border-radius: 100%;
+}
+
 .flyout-container {
   position: relative;
 }
+
 summary {
   padding: 0;
   margin: 0;
@@ -109,6 +137,7 @@ summary {
   width: 100%;
   cursor: pointer;
 }
+
 .flyout {
   position: absolute;
   display: block;
@@ -164,7 +193,7 @@ summary {
 
 .tabs {
   display: grid;
-  gap: 16px;
+  column-gap: 16px;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -190,7 +219,8 @@ summary {
 
 .tabs-inner--main {
   position: relative;
-  font-size: 1.125em;
+  font-size: 1.5em;
+  font-weight: normal;
 }
 
 .space-between {
@@ -313,7 +343,6 @@ dd {
 
 @media (min-width: 900px) {
   .tabs {
-    height: calc(1.125em + 32px);
     line-height: 1;
   }
 }
@@ -321,7 +350,7 @@ dd {
 @media (max-width: 899px) {
   .tabs {
     grid-template-columns: .5fr .5fr;
-    gap: 16px;
+    column-gap: 16px;
   }
 
   .tabs-inner--main {
@@ -337,22 +366,9 @@ dd {
   .post {
     padding-bottom: 64px;
     position: relative;
-  }
-
-  .post:after {
-    content: '';
-    border-bottom: 1px solid;
-    position: absolute;
-    bottom: 0px;
-    color: white;
-    left: 0;
-    font-size: 1.5em;
-    width: 100%;
-    display: grid;
-    text-align: center;
-    user-select: none;
-    pointer-events: none;
-    touch-action: none;
+    padding: 16px;
+    border: 1px solid;
+    border-radius: 16px;
   }
 }
 
@@ -366,8 +382,8 @@ dd {
   z-index: 2;
 }
 
-.tabs-inner--main a,
-.tabs-inner--main button {
+.tabs-details a,
+.tabs-details button {
   display: flex;
   padding: 16px;
   white-space: nowrap;
@@ -375,8 +391,6 @@ dd {
   text-decoration: none;
   background-color: #015252;
   color: white;
-  text-transform: uppercase;
-  font-weight: bold;
   width: 100%;
   justify-content: flex-start;
 }
@@ -403,7 +417,6 @@ dd {
 .tabs-inner--left {
   display: grid;
   align-items: center;
-  height: 1.125em;
 }
 
 @media (min-width: 900px) {
@@ -474,16 +487,16 @@ form .button[type="submit"] {
 .tabs-details {
   display: grid;
   height: 100%;
+  width: 100%;
 }
 
 .tabs-details summary {
   display: grid;
-  font-weight: bold;
-  height: 3em;
+  height: 100%;
   background: #14dac3;
   grid-auto-flow: column;
   grid-template-rows: 100%;
-  gap: 6px;
+  gap: 12px;
   grid-template-columns: 1.5em auto;
   justify-content: flex-start;
   padding: 6px 12px;
@@ -491,7 +504,7 @@ form .button[type="submit"] {
 }
 
 .tabs-details summary svg {
-  height: 1em;
+  height: 1.5em;
 }
 
 #loader[open] {
