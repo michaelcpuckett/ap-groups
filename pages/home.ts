@@ -22,6 +22,12 @@ function assertIsDetailsElement(element: unknown): asserts element is HTMLDetail
   }
 }
 
+function assertIsHTMLElement(element: unknown): asserts element is HTMLElement {
+  if (!(element instanceof HTMLElement)) {
+    throw new Error('Element is not an HTMLElement');
+  }
+}
+
 function assertIsNode(element: unknown): asserts element is Node {
   if (!(element instanceof Node)) {
     throw new Error('Element is not an Node');
@@ -29,19 +35,26 @@ function assertIsNode(element: unknown): asserts element is Node {
 }
 
 // Closes when loses focus.
-/*
 detailsElements.forEach((detailsElement) => {
+  const summaryElement = detailsElement.querySelector('summary');
+
   try {
     assertIsDetailsElement(detailsElement);
+    assertIsHTMLElement(summaryElement);
 
     detailsElement.addEventListener('keyup', (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
+        summaryElement.focus();
         detailsElement.open = false;
-      }      
+      }
     });
 
     detailsElement.addEventListener('focusout', async ({ relatedTarget }: FocusEvent) => {
+      // Fix Safari issue
+      await new Promise(window.requestAnimationFrame);
+
       if (!relatedTarget) {
+        summaryElement.focus();
         detailsElement.open = false;
         return;
       }
@@ -98,7 +111,6 @@ detailsElements.forEach((detailsElement) => {
     console.log(error);
   }
 });
-*/
 
 function showLoader() {
   assertIsDialogElement(loaderDialogElement);
