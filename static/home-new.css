@@ -149,7 +149,7 @@ summary {
   top: 100%;
   margin: 0;
   width: 100%;
-  list-style-position: inside;
+  list-style: none;
   text-align: left;
   color: black;
   z-index: 1;
@@ -165,9 +165,15 @@ summary {
   min-width: 48px;
   display: inline-grid;
   text-decoration: none;
-  place-items: center;
-  place-content: center;
   color: inherit;
+}
+
+.flyout a,
+.flyout button {
+  width: 100%;
+  justify-content: flex-start;
+  text-align: left;
+  align-items: center;
 }
 
 .post {
