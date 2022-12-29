@@ -5,7 +5,6 @@ import '../components/request-entity';
 import '../components/announce-entity';
 import '../components/post-form';
 import '../components/pagination-nav';
-import { async } from '@firebase/util';
 
 const detailsElements = Array.from(window.document.querySelectorAll('details'));
 const buttonElements = Array.from(window.document.querySelectorAll('button[type="button"]'));
@@ -30,6 +29,7 @@ function assertIsNode(element: unknown): asserts element is Node {
 }
 
 // Closes when loses focus.
+/*
 detailsElements.forEach((detailsElement) => {
   try {
     assertIsDetailsElement(detailsElement);
@@ -98,6 +98,7 @@ detailsElements.forEach((detailsElement) => {
     console.log(error);
   }
 });
+*/
 
 function showLoader() {
   assertIsDialogElement(loaderDialogElement);
