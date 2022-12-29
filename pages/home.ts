@@ -7,7 +7,7 @@ import '../components/post-form';
 import '../components/pagination-nav';
 import { async } from '@firebase/util';
 
-const flyoutElements = Array.from(window.document.querySelectorAll('.flyout-container'));
+const detailsElements = Array.from(window.document.querySelectorAll('details'));
 const buttonElements = Array.from(window.document.querySelectorAll('button[type="button"]'));
 const loaderDialogElement = window.document.querySelector('#loader');
 
@@ -30,11 +30,11 @@ function assertIsNode(element: unknown): asserts element is Node {
 }
 
 // Closes when loses focus.
-flyoutElements.forEach((element) => {
+detailsElements.forEach((detailsElement) => {
   try {
-    assertIsDetailsElement(element);
+    assertIsDetailsElement(detailsElement);
     
-    element.addEventListener('focusout', async (event: FocusEvent) => {
+    detailsElement.addEventListener('focusout', async (event: FocusEvent) => {
       const target = event.target;
 
       // Prevent Chrome error when opening link.
@@ -43,11 +43,11 @@ flyoutElements.forEach((element) => {
       try {
         assertIsNode(target);
 
-        if (!element.contains(target)) {
+        if (!detailsElement.contains(target)) {
           return;
         }
 
-        element.open = false;
+        detailsElement.open = false;
       } catch (error) {
         console.log(error);
       }
