@@ -186,7 +186,7 @@ summary {
 .pagination,
 .post-body {
   display: grid;
-  gap: 16px;
+  column-gap: 16px;
   width: 100%;
   grid-template-columns: 100%;
 }
