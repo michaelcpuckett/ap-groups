@@ -46,9 +46,6 @@ detailsElements.forEach((detailsElement) => {
         return;
       }
 
-      // Prevent Chrome error when opening link.
-      await new Promise(window.requestAnimationFrame);
-
       try {
         assertIsNode(relatedTarget);
 
