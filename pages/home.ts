@@ -33,21 +33,66 @@ function assertIsNode(element: unknown): asserts element is Node {
 detailsElements.forEach((detailsElement) => {
   try {
     assertIsDetailsElement(detailsElement);
-    
-    detailsElement.addEventListener('focusout', async (event: FocusEvent) => {
-      const target = event.target;
+
+    detailsElement.addEventListener('keyup', (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        detailsElement.open = false;
+      }      
+    });
+
+    detailsElement.addEventListener('focusout', async ({ relatedTarget }: FocusEvent) => {
+      if (!relatedTarget) {
+        detailsElement.open = false;
+        return;
+      }
 
       // Prevent Chrome error when opening link.
       await new Promise(window.requestAnimationFrame);
 
       try {
-        assertIsNode(target);
+        assertIsNode(relatedTarget);
 
-        if (!detailsElement.contains(target)) {
-          return;
+        if (relatedTarget.getRootNode() !== window.document.documentElement) {
+          let target = relatedTarget;
+
+          while (target !== window.document.documentElement) {
+            try {
+              assertIsNode(target);
+
+              if (!detailsElement.contains(target)) {
+                const rootNode = target.getRootNode();
+                
+                if (rootNode instanceof ShadowRoot) {
+                  target = rootNode.host;
+                } else {
+                  target = rootNode;
+                }
+
+                break;
+              }
+
+              return;
+            } catch (error) {
+              console.log(error);
+              break;
+            }
+
+          }
+
+          detailsElement.open = false;
         }
 
-        detailsElement.open = false;
+        try {
+          assertIsNode(relatedTarget);
+
+          if (!detailsElement.contains(relatedTarget)) {
+            return;
+          }
+
+          detailsElement.open = false;
+        } catch (error) {
+          console.log(error);
+        }
       } catch (error) {
         console.log(error);
       }
