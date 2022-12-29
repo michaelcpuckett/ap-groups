@@ -34,8 +34,17 @@
                   </div>
                 {% endif %}
                 {% if item.type == 'Announce' %}
+                  <textarea>
+                    {{ item.object.id }}
+                  </textarea>
                   <div class="region">
-                    {{ announcedEntity(item.object) }}
+                    {% if item.object.type == 'Tombstone' %}
+                      <p>
+                        Deleted.
+                      </p>
+                    {% else %}
+                      {{ announcedEntity(item.object) }}
+                    {% endif %}
                   </div>
                 {% endif %}
                 {% if item.type == 'Create' and item.object.id and item.object.type == 'Note' %}
