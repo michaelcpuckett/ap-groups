@@ -402,6 +402,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                   return {
                     ...item,
                     object: {
+                      _test: objectId,
                       type: AP.ExtendedObjectTypes.TOMBSTONE,
                     },
                   };
@@ -413,6 +414,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                   return {
                     ...item,
                     object: {
+                      id: `${objectId}`,
                       type: AP.ExtendedObjectTypes.TOMBSTONE,
                     },
                   };

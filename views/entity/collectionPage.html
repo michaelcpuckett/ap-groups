@@ -34,6 +34,9 @@
                   </div>
                 {% endif %}
                 {% if item.type == 'Announce' %}
+                  <textarea>
+                    {{ item | dump }}
+                  </textarea>
                   <div class="region">
                     {% if item.object.type == 'Tombstone' %}
                       <p>

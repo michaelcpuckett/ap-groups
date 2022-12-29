@@ -5,8 +5,62 @@ import '../components/request-entity';
 import '../components/announce-entity';
 import '../components/post-form';
 import '../components/pagination-nav';
+import { async } from '@firebase/util';
 
+const flyoutElements = Array.from(window.document.querySelectorAll('.flyout-container'));
 const buttonElements = Array.from(window.document.querySelectorAll('button[type="button"]'));
+const loaderDialogElement = window.document.querySelector('#loader');
+
+function assertIsDialogElement(element: unknown): asserts element is HTMLDialogElement {
+  if (!(element instanceof HTMLDialogElement)) {
+    throw new Error('Element is not an HTMLDialogElement');
+  }
+}
+
+function assertIsDetailsElement(element: unknown): asserts element is HTMLDetailsElement {
+  if (!(element instanceof HTMLDetailsElement)) {
+    throw new Error('Element is not an HTMLDetailsElement');
+  }
+}
+
+function assertIsNode(element: unknown): asserts element is Node {
+  if (!(element instanceof Node)) {
+    throw new Error('Element is not an Node');
+  }
+}
+
+// Closes when loses focus.
+flyoutElements.forEach((element) => {
+  try {
+    assertIsDetailsElement(element);
+    
+    element.addEventListener('focusout', async (event: FocusEvent) => {
+      const target = event.target;
+
+      // Prevent Chrome error when opening link.
+      await new Promise(window.requestAnimationFrame);
+
+      try {
+        assertIsNode(target);
+
+        if (!element.contains(target)) {
+          return;
+        }
+
+        element.open = false;
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+function showLoader() {
+  assertIsDialogElement(loaderDialogElement);
+  loaderDialogElement.showModal();
+}
 
 function logout() {
   var cookies = document.cookie.split("; ");
@@ -27,6 +81,8 @@ function logout() {
 }
 
 function deleteGroup(actorId: string) {
+  showLoader();
+
   fetch(`${actorId}/outbox`, {
     method: 'POST',
     headers: {
@@ -98,6 +154,8 @@ if (addAdministratorForm) {
       return;
     }
 
+    showLoader();
+
     fetch(`/user/admin`, {
       method: 'POST',
       body: JSON.stringify({
@@ -116,7 +174,6 @@ if (addAdministratorForm) {
     });
   });
 }
-
 
 window.document.querySelector('#members')?.addEventListener('click', (event: Event) => {
   const target = event.target;
@@ -139,6 +196,8 @@ window.document.querySelector('#members')?.addEventListener('click', (event: Eve
       if (!entityId || !actorId) {
         return;
       }
+
+      showLoader();
 
       fetch(`${actorId}/outbox`, {
         method: 'POST',
@@ -165,7 +224,6 @@ window.document.querySelector('#members')?.addEventListener('click', (event: Eve
   }
 });
 
-
 window.document.querySelector('#blocked')?.addEventListener('click', (event: Event) => {
   const target = event.target;
 
@@ -187,6 +245,8 @@ window.document.querySelector('#blocked')?.addEventListener('click', (event: Eve
       if (!entityId || !actorId) {
         return;
       }
+
+      showLoader();
 
       fetch(`${actorId}/outbox`, {
         method: 'POST',
@@ -212,6 +272,7 @@ window.document.querySelector('#blocked')?.addEventListener('click', (event: Eve
     break;
   }
 });
+
 window.document.querySelector('#requests')?.addEventListener('click', (event: Event) => {
   const target = event.target;
 
@@ -233,6 +294,8 @@ window.document.querySelector('#requests')?.addEventListener('click', (event: Ev
       if (!entityId || !actorId) {
         return;
       }
+
+      showLoader();
 
       fetch(`${actorId}/outbox`, {
         method: 'POST',
@@ -256,6 +319,8 @@ window.document.querySelector('#requests')?.addEventListener('click', (event: Ev
       if (!entityId || !actorId) {
         return;
       }
+
+      showLoader();
 
       fetch(`${actorId}/outbox`, {
         method: 'POST',
@@ -281,7 +346,6 @@ window.document.querySelector('#requests')?.addEventListener('click', (event: Ev
   }
 });
 
-
 window.document.querySelector('#posts')?.addEventListener('click', (event: Event) => {
   const target = event.target;
 
@@ -303,6 +367,8 @@ window.document.querySelector('#posts')?.addEventListener('click', (event: Event
       if (!entityId || !actorId) {
         return;
       }
+
+      showLoader();
       
       fetch(`${actorId}/outbox`, {
         method: 'POST',
@@ -332,3 +398,4 @@ window.document.querySelector('#posts')?.addEventListener('click', (event: Event
     break;
   }
 });
+

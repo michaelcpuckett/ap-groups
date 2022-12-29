@@ -131,6 +131,15 @@ summary {
   min-height: 48px;
   min-width: 48px;
 }
+.flyout a {
+  min-height: 48px;
+  min-width: 48px;
+  display: inline-grid;
+  text-decoration: none;
+  place-items: center;
+  place-content: center;
+  color: inherit;
+}
 
 .post {
   display: grid;
@@ -331,7 +340,8 @@ dd {
   }
 
   .post:after {
-    content: '— ❖ —';
+    content: '';
+    border-bottom: 1px solid;
     position: absolute;
     bottom: 0px;
     color: white;
@@ -482,4 +492,47 @@ form .button[type="submit"] {
 
 .tabs-details summary svg {
   height: 1em;
+}
+
+#loader[open] {
+  display: grid;
+  place-items: center;
+  place-content: center;
+  border: 0;
+  border-radius: 0;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  max-width: 100%;
+  z-index: 9999;
+  gap: 24px;
+  background-color: #015252;
+  color: white;
+}
+
+#loader svg {
+  animation: linear 4s loader infinite;
+  fill: var(--primary-color);
+}
+
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(180deg);
+  }
+
+  50% {
+    transform: rotate(360eg);
+  }
+
+  75% {
+    transform: rotate(540deg);
+  }
+
+  100% {
+    transform: rotate(720deg);
+  }
 }
