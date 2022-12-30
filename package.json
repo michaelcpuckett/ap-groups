@@ -15,7 +15,8 @@
       "source": [
         "./pages/login.ts",
         "./pages/home.ts",
-        "./pages/group-entity.ts"
+        "./pages/group-entity.ts",
+        "./pages/collection-page.ts"
       ]
     }
   },

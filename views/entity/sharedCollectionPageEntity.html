@@ -1,16 +1,30 @@
-{% macro postsPage() %}
+{% macro sharedCollectionPageEntityPage() %}
+  {% set shared = entity.orderedItems %}
   <!doctype html>
   <html>
-    <title>chirp.social - Posts</title>
+    <title>chirp.social - {{ entity.name }} - Page {{ entity.page }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta charset="utf-8" />
     <link rel="stylesheet" href="/home-new.css" />
+    <link rel="stylesheet" href="/collection-page-new.css" />
     <body>
-      {{ loader() }}
       <div class="container">
         <div class="main-content">
           <main role="main">
-            {{ homeNav(url | getPathname) }}
+            <nav role="navigation" class="tabs">
+              <div class="tabs-inner tabs-inner--left">
+              </div>
+              <div class="tabs-inner tabs-inner--main">
+                <header class="header" role="banner">
+                  <div class="space-between space-between--break-on-mobile">
+                    {{ header() }}
+                    <a href="{{ entity.attributedTo }}">
+                      {{ entity.attributedTo | stripDomain }}
+                    </a>
+                  </div>
+                </header>
+              </div>
+            </nav>
             <div class="pagination">
               <div class="pagination-inner pagination-inner--left">
 
@@ -18,15 +32,10 @@
               <div class="pagination-inner pagination-inner--main">
                 <div class="space-between">
                   <h2 class="heading">
-                    Posts ({{ pagination.totalItems }})
+                    Posts ({{ entity.totalItems }})
                   </h2>
                   {% if shared.length %}
-                    <pagination-nav
-                      first-page="{{ pagination.first }}"
-                      prev-page="{{ pagination.prev }}"
-                      next-page="{{ pagination.next }}"
-                      last-page="{{ pagination.last }}">
-                    </pagination-nav>
+                    {{ paginationNav(entity) }}
                   {% endif %}
                 </div>
               </div>
@@ -136,38 +145,9 @@
                         </div>
                       </div>
                       <div class="post-body-inner post-body-inner--right">
-                        <details class="flyout-container">
-                          <summary
-                            aria-label="Options"
-                            class="button">
-                            Options...
-                          </summary>
-                          <ul class="flyout">
-                            <li>
-                              <a href="{{ sharedItem.url }}" target="_blank">
-                                View Post
-                              </a>
-                            </li>
-                            <li>
-                              <button
-                                type="button"
-                                data-action="undo-announce"
-                                data-entity-id="{{ sharedItem.id }}"
-                                data-actor-id="{{ actor.id }}">
-                                Delete Post
-                              </button>
-                            </li>
-                            <li>
-                              <button
-                                type="button"
-                                data-action="block"
-                                data-entity-id="{{ post.attributedTo.id }}"
-                                data-actor-id="{{ actor.id }}">
-                                Block Member
-                              </button>
-                            </li>
-                          </ul>
-                        </details>
+                        <a href="{{ sharedItem.url }}" target="_blank">
+                          View Post
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -189,12 +169,7 @@
               <div class="pagination">
                 <div class="pagination-inner pagination-inner--main">
                   <div class="space-between">
-                    <pagination-nav
-                      first-page="{{ pagination.first }}"
-                      prev-page="{{ pagination.prev }}"
-                      next-page="{{ pagination.next }}"
-                      last-page="{{ pagination.last }}">
-                    </pagination-nav>
+                    {{ paginationNav(entity) }}
                   </div>
                 </div>
               </div>
@@ -202,7 +177,7 @@
           </main>
         </div>
       </div>
-      <script type="module" src="/home.js"></script>
+      <script type="module" src="/collection-page.js"></script>
     </body>
   </html>
 {% endmacro %}

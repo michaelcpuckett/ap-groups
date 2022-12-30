@@ -1,5 +1,8 @@
 * {
   box-sizing: border-box;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
 }
 
 :root {
@@ -40,7 +43,6 @@ main {
 img {
   max-width: 100%;
 }
-
 
 textarea,
 input {
@@ -100,7 +102,6 @@ a.button {
 .header {
   display: flex;
   align-items: center;
-  height: 3em;
   width: 100%;
 }
 
@@ -234,8 +235,16 @@ summary {
   display: flex;
   gap: 32px;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
   flex-wrap: wrap;
+  width: 100%;
+}
+
+@media (max-width: 899px) {
+  .space-between--break-on-mobile {
+    flex-direction: column;
+    place-items: center;
+  }
 }
 
 .space-between > * {

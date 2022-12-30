@@ -12,20 +12,19 @@ export class PaginationNav extends LitElement {
     }
 
     ol {
-      list-style: none;
-      display: flex;
+      width: 100%;
+      gap: 8px;
       flex-wrap: wrap;
+      flex-flow: row-wrap;
+      justify-content: flex-start;
       margin: 0;
       padding: 0;
-      gap: 8px;
     }
 
     ol,
     li {
       align-items: center;
-      display: grid;
-      grid-auto-flow: column;
-      justify-content: flex-start;
+      display: flex;
     }
   `];
 

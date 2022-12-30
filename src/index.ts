@@ -31,9 +31,17 @@ nunjucksConfig.addFilter('getHostname', (url) => {
   }
 });
 
+nunjucksConfig.addFilter('stripDomain', (url) => {
+  try {
+    return new URL(url).pathname.slice(1);
+  } catch (error) {
+    return '';
+  }
+});
+
 nunjucksConfig.addFilter('getPathname', (url) => {
   try {
-    return new URL(`${LOCAL_DOMAIN}${url}`).pathname;
+    return new URL(`${LOCAL_DOMAIN}${url}`);
   } catch (error) {
     return '';
   }
@@ -402,7 +410,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                   return {
                     ...item,
                     object: {
-                      _test: objectId,
+                      id: objectId,
                       type: AP.ExtendedObjectTypes.TOMBSTONE,
                     },
                   };
