@@ -52,7 +52,7 @@
                             <a
                               class="permalink"
                               target="_blank"
-                              href="{{ post.url }}">
+                              href="{{ post.id or post.url }}">
                               {{ post.published | dateFromNow }}
                             </a>
                           {% endif %}
@@ -137,7 +137,7 @@
                           </div>
                         {% endif %}
                         <div class="post-content">
-                          {% if post.published and post.url %}
+                          {% if post.published and (post.id or post.url) %}
                             {{ post.content | safe }}
                           {% else %}
                             Post not found.
@@ -145,7 +145,7 @@
                         </div>
                       </div>
                       <div class="post-body-inner post-body-inner--right">
-                        <a href="{{ post.url }}" target="_blank">
+                        <a href="{{ post.url or post.id }}" target="_blank">
                           View Post
                         </a>
                       </div>

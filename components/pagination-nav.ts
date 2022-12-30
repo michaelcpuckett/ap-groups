@@ -26,6 +26,10 @@ export class PaginationNav extends LitElement {
       align-items: center;
       display: flex;
     }
+
+    li a {
+      text-align: center;
+    }
   `];
 
   @property({type: String, attribute: 'first-page'})

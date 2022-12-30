@@ -589,32 +589,43 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                         }
           
                         const object = await mongoDbAdapter.fetchEntityById(objectId) as AP.Note;
-          
-                        if (!object) {
-                          throw new Error('No object');
-                        }
                         
-                        const actorId = getId(object.attributedTo);
-          
-                        if (!actorId) {
-                          throw new Error('No actor ID');
+                        try {
+                          if (!object) {
+                            throw new Error('No object');
+                          }
+                          
+                          const actorId = getId(object.attributedTo);
+            
+                          if (!actorId) {
+                            throw new Error('No actor ID');
+                          }
+            
+                          const actor = await mongoDbAdapter.fetchEntityById(actorId);
+            
+                          if (!actor) {
+                            throw new Error('No actor.');
+                          }
+            
+                          return {
+                            ...announceActivity,
+                            object: {
+                              ...object,
+                              attributedTo: actor,
+                            },
+                          };
+                        } catch (error) {
+                          return {
+                            ...announceActivity,
+                            object: {
+                              id: `${objectId}`,
+                              type: AP.ExtendedObjectTypes.TOMBSTONE,
+                            },
+                          };
                         }
-          
-                        const actor = await mongoDbAdapter.fetchEntityById(actorId);
-          
-                        if (!actor) {
-                          throw new Error('No actor.');
-                        }
-          
-                        return {
-                          ...announceActivity,
-                          object: {
-                            ...object,
-                            attributedTo: actor,
-                          },
-                        };
                       } catch (error) {
                         return {
+                          id: shared.id,
                           type: AP.ExtendedObjectTypes.TOMBSTONE,
                         };
                       }
