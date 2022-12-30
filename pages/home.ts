@@ -229,6 +229,57 @@ if (addAdministratorForm) {
     });
   });
 }
+const announcementForm = window.document.querySelector('#announcement-form');
+
+if (announcementForm) {
+  announcementForm.addEventListener('input', () => {
+    announcementForm.classList.remove('has-error');
+  });
+
+  announcementForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const actorId = announcementForm.querySelector<HTMLInputElement>('[name="actor-id"]')?.value;
+
+    if (!actorId) {
+      return;
+    }
+
+    const content = announcementForm.querySelector<HTMLInputElement>('[name="announcement"]')?.value;
+
+    if (!content) {
+      announcementForm.classList.add('has-error');
+      const errorMessage = announcementForm.querySelector('[name="announcement"]').parentElement.querySelector('.error-message');
+      errorMessage.textContent = 'Required';
+      return;
+    }
+
+    showLoader();
+
+    fetch(`${actorId}/outbox`, {
+      method: 'POST',
+      body: JSON.stringify({
+        type: 'Create',
+        actor: actorId,
+        to: [
+          'https://www.w3.org/ns/activitystreams#Public',
+          `${actorId}/following`
+        ],
+        object: {
+          type: 'Note',
+          content,
+        },
+      }),
+    })
+    .then(res => res.json())
+    .then((result) => {
+      if (result.success) {
+        window.location.reload();
+      } else {
+        console.log(result);
+      }
+    });
+  });
+}
 
 window.document.querySelector('#members')?.addEventListener('click', (event: Event) => {
   const target = event.target;

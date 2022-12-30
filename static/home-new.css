@@ -125,6 +125,7 @@ a.button {
 }
 
 summary {
+  appearance: none;
   padding: 0;
   margin: 0;
   border: 0;
@@ -225,8 +226,8 @@ summary {
 
 .tabs-inner--main {
   position: relative;
-  font-size: 1.5em;
-  font-weight: normal;
+  font-size: 1.125em;
+  font-weight: bold;
 }
 
 .space-between {
@@ -511,6 +512,16 @@ form .button[type="submit"] {
 
 .tabs-details summary svg {
   height: 1.5em;
+}
+
+#back-button {
+  gap: 6px;
+  font-size: .875em;
+}
+
+#back-button svg {
+  height: 1em;
+  fill: currentColor;
 }
 
 #loader[open] {

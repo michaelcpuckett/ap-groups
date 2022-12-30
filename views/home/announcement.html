@@ -1,4 +1,4 @@
-{% macro addManagerPage() %}
+{% macro announcementPage() %}
   <!doctype html>
   <html>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,12 +17,12 @@
               <div class="pagination-inner pagination-inner--main">
                 <div class="space-between">
                   <h2 class="heading">
-                    Add a Group Manager
+                    Announcement
                   </h2>
                 </div>
               </div>
             </div>
-            <div class="posts" id="add-manager">
+            <div class="announcement" id="add-manager">
               <div class="post">
                 <div class="post-body">
                   <div class="post-body-inner post-body-inner--left">
@@ -31,31 +31,15 @@
                   <div class="post-body-inner post-body-inner--main">
                     <div class="post-content">
                       <p>
-                        You can add someone to help manage the account.
-                        <strong>After adding them, they will need to follow the Forgot Password instructions
-                        on the home page</strong>.
+                        You can make an announcement as the Group.
                       </p>
-                      <p class="error-message">
-                        There is no way to delete Administrators yet!
-                      </p>
-                      <form id="add-administrator-form" novalidate>
+                      <form id="announcement-form" novalidate>
+                        <input type="hidden" name="actor-id" value="{{ actor.id }} " />
                         <label class="label">
                           <span class="label-text">
-                            Admin Email
+                            Announcement
                           </span>
-                          <input class="input" type="email" name="email" control-id="ControlID-1">
-                          <p class="hint-text">
-                            An email can only be associated with one Group.
-                            Consider using <code>user<strong>+groupname</strong>@gmail.com</code>
-                            if using Gmail or similar.
-                          </p>
-                          <p class="error-message"></p>
-                        </label>
-                        <label class="label">
-                          <span class="label-text">
-                            Admin Email (Repeat to Confirm)
-                          </span>
-                          <input class="input" type="email" name="email-confirm" />
+                          <textarea name="announcement" rows="6"></textarea>
                           <p class="error-message"></p>
                         </label>
                         <button type="submit" class="button">

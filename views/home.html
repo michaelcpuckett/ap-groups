@@ -13,6 +13,7 @@
 {% from "home/addManager.html" import addManagerPage with context %}
 {% from "home/settings.html" import settingsPage with context %}
 {% from "home/requests.html" import requestsPage with context %}
+{% from "home/announcement.html" import announcementPage with context %}
 {% from "home/blocked.html" import blockedPage with context %}
 
 {% if url | getPathname == '/home/posts' %}
@@ -29,6 +30,8 @@
   {{ requestsPage() }}
 {% elif url | getPathname == '/home/blocked' %}
   {{ blockedPage() }}
+{% elif url | getPathname == '/home/announcement' %}
+  {{ announcementPage() }}
 {% else %}
   {{ editProfilePage() }}
 {% endif %}
