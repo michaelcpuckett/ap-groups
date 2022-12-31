@@ -190,14 +190,14 @@ summary {
 
 .post {
   display: grid;
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
   width: 100%;
   gap: 16px;
 }
 
 .pagination {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
 }
 
@@ -213,20 +213,17 @@ summary {
   display: grid;
   column-gap: 16px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
   grid-template-columns: 100%;
 }
 
 @media (min-width: 900px) {
   .pagination,
-  .post-body {
-    grid-template-columns: 180px minmax(0, 1fr) 180px;
-    grid-auto-flow: column;
-  }
+  .post-body,
   .tabs {
+    grid-template-columns: 280px minmax(0, 1fr) 280px;
     grid-auto-flow: column;
-    grid-template-columns: 180px minmax(0, 1fr) 180px;
   }
   
   .pagination-inner--main,
