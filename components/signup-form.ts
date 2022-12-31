@@ -212,12 +212,11 @@ export class SignupForm extends LitElement {
             @input=${this.clearEmailError}
             class="input"
             type="email"
+            autocomplete="email"
             name="email"
           />
           <span class="hint-text">
             An email can only be associated with one Group.
-            Consider using <code>user<strong>+groupname</strong>@gmail.com</code>
-            if using Gmail or similar.
           </span>
           ${this.emailError ? html`
             <span class="error-message">
@@ -237,6 +236,7 @@ export class SignupForm extends LitElement {
             class="input"
             type="password"
             name="password"
+            autocomplete="password"
           />
           <span class="hint-text">
             Must be at least 6 characters.

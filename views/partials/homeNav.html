@@ -3,7 +3,7 @@
     <div class="tabs-inner tabs-inner--left">
     </div>
     <div class="tabs-inner tabs-inner--main">
-      <header class="header" role="banner">
+      <header class="header header--home" role="banner">
         <details class="tabs-details">
           <summary>
             <svg aria-hidden="true" viewBox="0 0 1000 1000">
@@ -16,50 +16,50 @@
           </summary>
           <ul class="tabs-list">
             <li>
-              {% set url = '/home' %}
-              <a href="{{ url }}" {% if currentUrl == url %}rel="current"{% endif %}>
+              {% set linkUrl = '/home' %}
+              <a href="{{ linkUrl }}" {% if currentUrl == linkUrl %}rel="current"{% endif %}>
                 Profile
               </a>
             </li>
             <li>
-              {% set url = '/home/posts' %}
-              <a href="{{ url }}" {% if currentUrl == url %}rel="current"{% endif %}>
-                Posts ({% if currentUrl == url %}{{ pagination.totalItems }}{% else %}{{ shared.length }}{% endif %})
+              {% set linkUrl = '/home/posts' %}
+              <a href="{{ linkUrl }}" {% if currentUrl == linkUrl %}rel="current"{% endif %}>
+                Posts ({% if currentUrl == linkUrl %}{{ pagination.totalItems }}{% else %}{{ shared.length }}{% endif %})
               </a>
             </li>
             <li>
-              {% set url = '/home/members' %}
-              <a href="{{ url }}" {% if currentUrl == url %}rel="current"{% endif %}>
-                Members ({% if currentUrl == url %}{{ pagination.totalItems }}{% else %}{{ members.length }}{% endif %})
+              {% set linkUrl = '/home/members' %}
+              <a href="{{ linkUrl }}" {% if currentUrl == linkUrl %}rel="current"{% endif %}>
+                Members ({% if currentUrl == linkUrl %}{{ pagination.totalItems }}{% else %}{{ members.length }}{% endif %})
               </a>
             </li>
             <li>
-              {% set url = '/home/requests' %}
-              <a href="{{ url }}" {% if currentUrl == url %}rel="current"{% endif %}>
-                Requests ({% if currentUrl == url %}{{ pagination.totalItems }}{% else %}{{ requests.length }}{% endif %})
+              {% set linkUrl = '/home/requests' %}
+              <a href="{{ linkUrl }}" {% if currentUrl == linkUrl %}rel="current"{% endif %}>
+                Requests ({% if currentUrl == linkUrl %}{{ pagination.totalItems }}{% else %}{{ requests.length }}{% endif %})
               </a>
             </li>
             <li>
-              {% set url = '/home/blocked' %}
-              <a href="{{ url }}" {% if currentUrl == url %}rel="current"{% endif %}>
-                Blocked ({% if currentUrl == url %}{{ pagination.totalItems }}{% else %}{{ blocks.length }}{% endif %})
+              {% set linkUrl = '/home/blocked' %}
+              <a href="{{ linkUrl }}" {% if currentUrl == linkUrl %}rel="current"{% endif %}>
+                Blocked ({% if currentUrl == linkUrl %}{{ pagination.totalItems }}{% else %}{{ blocks.length }}{% endif %})
               </a>
             </li>
             <li>
-              {% set url = '/home/managers' %}
-              <a href="{{ url }}" {% if currentUrl == url or currentUrl == '/home/add-manager' %}rel="current"{% endif %}>
-                Managers ({% if currentUrl == url %}{{ pagination.totalItems }}{% else %}{{ managers.length }}{% endif %})
+              {% set linkUrl = '/home/managers' %}
+              <a href="{{ linkUrl }}" {% if currentUrl == linkUrl or currentUrl == '/home/add-manager' %}rel="current"{% endif %}>
+                Managers ({% if currentUrl == linkUrl %}{{ pagination.totalItems }}{% else %}{{ managers.length }}{% endif %})
               </a>
             </li>
             <li>
-              {% set url = '/home/announcement' %}
-              <a href="{{ url }}" {% if currentUrl == url %}rel="current"{% endif %}>
+              {% set linkUrl = '/home/announcement' %}
+              <a href="{{ linkUrl }}" {% if currentUrl == linkUrl %}rel="current"{% endif %}>
                 Announcement
               </a>
             </li>
             <li>
-              {% set url = '/home/settings' %}
-              <a href="{{ url }}" {% if currentUrl == url %}rel="current"{% endif %}>
+              {% set linkUrl = '/home/settings' %}
+              <a href="{{ linkUrl }}" {% if currentUrl == linkUrl %}rel="current"{% endif %}>
                 Settings
               </a>
             </li>

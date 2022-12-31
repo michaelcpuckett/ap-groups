@@ -110,6 +110,7 @@ export class LoginForm extends LitElement {
             class="input"
             type="email"
             name="email"
+            autocomplete="email"
           />
           ${this.emailError ? html`
             <span class="error-message">
@@ -128,6 +129,7 @@ export class LoginForm extends LitElement {
             @input=${this.clearPasswordError}
             class="input"
             type="password"
+            autocomplete="password"
             name="password"
           />
           ${this.passwordError ? html`

@@ -16,21 +16,21 @@
 {% from "home/announcement.html" import announcementPage with context %}
 {% from "home/blocked.html" import blockedPage with context %}
 
-{% if url | getPathname == '/home/posts' %}
+{% if url == '/home/posts' %}
   {{ postsPage() }}
-{% elif url | getPathname == '/home/members' %}
+{% elif url == '/home/members' %}
   {{ membersPage() }}
-{% elif url | getPathname == '/home/managers' %}
+{% elif url == '/home/managers' %}
   {{ managersPage() }}
-{% elif url | getPathname == '/home/add-manager' %}
+{% elif url == '/home/add-manager' %}
   {{ addManagerPage() }}  
-{% elif url | getPathname == '/home/settings' %}
+{% elif url == '/home/settings' %}
   {{ settingsPage() }}
-{% elif url | getPathname == '/home/requests' %}
+{% elif url == '/home/requests' %}
   {{ requestsPage() }}
-{% elif url | getPathname == '/home/blocked' %}
+{% elif url == '/home/blocked' %}
   {{ blockedPage() }}
-{% elif url | getPathname == '/home/announcement' %}
+{% elif url == '/home/announcement' %}
   {{ announcementPage() }}
 {% else %}
   {{ editProfilePage() }}

@@ -15,6 +15,7 @@ import { AP } from 'activitypub-core-types';
 import * as path from 'path';
 import { AssertionError } from 'assert';
 import * as cookie from 'cookie';
+import { assertIsApEntity, assertIsApTransitiveActivity } from 'activitypub-core-types/lib/assertions';
 
 const app = express.default();
 app.use(express.static(path.resolve(__dirname, '../static')));
@@ -34,14 +35,6 @@ nunjucksConfig.addFilter('getHostname', (url) => {
 nunjucksConfig.addFilter('stripDomain', (url) => {
   try {
     return new URL(url).pathname.slice(1);
-  } catch (error) {
-    return '';
-  }
-});
-
-nunjucksConfig.addFilter('getPathname', (url) => {
-  try {
-    return new URL(`${LOCAL_DOMAIN}${url}`);
   } catch (error) {
     return '';
   }
@@ -570,70 +563,49 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                     }
 
                     const sliced = (sharedIds ? Array.isArray(sharedIds) ? sharedIds : [sharedIds] : []).slice(startIndex, startIndex + ITEMS_PER_PAGE);
-                    const shared = await Promise.all(sliced.map(async (sharedId) => {
-                      try {
-                        if (!(sharedId instanceof URL)) {
-                          throw new Error('No shared ID');
-                        }
-
-                        const announceActivity = await mongoDbAdapter.findEntityById(sharedId) as AP.Announce;
-        
-                        if (!announceActivity) {
-                          throw new Error('No activity found.');
-                        }
-          
-                        const objectId = getId(announceActivity.object);
-          
-                        if (!objectId) {
-                          throw new Error('No object ID');
-                        }
-          
-                        const object = await mongoDbAdapter.fetchEntityById(objectId) as AP.Note;
-                        
-                        try {
-                          if (!object) {
-                            throw new Error('No object');
-                          }
-                          
-                          const actorId = getId(object.attributedTo);
-            
-                          if (!actorId) {
-                            throw new Error('No actor ID');
-                          }
-            
-                          const actor = await mongoDbAdapter.fetchEntityById(actorId);
-            
-                          if (!actor) {
-                            throw new Error('No actor.');
-                          }
-            
-                          return {
-                            ...announceActivity,
-                            object: {
-                              ...object,
-                              attributedTo: actor,
-                            },
-                          };
-                        } catch (error) {
-                          return {
-                            ...announceActivity,
-                            object: {
-                              id: `${objectId}`,
-                              type: AP.ExtendedObjectTypes.TOMBSTONE,
-                            },
-                          };
-                        }
-                      } catch (error) {
-                        return {
-                          id: shared.id,
-                          type: AP.ExtendedObjectTypes.TOMBSTONE,
-                        };
-                      }
-                    }));
 
                     return {
                       sharedTotalItems,
-                      shared,
+                      shared: await Promise.all(sliced.map(async (sharedId: URL): Promise<JSON> => {
+                        try {
+                          const announcedActivity = await mongoDbAdapter.findEntityById(sharedId);
+
+                          assertIsApTransitiveActivity(announcedActivity);
+
+                          const objectId = getId(announcedActivity.object);
+
+                          const object = await mongoDbAdapter.findEntityById(objectId);
+
+                          assertIsApEntity(object);
+
+                          const actorId = getId(object.attributedTo);
+
+                          const attributedTo = await mongoDbAdapter.queryById(actorId);
+
+                          assertIsApEntity(attributedTo);
+
+                          return JSON.parse(JSON.stringify({
+                            ...announcedActivity,
+                            id: `${announcedActivity.id}`,
+                            url: `${announcedActivity.url}`,
+                            object: {
+                              ...object,
+                              id: `${object.id}`,
+                              url: `${object.url}`,
+                              attributedTo: {
+                                ...attributedTo,
+                                id: `${attributedTo.id}`,
+                                url: `${attributedTo.url}`,
+                              }
+                            },
+                          }));
+                        } catch (error) {
+                          return JSON.parse(JSON.stringify({
+                            id: `${sharedId}`,
+                            type: AP.ExtendedObjectTypes.TOMBSTONE,
+                          }));
+                        }
+                      })),
                     };
                   })
                   .catch(() => {
