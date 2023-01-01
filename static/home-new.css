@@ -28,7 +28,7 @@ body {
   gap: 8px;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1200px) {
   .container {
     padding: 24px;
     gap: 24px;
@@ -218,7 +218,7 @@ summary {
   grid-template-columns: 100%;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1200px) {
   .pagination,
   .post-body,
   .tabs {
@@ -247,7 +247,7 @@ summary {
   width: 100%;
 }
 
-@media (max-width: 899px) {
+@media (max-width: 1199px) {
   .space-between--break-on-mobile {
     flex-direction: column;
     place-items: center;
@@ -264,13 +264,13 @@ summary {
 }
 
 
-@media (max-width: 899px) {
+@media (max-width: 1199px) {
   .post-body-inner--right {
     grid-row: 2 / 3;
   }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1200px) {
   .post-body-inner--left {
     text-align: right;
     justify-items: flex-end;
@@ -325,7 +325,7 @@ h2 {
   display: grid;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1200px) {
   .post-body-inner--left .post-actor {
     justify-content: flex-end;
   }
@@ -352,7 +352,7 @@ dd {
   margin: 0;
 }
 
-@media (max-width: 899px) {
+@media (max-width: 1199px) {
   dl {
     display: grid;
     grid-template-columns: max-content 1fr;
@@ -364,7 +364,7 @@ dd {
   }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1200px) {
   dd + dt {
     margin-top: 16px;
   }
@@ -381,13 +381,13 @@ dd {
   font-size: 1.5em;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1200px) {
   .tabs {
     line-height: 1;
   }
 }
 
-@media (max-width: 899px) {
+@media (max-width: 1199px) {
   .tabs {
     grid-template-columns: .5fr .5fr;
     column-gap: 16px;
@@ -459,7 +459,7 @@ dd {
   align-items: center;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1200px) {
   .tabs-inner--left {
     justify-content: flex-end;
   }
