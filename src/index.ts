@@ -794,7 +794,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                 members,
                 blocks,
                 managers,
-                url: rawUrl,
+                url: url.pathname,
                 pagination: {
                   totalItems,
                   first: `${LOCAL_DOMAIN}${url.pathname}?page=1`,
