@@ -41,7 +41,7 @@
                       </div>
                       <div class="post-body-inner post-body-inner--main">
                         <div class="post-content">
-                          {% if not request.url %}
+                          {% if not request.id %}
                             <p>Request not found.</p>
                           {% else %}
                             {% if request.actor.icon.url %}

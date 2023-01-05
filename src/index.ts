@@ -15,7 +15,7 @@ import { AP } from 'activitypub-core-types';
 import * as path from 'path';
 import { AssertionError } from 'assert';
 import * as cookie from 'cookie';
-import { assertIsApActor, assertIsApExtendedObject, assertIsApType } from 'activitypub-core-types/lib/assertions';
+import { assertExists, assertIsApActor, assertIsApExtendedObject, assertIsApType } from 'activitypub-core-types/lib/assertions';
 import { GroupsPlugin } from 'activitypub-core-plugin-groups';
 
 const app = express.default();
@@ -634,23 +634,17 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
 
                     const requests = await Promise.all(sliced.map(async (item) => {
                       try {
-                        const foundItem = await mongoDbAdapter.queryById(item) as AP.Follow;
+                        const foundItem = await mongoDbAdapter.queryById(item);
 
-                        if (!foundItem) {
-                          throw new Error('Not found.');
-                        }
+                        assertIsApType<AP.Follow>(foundItem, AP.ActivityTypes.FOLLOW);
 
                         const actorId = getId(foundItem.actor);
 
-                        if (!actorId) {
-                          throw new Error('No actor ID');
-                        }
+                        assertExists(actorId);
 
                         const foundActor = await mongoDbAdapter.queryById(actorId);
 
-                        if (!foundActor) {
-                          throw new Error('No actor found.');
-                        }
+                        assertIsApActor(foundActor);
 
                         return {
                           ...foundItem,
