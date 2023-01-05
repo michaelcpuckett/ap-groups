@@ -9,13 +9,14 @@ import { FtpStorageAdapter } from 'activitypub-core-storage-ftp';
 import { DeliveryAdapter } from 'activitypub-core-delivery';
 import { ServiceAccount } from 'firebase-admin';
 import { ServerResponse, IncomingMessage } from 'http';
-import { LOCAL_DOMAIN, isType, SERVER_ACTOR_ID, getId, ACTIVITYSTREAMS_CONTENT_TYPE, ACCEPT_HEADER, JRD_CONTENT_TYPE, HTML_CONTENT_TYPE, convertUrlsToStrings, parseStream, streamToString } from 'activitypub-core-utilities';
+import { LOCAL_DOMAIN, isType, SERVER_ACTOR_ID, getId, ACCEPT_HEADER, JRD_CONTENT_TYPE, HTML_CONTENT_TYPE, streamToString } from 'activitypub-core-utilities';
 import * as nunjucks from 'nunjucks';
 import { AP } from 'activitypub-core-types';
 import * as path from 'path';
 import { AssertionError } from 'assert';
 import * as cookie from 'cookie';
-import { assertIsApEntity, assertIsApTransitiveActivity } from 'activitypub-core-types/lib/assertions';
+import { assertIsApActor, assertIsApExtendedObject, assertIsApType } from 'activitypub-core-types/lib/assertions';
+import { GroupsPlugin } from 'activitypub-core-plugin-groups';
 
 const app = express.default();
 app.use(express.static(path.resolve(__dirname, '../static')));
@@ -161,6 +162,7 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
         storage: ftpStorageAdapter,
       },
       plugins: [
+        GroupsPlugin(),
         {
           generateActorId: () => (preferredUsername: string) => {
             return `${LOCAL_DOMAIN}/@${preferredUsername}`;
@@ -570,19 +572,19 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                         try {
                           const announcedActivity = await mongoDbAdapter.findEntityById(sharedId);
 
-                          assertIsApTransitiveActivity(announcedActivity);
+                          assertIsApType<AP.Announce>(announcedActivity, AP.ActivityTypes.ANNOUNCE);
 
                           const objectId = getId(announcedActivity.object);
 
                           const object = await mongoDbAdapter.findEntityById(objectId);
 
-                          assertIsApEntity(object);
+                          assertIsApExtendedObject(object);
 
                           const actorId = getId(object.attributedTo);
 
                           const attributedTo = await mongoDbAdapter.queryById(actorId);
 
-                          assertIsApEntity(attributedTo);
+                          assertIsApActor(attributedTo);
 
                           return JSON.parse(JSON.stringify({
                             ...announcedActivity,
@@ -709,7 +711,9 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
                       }
                     }
 
-                    const blocks = await Promise.all(items.map(async (item) => {
+                    const sliced = (items ? Array.isArray(items) ? items : [items] : []).slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+                    const blocks = await Promise.all(sliced.map(async (item) => {
                       try {
                         const foundItem = await mongoDbAdapter.queryById(item) as AP.Block;
 
