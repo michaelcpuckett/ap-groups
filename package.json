@@ -27,7 +27,7 @@
     "activitypub-core-delivery": "^0.1.1",
     "activitypub-core-oauth": "^0.1.1",
     "activitypub-core-plugin-foaf": "^0.1.1",
-    "activitypub-core-plugin-groups": "^0.1.1",
+    "activitypub-core-plugin-groups": "^0.1.2",
     "activitypub-core-server-express": "^0.1.1",
     "activitypub-core-storage-ftp": "^0.1.1",
     "activitypub-core-types": "^0.1.1",
