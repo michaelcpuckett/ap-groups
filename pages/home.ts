@@ -262,7 +262,7 @@ if (announcementForm) {
         actor: actorId,
         to: [
           'https://www.w3.org/ns/activitystreams#Public',
-          `${actorId}/following`
+          `${actorId}/followers`
         ],
         object: {
           type: 'Note',
