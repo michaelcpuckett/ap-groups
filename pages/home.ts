@@ -394,10 +394,11 @@ window.document.querySelector('#requests')?.addEventListener('click', (event: Ev
 
   const entityId = target.dataset.entityId;
   const actorId = target.dataset.actorId;
+  const entityActorId = target.dataset.entityActorId;
 
   switch (action) {
     case 'accept': {
-      if (!entityId || !actorId) {
+      if (!entityId || !actorId || !entityActorId) {
         return;
       }
 
@@ -413,6 +414,7 @@ window.document.querySelector('#requests')?.addEventListener('click', (event: Ev
           type: 'Accept',
           actor: actorId,
           object: entityId,
+          to: [entityActorId],
         }),
       }).then(res => {
         if (res.headers.has('Location')) {
