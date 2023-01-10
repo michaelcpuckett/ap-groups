@@ -1,7 +1,7 @@
 {% macro groupEntity(group) %}
   <div class="group-entity">
     {% if group.icon.url %}
-      <a href="{{ group.url }}/shared?current" style="display: block">
+      <a href="{{ group.url }}/shared?page=1&current" style="display: block">
         <img
           class="avatar"
           height="100"
@@ -10,7 +10,7 @@
         />
       </a>
     {% endif %}
-    <a href="{{ group.url }}/shared?current">
+    <a href="{{ group.url }}/shared?page=1&current">
       <strong>
         {{ group.name }}
       </strong>
@@ -20,7 +20,7 @@
         Handle
       </dt>
       <dd>
-        <a href="{{ group.url }}/shared?current">
+        <a href="{{ group.url }}/shared?page=1&current">
           @{{ group.preferredUsername }}@chirp.social
         </a>
       </dd>
