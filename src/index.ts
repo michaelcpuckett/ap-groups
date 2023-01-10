@@ -152,7 +152,6 @@ function assertIsGroup(entity: AP.Entity): asserts entity is AP.Group {
         login: renderLoginPage,
         home: renderHomePage,
         entity: renderEntityPage,
-        directory: renderDirectoryPage,
       },
 
       adapters: {
