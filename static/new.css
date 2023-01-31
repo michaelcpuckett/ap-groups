@@ -74,7 +74,7 @@ hr {
 nav {
     display: flex;
     flex-wrap: wrap;
-    row-gap: 24px;
+    row-gap: 12px;
     column-gap: 12px;
 }
 @media (max-width: 959px) {
@@ -96,6 +96,9 @@ nav a {
 @media (max-width: 959px) {
   nav a {
     padding: 6px 12px;
+  }
+  nav a:not(:last-of-type) {
+    margin-left: -12px;
   }
 }
 nav a:first-of-type {
