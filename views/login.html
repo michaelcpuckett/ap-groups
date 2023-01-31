@@ -1,18 +1,33 @@
-{% from "partials/header.html" import header with context %}
-{% from "partials/about.html" import about with context %}
+{% from "partials/nav.html" import nav with context %}
 
 <!doctype html>
-<html>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="base.css" />
-  <link rel="stylesheet" href="index.css" />
-  <body>
-    <div class="root">
-      <div class="container">
-        {{ header() }}
-        {{ about() }}
-      </div>
-      <div class="right-rail">
+<meta charset="utf-8" />
+<title>chirp.social - {{ entity.name }}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="/new.css" />
+<style>
+    .main-content {
+      display: grid;
+      grid-gap: 24px;
+    }
+</style>
+<div class="container">
+
+  {{ nav() }}
+  
+  <div class="hero">
+    <div class="hero-content">
+        <h1>
+          Account
+        </h1>
+    </div>
+  </div>
+</div>
+
+<div class="theme-primary">
+  <div class="container">
+    <div class="main-content">
+      <div class="split">
         <section role="region" aria-labelledby="login-heading">
           <h2 id="login-heading">
             Log In
@@ -25,6 +40,8 @@
           </h2>
           <signup-form></signup-form>
         </section>
+      </div>
+      <div class="split">
         <section role="region" aria-labelledby="forgot-password-heading">
           <h2 id="forgot-password-heading">
             Forgot Password?
@@ -33,6 +50,6 @@
         </section>
       </div>
     </div>
-    <script type="module" src="login.js"></script>
-  </body>
-</html>
+  </div>
+</div>
+<script type="module" src="login.js"></script>

@@ -6,87 +6,91 @@
     {{ sharedCollectionPageEntityPage() }}
   {% else %}
     <!doctype html>
-    <html>
-      <title>chirp.social - {{ entity.name }}</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <meta charset="utf-8" />
-      <link rel="stylesheet" href="/base.css" />
-      <link rel="stylesheet" href="/index.css" />
-      <body>
-        <div class="root">
-          <div class="container">
-            {{ header() }}
-            <div class="regions">
-              {% set items = entity.items %}
-              {% if entity.type == 'OrderedCollectionPage' %}
-                {% set items = entity.orderedItems %}
-              {% endif %}
-              {% if items.length %}
-                <div class="region">
-                  {{ paginationNav(entity) }}
-                </div>
-                {% for item in items %}
-                  {% if item.type == 'Collection' %}
-                    <div class="region">
-                      <a href="{{ item.id }}?page=1&sort=name">
-                        <h2>{{ item.name }}</h2>
-                        Groups: {{ item.totalItems }}
-                      </a>
-                    </div>
-                  {% endif %}
-                  {% if item.type == 'Group' %}
-                    <div class="region">
-                      {{ groupEntity(item) }}
-                    </div>
-                  {% endif %}
-                  {% if item.type == 'Announce' %}
-                    <div class="region">
-                      {% if item.object.type == 'Tombstone' %}
-                        <p>
-                          Deleted.
-                        </p>
-                      {% else %}
-                        {{ announcedEntity(item.object) }}
-                      {% endif %}
-                    </div>
-                  {% endif %}
-                  {% if item.type == 'Create' and item.object.id and item.object.type == 'Note' %}
-                    <div class="region">
-                      The group posted a Note:
-
-                      <p>{{ item.object.content }}</p>
-                    </div>
-                  {% endif %}
-                  {% if item.type == 'Create' and item.object.id and item.object.type == 'Group' %}
-                    {{ groupEntity(item.object) }}
-                  {% endif %}
-                {% endfor %}
-                <div class="region">
-                  {{ paginationNav(entity) }}
-                </div>
+    <meta charset="utf-8" />
+    <title>chirp.social - {{ entity.name }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/new.css" />
+    <style>
+      .main-content {
+        display: grid;
+        grid-gap: 24px;
+      }
+    </style>
+    <div class="container">
+    
+      {{ nav() }}
+      
+      <div class="hero">
+        <div class="hero-content">
+            <h1>
+              {% if entity.url | stripDomain == 'hashtags'  %}
+                Group Directory
               {% else %}
-                <div class="region">
-                  No posts yet.
-                </div>
+                {{ entity.name }}
               {% endif %}
-            </div>
-          </div>
-          <div class="right-rail">
-            {% if attributedTo.url %}
-              {% if not r/entity\/bot/.test(attributedTo) %}
-                <div class="region">
-                  {{ groupEntity(attributedTo) }}
-                </div>
-              {% endif %}
-            {% endif %}
-            
-            {{ directoryLink() }}
-
-            {{ about() }}
-          </div>
+            </h1>
         </div>
-        <script type="module" src="/group-entity.js"></script>
-      </body>
-    </html>
+      </div>
+    </div>
+    <div class="theme-primary">
+      <div class="container">
+        <div class="main-content">
+          {% set items = entity.items %}
+          {% if entity.type == 'OrderedCollectionPage' %}
+            {% set items = entity.orderedItems %}
+          {% endif %}
+          {% if items.length %}
+            <div class="region">
+              {{ paginationNav(entity) }}
+            </div>
+            {% for item in items %}
+              {% if item.type == 'Collection' %}
+                <div class="region">
+                  <a href="{{ item.id }}?page=1&sort=name">
+                    <h2>{{ item.name }}</h2>
+                    Groups: {{ item.totalItems }}
+                  </a>
+                </div>
+              {% endif %}
+              {% if item.type == 'Group' %}
+                <div class="region">
+                  {{ groupEntity(item) }}
+                </div>
+                <hr />
+              {% endif %}
+              {% if item.type == 'Announce' %}
+                <div class="region">
+                  {% if item.object.type == 'Tombstone' %}
+                    <p>
+                      Deleted.
+                    </p>
+                  {% else %}
+                    {{ announcedEntity(item.object) }}
+                  {% endif %}
+                </div>
+              {% endif %}
+              {% if item.type == 'Create' and item.object.id and item.object.type == 'Note' %}
+                <div class="region">
+                  The group posted a Note:
+
+                  <p>{{ item.object.content }}</p>
+                </div>
+              {% endif %}
+              {% if item.type == 'Create' and item.object.id and item.object.type == 'Group' %}
+                {{ groupEntity(item.object) }}
+              {% endif %}
+            {% endfor %}
+            <div class="region">
+              {{ paginationNav(entity) }}
+            </div>
+          {% else %}
+            <div class="region">
+              No posts yet.
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/group-entity.js"></script>
   {% endif %}
 {% endmacro %}

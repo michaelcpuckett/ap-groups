@@ -1,49 +1,51 @@
 {% macro groupEntity(group) %}
-  <div class="group-entity">
-    {% if group.icon.url %}
-      <a href="{{ group.url }}/shared?page=1&current" style="display: block">
-        <img
-          class="avatar"
-          height="100"
-          width="100"
-          src="{{ group.icon.url }}"
-        />
+  <div class="split">
+    <div class="main-content">
+      <a href="{{ group.url }}/shared?page=1&current" style="display: grid; align-content: flex-start; gap: 24px;">
+        <h2>
+          {{ group.name }}
+        </h2>
+        {% if group.icon.url %}
+          <img
+            class="avatar"
+            height="100"
+            width="100"
+            src="{{ group.icon.url }}"
+          />
+        {% endif %}
       </a>
-    {% endif %}
-    <a href="{{ group.url }}/shared?page=1&current">
-      <strong>
-        {{ group.name }}
-      </strong>
-    </a>
-    <dl>
-      <dt>
-        Handle
-      </dt>
-      <dd>
-        <a href="{{ group.url }}/shared?page=1&current">
-          @{{ group.preferredUsername }}@chirp.social
-        </a>
-      </dd>
-      <dt>
-        Bio
-      </dt>
-      <dd>
-        {{ group.summary | safe }}
-      </dd>
-      {% for attachment in group.attachment %}
+    </div>
+    <div class="main-content">
+      <dl>
         <dt>
-          {{ attachment.name }}
+          Handle
         </dt>
         <dd>
-          {{ attachment.value | safe }}
+          <a href="{{ group.url }}/shared?page=1&current">
+            @{{ group.preferredUsername }}@chirp.social
+          </a>
         </dd>
-      {% endfor %}
-      <dt>
-        Added
-      </dt>
-      <dd>
-        {{ group.published }}
-      </dd>
-    </dl>
+        <dt>
+          Bio
+        </dt>
+        <dd>
+          {{ group.summary | safe }}
+        </dd>
+        {% for attachment in group.attachment %}
+          <dt>
+            {{ attachment.name }}
+          </dt>
+          <dd>
+            {{ attachment.value | safe }}
+          </dd>
+        {% endfor %}
+        <dt>
+          Added
+        </dt>
+        <dd>
+          {{ group.published }}
+        </dd>
+      </dl>
+    </div>
   </div>
 {% endmacro %}

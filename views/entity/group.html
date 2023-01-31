@@ -1,80 +1,79 @@
 {% macro groupEntityPage(entity) %}
-  <!doctype html>
-  <html>
-    <title>@{{ entity.preferredUsername }}@chirp.social</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta charset="utf-8" />
-    <meta name="description" content="{{ group.summary }}" />
-    <link rel="stylesheet" href="base.css" />
-    <link rel="stylesheet" href="index.css" />
-    <body>
-      <div class="root">
-        <div class="container">
-          {{ header() }}
-          <section role="region">
-            <h1>
-              {% if entity.name %}
-                {{ entity.name }}
-              {% else %}
-                {{ entity.preferredUsername }}
-              {% endif %}
-            </h1>
-            <div class="avatar-summary">
-              {% if entity.icon %}
-                <img
-                  class="avatar"
-                  height="100"
-                  width="100"
-                  src="{{ entity.icon.url }}"
-                />
-              {% endif %}
-              <div>
-                <p>
-                  <strong>
-                    @{{ entity.preferredUsername }}@chirp.social
-                  </strong>
-                </p>
-                <p>
-                  <a href="{{ entity.url }}/shared?page=1&current">
-                    All Posts from
-                    @{{ entity.preferredUsername }}@chirp.social
-                  </a>
-                </p>
-                {% if entity.summary %}
-                {% endif %}
-                  <dl>
-                    <dt>
-                      Group Summary
-                    </dt>
-                    <dd>
-                      {{ entity.summary | safe }}
-                    </dd>
-                    {% for attachment in entity.attachment %}
-                      <dt>
-                        {{ attachment.name }}
-                      </dt>
-                      <dd>
-                        {{ attachment.value | safe }}
-                      </dd>
-                    {% endfor %}
-                    <dt>
-                      Followers
-                    </dt>
-                    <dd>
-                      {{ followersCount }}
-                    </dd>
-                  </dl>
-              </div>
-            </div>
-          </section>
-          <script type="module" src="group-entity.js"></script>
-        </div>
-        <div class="right-rail">
-          {{ directoryLink() }}
-          
-          {{ about() }}
-        </div>
+
+<!doctype html>
+<meta charset="utf-8" />
+<title>@{{ entity.preferredUsername }}@chirp.social</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="{{ group.summary }}" />
+
+<link rel="stylesheet" href="/new.css" />
+<style>
+  .main-content {
+      display: grid;
+      grid-gap: 24px;
+    }
+</style>
+<div class="container">
+
+  {{ nav() }}
+  
+  <div class="hero">
+    <div class="hero-content">
+      <h1>
+        {% if entity.name %}
+          {{ entity.name }}
+        {% else %}
+          @{{ entity.preferredUsername }}
+        {% endif %}
+      </h1>
+    </div>
+  </div>
+</div>
+<div class="theme-primary">
+  <div class="container">
+    <div class="split">
+      <div class="main-content">
+        <p>
+          <strong>
+            @{{ entity.preferredUsername }}@chirp.social
+          </strong>
+        </p>
+        <p>
+          <a href="{{ entity.url }}/shared?page=1&current">
+            All Posts from
+            @{{ entity.preferredUsername }}@chirp.social
+          </a>
+        </p>
+        <dl>
+          <dt>
+            Group Summary
+          </dt>
+          <dd>
+            {{ entity.summary | safe }}
+          </dd>
+          {% for attachment in entity.attachment %}
+            <dt>
+              {{ attachment.name }}
+            </dt>
+            <dd>
+              {{ attachment.value | safe }}
+            </dd>
+          {% endfor %}
+          <dt>
+            Followers
+          </dt>
+          <dd>
+            {{ followersCount }}
+          </dd>
+        </dl>
       </div>
-    </body>
-  </html>
+      {% if entity.icon %}
+        <img
+          src="{{ entity.icon.url }}"
+        />
+      {% endif %}
+    </div>
+  </div>
+</div>
+<script type="module" src="group-entity.js"></script>
 {% endmacro %}

@@ -83,6 +83,7 @@ export class PaginationNav extends LitElement {
     this.limit = new URL(this.firstPage).searchParams.get('limit');
     this.type = new URL(this.firstPage).searchParams.get('type');
     this.sort = new URL(this.firstPage).searchParams.get('sort');
+    console.log(this.sort);
     this.firstPageIndex = Number(new URL(this.firstPage).searchParams.get('page')) || 1;
     this.lastPageIndex = Number(new URL(this.lastPage).searchParams.get('page')) || 1;
     this.totalPages = this.lastPageIndex - this.firstPageIndex + 1;
@@ -125,7 +126,7 @@ export class PaginationNav extends LitElement {
       <ol>
         ${repeat(new Array(this.totalPages), (value, index) => {
           const pageIndex = index + 1;
-          const url = pageIndex === this.currentPageIndex ? '' : `${this.baseUrlPath}?page=${pageIndex}${this.isCurrent ? '&current' : ''}${this.type ? `&type=${this.type}` : ''}${this.limit ? `&limit=${this.limit}` : ''}`;
+          const url = pageIndex === this.currentPageIndex ? '' : `${this.baseUrlPath}?page=${pageIndex}${this.isCurrent ? '&current' : ''}${this.type ? `&type=${this.type}` : ''}${this.limit ? `&limit=${this.limit}` : ''}${this.sort ? `&sort=${this.sort}` : ''}`;
 
           if (pageIndex === this.firstPageIndex) {
             return url ? html`

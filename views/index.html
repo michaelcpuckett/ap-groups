@@ -1,176 +1,127 @@
-{% from "partials/header.html" import header with context %}
-{% from "partials/about.html" import about with context %}
-{% from "partials/directoryLink.html" import directoryLink with context %}
+{% from "partials/nav.html" import nav with context %}
 
 <!doctype html>
-<html>
-  <head>
-    <title>chirp.social: groups for the fediverse</title>
-    <meta name="description" content="Create groups for Mastodon and other ActivityPub-enabled apps." />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta charset="utf-8" />
-    <link rel="stylesheet" href="/home-new.css" />
-  </head>
-  <body>
+<title>chirp.social: Groups for the Fediverse</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Create groups for Mastodon and other ActivityPub-enabled apps." />
+<link rel="stylesheet" href="/new.css" />
+<div class="container">
+
+    {{ nav() }}
+
+    <div class="hero">
+        <div class="hero-content">
+            <h1>
+                Groups for the Fediverse
+            </h1>
+            <p>
+                This is an <a target="_blank" href="https://activitypub.rocks">ActivityPub</a> server that can interact with
+                any other ActivityPub server, including Mastodon. Every account created here is a Group account, which is a kind of bot for mass communication across servers.
+            </p>
+        </div>
+        <img src="groups.jpg" aria-hidden="true" />
+    </div>
+</div>
+
+<div class="theme-primary">
     <div class="container">
-      <div class="main-content">
-        <main role="main">
-          <nav role="navigation" class="tabs">
-            <div class="tabs-inner tabs-inner--left">
+        <div class="split">
+            <img src="how.jpg" aria-hidden="true" />
+            <div class="main-content">
+                <h2>
+                    How does it work?
+                </h2>
+                <p>
+                    Any post addressed to a Group by a follower gets reposted by the Group, so all followers can see it.
+                </p>
+                <p>
+                    All posts are public, but you can restrict who can follow.
+                </p>
             </div>
-            <div class="tabs-inner tabs-inner--main">
-              <header class="header" role="banner">
-                <h1>
-                  chirp.social
-                  <span>groups for the Fediverse</span>
-                </h1>
-              </header>
-            </div>
-          </nav>
-          <div class="pagination">
-            <div class="pagination-inner pagination-inner--left">
+        </div>
+    </div>
+</div>
 
-            </div>
-            <div class="pagination-inner pagination-inner--main">
-              <a href="/hashtags?page=1&sort=name" class="button button--cta">
-                Group Directory
-              </a>
-            </div>
-          </div>
-          <div class="posts" id="home">
-            <div class="post">
-              <div class="post-body">
-                <div class="post-body-inner post-body-inner--left">
-                  <div class="forms">
-                    <div class="form">
-                      <h2 id="login-heading">
-                        Log In
-                      </h2>
-                      <login-form></login-form>
-                    </div>
-                  </div>
-                </div>
-                <div class="post-body-inner post-body-inner--main">
-                  <section class="region" aria-labelledby="about-heading">
-                    <h2 id="about-heading">
-                      What is this?
-                    </h2>
-                    <p>
-                      This is an <a target="_blank" href="https://activitypub.rocks">ActivityPub</a> server that can interact with
-                      any other ActivityPub server, including Mastodon. Every account created here is a Group account, which is a kind of bot for mass communication across servers.
-                      You can create a Group for anything!
-                    </p>
-                    <p>
-                      Any post addressed to a Group by a follower gets reposted
-                      by the Group, so all followers can see it.
-                    </p>
-                  </section>
+<div class="container">
+    <div class="split">
+        <div class="main-content">
+            <h2>
+                Join a Group
+            </h2>
+            <p>
+                You can join a Group by:
+            </p>
+            <ol>
+                <li>
+                    <a href="/hashtags?page=1&sort=name">Find a Group in the directory</a> or search for one.
+                </li>
+                <li>
+                    Copy the full account name, like @somegroup@chirp.social
+                </li>
+                <li>
+                    Go to your Fediverse account's homepage.
+                </li>
+                <li>
+                    Search for the full account name.
+                </li>
+                <li>
+                    Follow the Group.
+                </li>
+                <li>
+                    Post to the group by mentioning it.
+                </li>
+            </ol>
+        </div>
+        <img src="join.jpg" />
+    </div>
+</div>
 
-                  <section class="region" aria-labelledby="join-heading">
-                    <h2 id="join-heading">
-                      Join a Group
-                    </h2>
-                    <p>
-                      You can join a group by:
-                    </p>
-                    <ol>
-                      <li>
-                        Find a group in the directory or search for one.
-                      </li>
-                      <li>
-                        Copy the full account name, like @somegroup@chirp.social
-                      </li>
-                      <li>
-                        Go to your Fediverse account's homepage.
-                      </li>
-                      <li>
-                        Search for the full account name.
-                      </li>
-                      <li>
+<div class="theme-primary">
+    <div class="container">
+        <div class="split">
+            <img src="create.jpg" />
+            <div class="main-content">
+                <h2>
+                    Create a Group
+                </h2>
+                <ol>
+                    <li>
+                        <a href="/login">Sign up for a Group account on this page</a>.
+                    </li>
+                    <li>
                         Follow the Group.
-                      </li>
-                      <li>
-                        Post to the group by mentioning it.
-                      </li>
-                    </ol>
-                  </section>
-
-                  <section class="region" aria-labelledby="create-heading">
-                    <h2 id="create-heading">
-                      Create a Group
-                    </h2>
-                    <ol>
-                      <li>
-                        Sign up for an Group account on this page.
-                      </li>
-                      <li>
-                        Follow the Group.
-                      </li>
-                      <li>
+                    </li>
+                    <li>
                         Post a message addressed to the Group.
-                      </li>
-                      <li>
+                    </li>
+                    <li>
                         The Group will repost it immediately, for all followers to see.
-                      </li>
-                      <li>
+                    </li>
+                    <li>
                         Log in to manage your Group.
                         You can block people from getting reposted or delete the Group.
-                      </li>
-                    </ol>
-                  </section>
-                  <section class="region" aria-labelledby="need-help-heading">
-                    <h2 id="need-help-heading">
-                      Support
-                    </h2>
-                    <p>
-                      Please open a ticket on
-                      <a target="_blank" href="https://github.com/michaelcpuckett/ap-groups">
-                        Github
-                      </a>
-                    </p>
-                  </section>
-                  <section class="region" aria-labelledby="who-heading">
-                    <h2 id="who-heading">
-                      Who made this?
-                    </h2>
-                    <p>
-                      This is a side project made primarily by
-                      <a target="_blank" href="https://a11y.social/@mpuckett">
-                        @mpuckett@a11y.social
-                      </a>
-                    </p>
-                    <p>
-                      I'm using Firebase Authentication for sign-ups, so I can't see the passwords.
-                    </p>
-                  </section>
-                  <footer role="contentinfo">
-                    <p>
-                      This is not a fork of Mastodon and is not affiliated with Mastodon. Everything is MIT licensed.
-                    </p>
-                  </footer>
-                </div>
-                <div class="post-body-inner post-body-inner--right">
-                  <div class="form">
-                    <h2 id="signup-heading">
-                      Sign Up
-                    </h2>
-                    <signup-form></signup-form>
-                  </div>
-                  <div class="form">
-                    <h2 id="forgot-password-heading">
-                      Forgot Password?
-                    </h2>
-                    <forgot-password-form></forgot-password-form>
-                  </div>
-                </div>
-              </div>
+                    </li>
+                </ol>
             </div>
-          </div>
         </div>
-      </main>
     </div>
-  </div>
-  <script type="module" src="/login.js"></script>
-</body>
+</div>
 
-</html>
+<div class="container">
+    <div class="split">
+        <div class="main-content">
+          <h2>
+              Info/Support
+          </h2>
+          <p>
+              This is a side project made by <a target="_blank" href="https://a11y.social/@mpuckett">@mpuckett@a11y.social</a>.
+              The images were created using <a target="_blank" href="https://midjourney.com">Midjourney</a>.
+          </p>
+            <p>
+                For ideas, suggestions, or bugs, open a ticket on
+                <a target="_blank" href="https://github.com/michaelcpuckett/ap-groups">
+                Github</a>.
+            </p>
+        </div>
+    </div>
+</div>
