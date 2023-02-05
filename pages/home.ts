@@ -271,12 +271,11 @@ if (announcementForm) {
         },
       }),
     })
-    .then(res => res.json())
-    .then((result) => {
-      if (result.success) {
+    .then((res) => {
+      if (res.headers.get('Location')) {
         window.location.reload();
       } else {
-        console.log(result);
+        console.log('Error');
       }
     });
   });
