@@ -258,6 +258,7 @@ if (announcementForm) {
     fetch(`${actorId}/outbox`, {
       method: 'POST',
       body: JSON.stringify({
+        '@context': 'https://www.w3.org/ns/activitystreams',
         type: 'Create',
         actor: actorId,
         to: [
