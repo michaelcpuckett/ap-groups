@@ -214,7 +214,7 @@ import { dateFromNow } from './filters/dateFromNow';
     }
   });
   
-  app.listen(process.env.PORT ?? 3000, () => {
+  app.listen(process.env.AP_PORT ?? 3000, () => {
     console.log('Running...');
   });
 })();
