@@ -1,4 +1,4 @@
-import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+import * as dotenv from 'dotenv'; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
 dotenv.config();
 
 import * as express from 'express';
@@ -27,7 +27,6 @@ import { dateFromNow } from './filters/dateFromNow';
 
 // Create an immediately-evoked async function in order to wait for MonogDB to spin up.
 (async () => {
-
   // Use Express for all routes.
   const app = express.default();
 
@@ -48,7 +47,7 @@ import { dateFromNow } from './filters/dateFromNow';
   app.get('/', async (req: IncomingMessage, res: ServerResponse) => {
     if (!res.headersSent) {
       res.statusCode = 200;
-      res.setHeader('Content-Type', 'text/html')
+      res.setHeader('Content-Type', 'text/html');
       res.write(nunjucks.render('index.html'));
       res.end();
     }
@@ -64,38 +63,38 @@ import { dateFromNow } from './filters/dateFromNow';
     throw new Error('Bad Service Account.');
   }
 
-  const firebaseServiceAccount: ServiceAccount = JSON.parse(decodeURIComponent(envServiceAccount));
+  const firebaseServiceAccount: ServiceAccount = JSON.parse(
+    decodeURIComponent(envServiceAccount),
+  );
 
-  const firebaseAuthAdapter =
-    new FirebaseAuthAdapter(
-      firebaseServiceAccount,
-      'pickpuck-com'
-    );
+  const firebaseAuthAdapter = new FirebaseAuthAdapter(
+    firebaseServiceAccount,
+    'pickpuck-com',
+  );
 
   // FTP Storage adapter plugin.
 
-  const ftpStorageAdapter =
-    new FtpStorageAdapter(
-      JSON.parse(decodeURIComponent(process.env.AP_FTP_CONFIG)),
-      '/uploads'
-    );
+  const ftpStorageAdapter = new FtpStorageAdapter(
+    JSON.parse(decodeURIComponent(process.env.AP_FTP_CONFIG)),
+    '/uploads',
+  );
 
   // Mongo Database adapter plugin.
 
-  const mongoClient = new MongoClient(process.env.AP_MONGO_CLIENT_URL ?? 'mongodb://127.0.0.1:27017');
+  const mongoClient = new MongoClient(
+    process.env.AP_MONGO_CLIENT_URL ?? 'mongodb://127.0.0.1:27017',
+  );
   await mongoClient.connect();
   const mongoDb = mongoClient.db(process.env.AP_MONGO_DB_NAME ?? 'groups');
 
-  const mongoDbAdapter =
-    new MongoDbAdapter(mongoDb);
+  const mongoDbAdapter = new MongoDbAdapter(mongoDb);
 
-  const defaultDeliveryAdapter =
-    new DeliveryAdapter({
-      adapters: {
-        db: mongoDbAdapter,
-      },
-    });
-    
+  const defaultDeliveryAdapter = new DeliveryAdapter({
+    adapters: {
+      db: mongoDbAdapter,
+    },
+  });
+
   // Use the activitypub-core Express plugin.
 
   app.use(
@@ -134,12 +133,11 @@ import { dateFromNow } from './filters/dateFromNow';
         // Uses the AP Groups plugin.
         GroupsPlugin(),
 
-        // Creatse a new "Plugin" with the following methods.
+        // Creatse a custom Plugin with the following methods.
         {
-          generateActorId: () => (preferredUsername: string) => {
-            return `${LOCAL_DOMAIN}/@${preferredUsername}`;
-          },
-          handleCreateUserActor(this: { activity: unknown & { object: AP.Actor } }) {
+          handleCreateUserActor(this: {
+            activity: unknown & { object: AP.Actor };
+          }) {
             return {
               ...this.activity,
               object: {
@@ -150,22 +148,23 @@ import { dateFromNow } from './filters/dateFromNow';
                   type: 'Image',
                   url: 'https://media.michaelpuckett.engineer/uploads/banner.png',
                 },
-              }
+              },
             };
           },
           getIsEntityGetRequest(url: string) {
-            if ([
-              'hashtags',
-              'hashtag',
-            ].includes(new URL(`${LOCAL_DOMAIN}${url}`).pathname.split('/')[1])) {
+            if (
+              ['hashtags', 'hashtag'].includes(
+                new URL(`${LOCAL_DOMAIN}${url}`).pathname.split('/')[1],
+              )
+            ) {
               return true;
             }
           },
           handleOutboxSideEffect,
           getEntityPageProps,
           getHomePageProps,
-        }
-      ]
+        },
+      ],
     }),
   );
 
@@ -188,32 +187,41 @@ import { dateFromNow } from './filters/dateFromNow';
         throw new Error('Bad request: Not authorized.');
       }
 
-      const user = await firebaseAuthAdapter.createUser.call(firebaseAuthAdapter, {
-        email,
-        preferredUsername: actor.preferredUsername,
-      });
+      const user = await firebaseAuthAdapter.createUser.call(
+        firebaseAuthAdapter,
+        {
+          email,
+          preferredUsername: actor.preferredUsername,
+        },
+      );
 
       await Promise.all([
         mongoDbAdapter.saveString('account', user.uid, email),
-        mongoDbAdapter.saveString('username', user.uid, actor.preferredUsername),
+        mongoDbAdapter.saveString(
+          'username',
+          user.uid,
+          actor.preferredUsername,
+        ),
       ]);
 
       res.statusCode = 200;
       res.write(
         JSON.stringify({
           success: true,
-        })
+        }),
       );
       res.end();
     } catch (error) {
       res.statusCode = 500;
-      res.write(JSON.stringify({
-        error: `${error || 'Unknown error'}`,
-      }));
+      res.write(
+        JSON.stringify({
+          error: `${error || 'Unknown error'}`,
+        }),
+      );
       res.end();
     }
   });
-  
+
   app.listen(process.env.AP_PORT ?? 3000, () => {
     console.log('Running...');
   });
