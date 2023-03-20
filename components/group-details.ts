@@ -2,6 +2,7 @@ import { LitElement, html, css, nothing, PropertyValues } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators';
 import { baseCss } from './base-css';
 import { AP } from 'activitypub-core-types';
+import { URLSearchParams } from 'url';
 
 const DEFAULT_BANNER_IMAGE_URL =
   'https://media.michaelpuckett.engineer/uploads/banner.png';
@@ -25,6 +26,18 @@ export class GroupDetails extends LitElement {
 
       .avatar {
         max-width: 200px;
+      }
+
+      .saved-dialog[open] {
+        display: grid;
+        gap: 24px;
+        border-radius: 24px;
+        padding: 24px;
+        font-size: 32px;
+      }
+
+      .saved-dialog button {
+        place-self: flex-end;
       }
     `,
   ];
@@ -95,9 +108,6 @@ export class GroupDetails extends LitElement {
   private isFileReadyToUpload = false;
 
   @state()
-  private isSaved = false;
-
-  @state()
   private isSaving = false;
 
   @state()
@@ -109,7 +119,15 @@ export class GroupDetails extends LitElement {
   @state()
   private textManager = '';
 
+  @query('dialog')
+  private savedDialog!: HTMLDialogElement;
+
   override firstUpdated() {
+    if (window.location.hash === '#saved') {
+      this.savedDialog.showModal();
+      window.history.replaceState('', null, window.location.pathname);
+    }
+
     const summaryWrapperElement = window.document.createElement('div');
     summaryWrapperElement.innerHTML = this.summary ?? '';
     this.textSummary = this.getInnerText(summaryWrapperElement);
@@ -148,7 +166,6 @@ export class GroupDetails extends LitElement {
 
   private async handleSubmit(event: SubmitEvent) {
     event.preventDefault();
-    this.isSaved = false;
     this.isSaving = true;
 
     if (
@@ -257,8 +274,10 @@ export class GroupDetails extends LitElement {
     })
       .then((res) => {
         if (res.headers.has('Location')) {
-          this.isSaving = false;
-          this.isSaved = true;
+          const nextLocation = new URL(window.location.href);
+          nextLocation.hash = 'saved';
+          window.location.href = nextLocation.href;
+          window.location.reload();
         }
       })
       .catch((error: unknown) => {
@@ -300,6 +319,9 @@ export class GroupDetails extends LitElement {
           })
             .then((res) => {
               if (res.headers.has('Location')) {
+                const nextLocation = new URL(window.location.href);
+                nextLocation.hash = 'saved';
+                window.location.href = nextLocation.href;
                 window.location.reload();
               }
             })
@@ -476,10 +498,11 @@ ${this.textRules ?? 'Be nice.'}</textarea
         <button ?disabled=${this.isSaving} type="submit" class="button">
           Save Profile
         </button>
-        <output>
-          <p>${this.isSaved ? 'Your changes have been saved' : ''}</p>
-        </output>
       </form>
+      <dialog @click=${() => this.savedDialog.close()} class="saved-dialog">
+        <button type="button" aria-label="Close dialog">X</button>
+        Your changes were saved.
+      </dialog>
     `;
   }
 }
